@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class Activity extends Equatable {
   String id;
   String title;
-  String description;
+  String? description;
   ActivityType type;
   int? amountSpend;
   

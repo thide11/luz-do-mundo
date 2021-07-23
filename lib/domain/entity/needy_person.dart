@@ -4,7 +4,7 @@ import 'dependent.dart';
 import 'file.dart';
 
 class NeedyPerson extends Equatable {
-  String id;
+  String? id;
   String name;
   DateTime birthDate;
   String rg;
@@ -13,8 +13,8 @@ class NeedyPerson extends Equatable {
   String motherName;
   String fatherName;
   int income;
-  File workCard;
-  File photo;
+  File? workCard;
+  File? photo;
   List<Dependent> dependents;
 
   NeedyPerson({

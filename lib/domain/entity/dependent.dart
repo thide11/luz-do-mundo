@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 
 class Dependent extends Equatable {
-  String id;
+  String? id;
   String nome;
-  String rg;
+  String? rg;
   
   Dependent({
     required this.id,
