@@ -1,4 +1,6 @@
-class Activity {
+import 'package:equatable/equatable.dart';
+
+class Activity extends Equatable {
   String id;
   String title;
   String description;
@@ -12,6 +14,9 @@ class Activity {
     required this.type,
     this.amountSpend,
   });
+
+  @override
+  List<Object?> get props => [id, title, description, type, amountSpend];
 }
 
 enum ActivityType {

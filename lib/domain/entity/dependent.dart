@@ -1,4 +1,6 @@
-class Dependent {
+import 'package:equatable/equatable.dart';
+
+class Dependent extends Equatable {
   String id;
   String nome;
   String rg;
@@ -8,4 +10,7 @@ class Dependent {
     required this.nome,
     required this.rg,
   });
+
+  @override
+  List<Object?> get props => [id, nome, rg];
 }

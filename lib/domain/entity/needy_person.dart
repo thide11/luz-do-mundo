@@ -1,7 +1,9 @@
+import 'package:equatable/equatable.dart';
+
 import 'dependent.dart';
 import 'file.dart';
 
-class NeedyPerson {
+class NeedyPerson extends Equatable {
   String id;
   String name;
   DateTime birthDate;
@@ -29,4 +31,7 @@ class NeedyPerson {
     required this.photo,
     required this.dependents,
   });
+
+  @override
+  List<Object?> get props => [id, name, birthDate, rg, adress, telephone, motherName, fatherName, income, workCard, photo, dependents];
 }
