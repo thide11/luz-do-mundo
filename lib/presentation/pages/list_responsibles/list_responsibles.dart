@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
 import 'package:luz_do_mundo/routes/routes.dart';
 
@@ -10,9 +11,22 @@ class ListResponsibles extends StatelessWidget {
     return Widgets.scaffold(
       context, 
       title: "Listar responsáveis", 
-      child: Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 23,
+          vertical: 10,
+        ),
         child: Column(
           children: [
+            SizedBox(
+              height: 20,
+            ),
+            ListView.separated(
+              shrinkWrap: true,
+              itemBuilder: (context, index) => generateResponsibleItem(), 
+              separatorBuilder: (context, index) => SizedBox(height: 25,), 
+              itemCount: 2
+            ),
             SizedBox(
               height: 20,
             ),
@@ -28,6 +42,27 @@ class ListResponsibles extends StatelessWidget {
           ],
         ),
       )
+    );
+  }
+
+  generateResponsibleItem() {
+    return Row(
+      children: [
+        Container(
+          width: 48,
+          height: 48,
+          color: Colors.black,
+        ),
+        SizedBox(
+          width: 12,
+        ),
+        Text("Nome"),
+        Spacer(),
+        IconButton(
+          onPressed: () => null,
+          icon: Icon(Icons.edit),
+        )
+      ],
     );
   }
 }
