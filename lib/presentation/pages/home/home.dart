@@ -9,19 +9,43 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgets.scaffold(
       context,
+      mostrarAppBar: false,
       title: "Home",
-      child: Column(
-        children: [
-          Widgets.button(
-            text: "Gestores",
-            onTap: () => Navigator.pushNamed(context, Routes.listResponsibles),
-          ),
-          Widgets.buttonWithIcon(
-            text: "Calendário",
-            icon: Icons.calendar_today,
-            onTap: () => Navigator.pushNamed(context, Routes.listPersons),
-          ),
-        ],
+      child: Center(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 172,
+            ),
+            Text(
+              "Luz do mundo",
+              style: TextStyle(
+                fontSize: 30,
+              ),
+            ),
+            SizedBox(
+              height: 251,
+            ),
+            Widgets.button(
+              text: "Calendário",
+              onTap: () => Navigator.pushNamed(context, Routes.showCalendar),
+            ),
+            SizedBox(
+              height: 33,
+            ),
+            Widgets.button(
+              text: "Responsáveis",
+              onTap: () => Navigator.pushNamed(context, Routes.listResponsibles),
+            ),
+            SizedBox(
+              height: 33,
+            ),
+            Widgets.button(
+              text: "Pessoas",
+              onTap: () => Navigator.pushNamed(context, Routes.listPersons),
+            ),
+          ],
+        ),
       ),
     );
   }
