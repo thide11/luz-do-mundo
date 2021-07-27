@@ -1,4 +1,4 @@
-package com.thide11.luzdomundo.luz_do_mundo
+package com.thide11.luzdomundo
 
 import io.flutter.embedding.android.FlutterActivity
 

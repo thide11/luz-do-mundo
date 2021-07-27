@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:luz_do_mundo/presentation/routes/routes.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
-import 'package:luz_do_mundo/routes/routes.dart';
 
 class ListResponsibles extends StatelessWidget {
   const ListResponsibles({Key? key}) : super(key: key);

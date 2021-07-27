@@ -1,7 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:luz_do_mundo/presentation/pages/home/home.dart';
+import 'package:luz_do_mundo/presentation/routes/routes.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
-import 'package:luz_do_mundo/routes/routes.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,6 +11,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    Firebase.initializeApp();
     return MaterialApp(
       title: 'Luz do mundo',
       initialRoute: Routes.home,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:luz_do_mundo/presentation/routes/routes.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
-import 'package:luz_do_mundo/routes/routes.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
