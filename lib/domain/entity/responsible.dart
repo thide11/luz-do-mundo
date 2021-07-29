@@ -5,7 +5,7 @@ import 'file.dart';
 class Responsible extends Equatable {
   String? id;
   String name;
-  File picture;
+  File? picture;
 
   Responsible({
     this.id,

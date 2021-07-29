@@ -51,7 +51,8 @@ abstract class Widgets {
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 24
+          fontSize: 24,
+          color: Colors.black,
         ),
       ),
       onTap: onTap,
