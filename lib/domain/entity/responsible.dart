@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
-import 'file.dart';
+import 'app_file.dart';
 
 class Responsible extends Equatable {
-  String? id;
-  String name;
-  File? picture;
+  final String? id;
+  final String name;
+  final AppFile? picture;
 
   Responsible({
     this.id,

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:luz_do_mundo/domain/entity/app_file.dart';
 import 'package:luz_do_mundo/domain/entity/responsible.dart';
 import 'package:luz_do_mundo/domain/repository/responsible_repository.dart';
 import 'package:luz_do_mundo/infrastructure/data/responsible_dto.dart';
@@ -32,6 +33,12 @@ class CreateEditResponsiblesCubit extends Cubit<CreateEditResponsiblesState> {
 
   onNameChanged(String name) {
     _responsible = _responsible.copyWith(name: name);
+  }
+
+  onPictureChanged(AppFile file) {
+    _responsible = _responsible.copyWith(
+      picture: file
+    );
   }
 
   save() async {

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,9 +9,14 @@ import 'package:luz_do_mundo/presentation/routes/routes.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
 import 'package:injector/injector.dart' as injector;
 
-class ListResponsibles extends StatelessWidget {
+class ListResponsibles extends StatefulWidget {
   const ListResponsibles({Key? key}) : super(key: key);
 
+  @override
+  _ListResponsiblesState createState() => _ListResponsiblesState();
+}
+
+class _ListResponsiblesState extends State<ListResponsibles> {
   @override
   Widget build(BuildContext context) {
     return Widgets.scaffold(
@@ -60,14 +66,14 @@ class ListResponsibles extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              GestureDetector(
-                onTap: () => Navigator.of(context).pushNamed(Routes.createEditResponsibles),
+              ElevatedButton(
                 child: Text(
                   "+ Adicionar responsável",
                   style: TextStyle(
                     fontSize: 23,
                   ),
-                )
+                ),
+                onPressed: () => Navigator.of(context).pushNamed(Routes.createEditResponsibles),
               )
             ],
           ),
@@ -79,10 +85,19 @@ class ListResponsibles extends StatelessWidget {
   generateResponsibleItem(Responsible responsible) {
     return Row(
       children: [
-        Container(
+        SizedBox(
           width: 48,
           height: 48,
-          color: Colors.black,
+          child: 
+          responsible.picture != null ?
+          CachedNetworkImage(
+            imageUrl: responsible.picture!.fileUrl,
+            cacheKey: responsible.picture!.md5Hash,
+          )
+          :
+          Container(
+            color: Colors.black,
+          )
         ),
         SizedBox(
           width: 12,
@@ -95,7 +110,10 @@ class ListResponsibles extends StatelessWidget {
         ),
         Spacer(),
         IconButton(
-          onPressed: () => null,
+          onPressed: () => Navigator.of(context).pushNamed(
+            Routes.createEditResponsibles,
+            arguments: responsible
+          ),
           icon: Icon(Icons.edit),
         )
       ],

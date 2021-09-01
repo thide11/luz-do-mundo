@@ -12,6 +12,9 @@ class EmptyCreateEditResponsibles extends CreateEditResponsiblesState {}
 class EditingCreateEditResponsibles extends CreateEditResponsiblesState {
   final ResponsibleDto responsible;
   final bool isSaving;
+
+  bool get isEditing => responsible.id != null;
+  
   EditingCreateEditResponsibles(this.responsible, this.isSaving);
 
   @override

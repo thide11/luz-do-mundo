@@ -20,7 +20,7 @@ abstract class BaseCrudCubit<T extends Object> extends Cubit<BaseCrudStates<T>> 
   }
 
   loadStreamData(Stream<T> Function() transaction) async {
-
+    emit(LoadingBaseCrudStates());
     _stream = transaction().listen(
       onDataReceived, 
       onError: onErrorReceived

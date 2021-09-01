@@ -14,14 +14,20 @@ abstract class FirestoreCrud<T> extends CrudCapacity<T> {
   FirestoreModel toFirestore(T data);
 
   @override
-  Future<void> create(T data) async {
+  Future<String> create(T data) async {
     try {
       final firestoreData = toFirestore(data);
-      assert(firestoreData.id == null);
-      await _firestore.collection(basePath).add(firestoreData.model);
+      if(firestoreData.id == null) {
+        final addData = await _firestore.collection(basePath).add(firestoreData.model);
+        return addData.id;
+      } else {
+        await _firestore.collection(basePath).doc(firestoreData.id).set(firestoreData.model);
+        return firestoreData.id!;
+      }
     } catch(e) {
       print("Criar");
       print(e);
+      return "";
     }
   }
 
@@ -32,9 +38,15 @@ abstract class FirestoreCrud<T> extends CrudCapacity<T> {
   }
 
   @override
-  Future<void> edit(data) {
-    // TODO: implement edit
-    throw UnimplementedError();
+  Future<void> edit(data) async {
+    try {
+      final firestoreData = toFirestore(data);
+      assert(firestoreData.id != null);
+      await _firestore.collection(basePath).doc(firestoreData.id).set(firestoreData.model);
+    } catch(e) {
+      print("Erro ao editar");
+      print(e);
+    }
   }
 
   @override

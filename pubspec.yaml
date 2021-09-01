@@ -35,6 +35,14 @@ dependencies:
   flutter_bloc: ^7.0.1
   injector: ^2.0.0
   asuka: ^2.0.0-nullsafety.2
+  cached_network_image: ^3.1.0
+  image_picker: ^0.8.3+3
+  image_cropper: ^1.4.1
+  crypto: ^3.0.1
+  md5_plugin:
+    git:
+      url: https://github.com/fluttervn/md5_plugin
+      ref: c327bff74b854122181b90e95733f8cc15c25133
 
 dev_dependencies:
   flutter_test:

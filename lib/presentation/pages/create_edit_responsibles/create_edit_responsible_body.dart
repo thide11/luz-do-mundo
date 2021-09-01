@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luz_do_mundo/application/create_edit_responsibles_cubit/create_edit_responsibles_cubit.dart';
+import 'package:luz_do_mundo/domain/entity/app_file.dart';
+import 'package:luz_do_mundo/presentation/widgets/image_picker.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
 import 'package:asuka/asuka.dart' as asuka;
 
@@ -18,7 +20,7 @@ class CreateEditResponsibleBody extends StatelessWidget {
         if (state is EditingCreateEditResponsibles)
           return Widgets.scaffold(
             context,
-            title: false ? "Editar responsável" : "Criar responsável",
+            title: state.isEditing ? "Editar responsável" : "Criar responsável",
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 16.0,
@@ -29,7 +31,8 @@ class CreateEditResponsibleBody extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Nome :"),
-                  TextField(
+                  TextFormField(
+                    initialValue: state.responsible.name,
                     onChanged: (text) => context
                         .read<CreateEditResponsiblesCubit>()
                         .onNameChanged(text),
@@ -37,24 +40,11 @@ class CreateEditResponsibleBody extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
-                  Text("Insira uma foto :"),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xff224E00),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(100),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(40),
-                      child: Icon(
-                        Icons.picture_as_pdf,
-                        color: Colors.white,
-                      ),
-                    ),
+                  ImagePicker(
+                    file: state.responsible.picture ?? AppFile.empty(),
+                    onChanged: (AppFile appFile) {
+                      context.read<CreateEditResponsiblesCubit>().onPictureChanged(appFile);
+                    },
                   ),
                   SizedBox(
                     height: 20,
@@ -78,7 +68,7 @@ class CreateEditResponsibleBody extends StatelessWidget {
         if (state is SucessCreateEditResponsibles) {
           asuka.showSnackBar(
             SnackBar(
-              content: Text("Responsável criado com sucesso!"),
+              content: Text("Responsável salvo com sucesso!"),
             )
           );
           return Navigator.of(context).pop();
