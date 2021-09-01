@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:luz_do_mundo/domain/entity/app_file.dart';
@@ -54,16 +53,12 @@ class _ImagePickerState extends State<ImagePicker> {
                 )
               );
               if(croppedFile != null) {
-                final a = await Md5Plugin.getMD5WithPath(croppedFile.path);
-                print("MD5 da lib:");
-                print(a);
-                final md5Hash = md5.convert(croppedFile.readAsBytesSync().toList()).toString();
-                print(md5Hash);
+                final md5Hash = await Md5Plugin.getMD5WithPath(croppedFile.path);
                 widget
                     .onChanged(
                       widget.file.copyWith(
                         tempFile: croppedFile,
-                        md5Hash: a,
+                        md5Hash: md5Hash,
                       )
                     );
               } else {
@@ -90,14 +85,6 @@ class _ImagePickerState extends State<ImagePicker> {
                 :
                 null
             ),
-            // child: 
-                // Padding(
-                //     padding: const EdgeInsets.all(40),
-                //     child: Icon(
-                //       Icons.picture_as_pdf,
-                //       color: Colors.white,
-                //     ),
-                //   ),
           ),
         ),
       ],
