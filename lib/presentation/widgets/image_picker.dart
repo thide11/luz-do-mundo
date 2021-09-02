@@ -34,31 +34,13 @@ class _ImagePickerState extends State<ImagePicker> {
                 await _picker.pickImage(source: lib.ImageSource.gallery);
             if (xfile != null) {
               final file = File(xfile.path);
-              File? croppedFile = await ImageCropper.cropImage(
-                sourcePath: file.path,
-                aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
-                maxWidth: 700,
-                maxHeight: 700,
-                compressFormat: ImageCompressFormat.png,
-                cropStyle: CropStyle.circle,
-                androidUiSettings: AndroidUiSettings(
-                  toolbarTitle: 'Cortar imagem',
-                  toolbarColor: Colors.deepOrange,
-                  toolbarWidgetColor: Colors.white,
-                  initAspectRatio: CropAspectRatioPreset.original,
-                  lockAspectRatio: true
-                ),
-                iosUiSettings: IOSUiSettings(
-                  minimumAspectRatio: 1.0,
-                )
-              );
+              final croppedFile = await _cropImage(file);
               if(croppedFile != null) {
-                final md5Hash = await Md5Plugin.getMD5WithPath(croppedFile.path);
                 widget
                     .onChanged(
                       widget.file.copyWith(
                         tempFile: croppedFile,
-                        md5Hash: md5Hash,
+                        md5Hash: await Md5Plugin.getMD5WithPath(croppedFile.path),
                       )
                     );
               } else {
@@ -85,9 +67,37 @@ class _ImagePickerState extends State<ImagePicker> {
                 :
                 null
             ),
+            child: getImage(widget.file) == null ?
+            Icon(
+              Icons.insert_photo,
+              size: 40,
+              color: Colors.white,
+            )
+            : null,
           ),
         ),
       ],
+    );
+  }
+
+  Future<File?> _cropImage(File file) {
+    return ImageCropper.cropImage(
+      sourcePath: file.path,
+      aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+      maxWidth: 700,
+      maxHeight: 700,
+      compressFormat: ImageCompressFormat.png,
+      cropStyle: CropStyle.circle,
+      androidUiSettings: AndroidUiSettings(
+        toolbarTitle: 'Cortar imagem',
+        toolbarColor: Colors.deepOrange,
+        toolbarWidgetColor: Colors.white,
+        initAspectRatio: CropAspectRatioPreset.original,
+        lockAspectRatio: true
+      ),
+      iosUiSettings: IOSUiSettings(
+        minimumAspectRatio: 1.0,
+      )
     );
   }
 

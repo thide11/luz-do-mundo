@@ -40,7 +40,7 @@ class _ListResponsiblesState extends State<ListResponsibles> {
                     final data = context.watch<ListResponsiblesCubit>();
                     final state = data.state;
                     if(state is LoadingBaseCrudStates) {
-                      return CircularProgressIndicator();
+                      return Center(child: CircularProgressIndicator());
                     }
                     if(state is EmptyBaseCrudStates) {
                       return Container();
@@ -66,14 +66,14 @@ class _ListResponsiblesState extends State<ListResponsibles> {
               SizedBox(
                 height: 20,
               ),
-              ElevatedButton(
+              GestureDetector(
                 child: Text(
                   "+ Adicionar responsável",
                   style: TextStyle(
                     fontSize: 23,
                   ),
                 ),
-                onPressed: () => Navigator.of(context).pushNamed(Routes.createEditResponsibles),
+                onTap: () => Navigator.of(context).pushNamed(Routes.createEditResponsibles),
               )
             ],
           ),
@@ -90,10 +90,7 @@ class _ListResponsiblesState extends State<ListResponsibles> {
           height: 48,
           child: 
           responsible.picture != null ?
-          CachedNetworkImage(
-            imageUrl: responsible.picture!.fileUrl,
-            cacheKey: responsible.picture!.md5Hash,
-          )
+          Widgets.listImage(responsible.picture!)
           :
           Container(
             color: Colors.black,

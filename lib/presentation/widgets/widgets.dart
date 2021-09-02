@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:luz_do_mundo/domain/entity/app_file.dart';
 import 'package:luz_do_mundo/presentation/theme/app_colors.dart';
 
 abstract class Widgets {
@@ -81,5 +83,19 @@ abstract class Widgets {
     );
   }
 
-
+  static listImage(AppFile appFile) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(24.0)),
+        border: Border.all(width: 1),
+        image: DecorationImage(
+          fit: BoxFit.cover,
+          image: CachedNetworkImageProvider(
+            appFile.fileUrl,
+            cacheKey: appFile.md5Hash,
+          ),
+        ),
+      ),
+    );
+  }
 }
