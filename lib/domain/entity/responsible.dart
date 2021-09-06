@@ -10,7 +10,7 @@ class Responsible extends Equatable {
   Responsible({
     this.id,
     required this.name,
-    required this.picture,
+    this.picture,
   });
 
   @override

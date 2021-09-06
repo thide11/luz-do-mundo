@@ -60,7 +60,6 @@ class FirestoreResponsiblesRepository extends FirestoreCrud<Responsible>
         picture: AppFile(
           md5Hash: responsible.picture?.md5Hash ?? metadata.md5Hash!,
           fileUrl: fileUrl,
-          filename: "",
         ),
       );
     } on FirebaseException catch (e) {

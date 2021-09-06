@@ -53,7 +53,6 @@ class ResponsibleDto extends Responsible {
       name: map['name'],
       picture: map["picture"] != null ? AppFile(
         md5Hash: map["picture"]["md5Hash"],
-        filename: "",
         fileUrl: "",
       ) : null,
     );

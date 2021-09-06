@@ -5,7 +5,6 @@ import 'package:equatable/equatable.dart';
 
 class AppFile extends Equatable {
   final String md5Hash;
-  final String filename;
   final String fileUrl;
   final File? tempFile;
 
@@ -14,25 +13,22 @@ class AppFile extends Equatable {
 
   AppFile({
     required this.md5Hash,
-    required this.filename,
     required this.fileUrl,
     this.tempFile,
   });
 
-  factory AppFile.empty() => AppFile(md5Hash: "", filename: "", fileUrl: "");
+  factory AppFile.empty() => AppFile(md5Hash: "", fileUrl: "");
 
   @override
-  List<Object?> get props => [md5Hash, filename, fileUrl, tempFile];
+  List<Object?> get props => [md5Hash, fileUrl, tempFile];
 
   AppFile copyWith({
     String? md5Hash,
-    String? filename,
     String? fileUrl,
     File? tempFile,
   }) {
     return AppFile(
       md5Hash: md5Hash ?? this.md5Hash,
-      filename: filename ?? this.filename,
       fileUrl: fileUrl ?? this.fileUrl,
       tempFile: tempFile ?? this.tempFile,
     );
@@ -41,7 +37,6 @@ class AppFile extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       'md5Hash': md5Hash,
-      'filename': filename,
       'fileUrl': fileUrl,
     };
   }
@@ -49,7 +44,6 @@ class AppFile extends Equatable {
   factory AppFile.fromMap(Map<String, dynamic> map) {
     return AppFile(
       md5Hash: map['md5Hash'],
-      filename: map['filename'],
       fileUrl: map['fileUrl']
     );
   }
