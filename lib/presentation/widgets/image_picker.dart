@@ -7,6 +7,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:luz_do_mundo/domain/entity/app_file.dart';
 import 'package:image_picker/image_picker.dart' as lib;
 import 'package:md5_plugin/md5_plugin.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ImagePicker extends StatefulWidget {
   final AppFile file;
@@ -25,7 +26,7 @@ class _ImagePickerState extends State<ImagePicker> {
       children: [
         Text("Insira uma foto :"),
         SizedBox(
-          height: 5,
+          height: 5.h,
         ),
         GestureDetector(
           onTap: () async {
@@ -53,8 +54,8 @@ class _ImagePickerState extends State<ImagePicker> {
             }
           },
           child: Container(
-            height: 100,
-            width: 100,
+            height: 100.r,
+            width: 100.r,
             decoration: BoxDecoration(
               color: Color(0xff224E00),
               borderRadius: BorderRadius.all(
@@ -70,7 +71,7 @@ class _ImagePickerState extends State<ImagePicker> {
             child: getImage(widget.file) == null ?
             Icon(
               Icons.insert_photo,
-              size: 40,
+              size: 40.r,
               color: Colors.white,
             )
             : null,
@@ -117,8 +118,8 @@ class _ImagePickerState extends State<ImagePicker> {
 
   Widget imageContainer({required ImageProvider child}) {
     return SizedBox(
-      height: 200,
-      width: 200,
+      height: 200.r,
+      width: 200.r,
       // child: child,
     );
   }

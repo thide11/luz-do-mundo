@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:luz_do_mundo/domain/entity/app_file.dart';
 import 'package:luz_do_mundo/presentation/widgets/image_picker.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../create_edit_person.dart';
 
@@ -14,7 +15,7 @@ class CreateEditPersonStep3 extends StatelessWidget {
       children: [
         CreateEditPerson.title("Dependentes"),
         _dependentBox(),
-        SizedBox(height: 20,),
+        SizedBox(height: 20.h,),
         _dependentBox(),
       ],
     );
@@ -24,13 +25,13 @@ class CreateEditPersonStep3 extends StatelessWidget {
     return Stack(
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 20),
+          padding: EdgeInsets.only(bottom: 20.h),
           child: Container(
-            padding: EdgeInsets.all(17),
-            width: 304,
+            padding: EdgeInsets.all(17.r),
+            width: 304.w,
             decoration: BoxDecoration(
               color: Color(0xFFC4C4C4),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderRadius: BorderRadius.all(Radius.circular(10.r)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,11 +45,11 @@ class CreateEditPersonStep3 extends StatelessWidget {
         ),
         Positioned(
           bottom: 0,
-          right: 55,
+          right: 55.w,
           child: Container(
             decoration: BoxDecoration(
               color: Color(0xFF35D11C),
-              borderRadius: BorderRadius.all(Radius.circular(30)),
+              borderRadius: BorderRadius.all(Radius.circular(30.r)),
             ),
             child: IconButton(
               icon: Icon(Icons.edit),
@@ -62,7 +63,7 @@ class CreateEditPersonStep3 extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               color: Color(0xFF35D11C),
-              borderRadius: BorderRadius.all(Radius.circular(30)),
+              borderRadius: BorderRadius.all(Radius.circular(30.r)),
             ),
             child: IconButton(
               icon: Icon(Icons.delete),
@@ -78,13 +79,13 @@ class CreateEditPersonStep3 extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontSize: 18
+        fontSize: 18.sp
       ),
     );
   }
 
   _dependentCrudBox() {
-
+    
   }
 
 }

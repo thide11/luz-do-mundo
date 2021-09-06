@@ -8,6 +8,7 @@ import 'package:luz_do_mundo/domain/entity/responsible.dart';
 import 'package:luz_do_mundo/presentation/routes/routes.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
 import 'package:injector/injector.dart' as injector;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ListResponsibles extends StatefulWidget {
   const ListResponsibles({Key? key}) : super(key: key);
@@ -24,14 +25,14 @@ class _ListResponsiblesState extends State<ListResponsibles> {
       title: "Listar responsáveis", 
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 23,
-            vertical: 10,
+          padding: EdgeInsets.symmetric(
+            horizontal: 23.w,
+            vertical: 10.h,
           ),
           child: Column(
             children: [
               SizedBox(
-                height: 20,
+                height: 20.h,
               ),
               BlocProvider<ListResponsiblesCubit>(
                 create: (_) => injector.Injector.appInstance.get<ListResponsiblesCubit>()..load(),
@@ -55,7 +56,7 @@ class _ListResponsiblesState extends State<ListResponsibles> {
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) => generateResponsibleItem(data[index]),
-                        separatorBuilder: (context, index) => SizedBox(height: 25,), 
+                        separatorBuilder: (context, index) => SizedBox(height: 25.h,), 
                         itemCount: data.length
                       );
                     } 
@@ -64,13 +65,13 @@ class _ListResponsiblesState extends State<ListResponsibles> {
                 ) 
               ),
               SizedBox(
-                height: 20,
+                height: 20.h,
               ),
               GestureDetector(
                 child: Text(
                   "+ Adicionar responsável",
                   style: TextStyle(
-                    fontSize: 23,
+                    fontSize: 23.sp,
                   ),
                 ),
                 onTap: () => Navigator.of(context).pushNamed(Routes.createEditResponsibles),
@@ -86,8 +87,8 @@ class _ListResponsiblesState extends State<ListResponsibles> {
     return Row(
       children: [
         SizedBox(
-          width: 48,
-          height: 48,
+          width: 48.r,
+          height: 48.r,
           child: 
           responsible.picture != null ?
           Widgets.listImage(responsible.picture!)
@@ -97,12 +98,12 @@ class _ListResponsiblesState extends State<ListResponsibles> {
           )
         ),
         SizedBox(
-          width: 12,
+          width: 12.w,
         ),
         Text(
           responsible.name,
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 20.sp,
           ),
         ),
         Spacer(),

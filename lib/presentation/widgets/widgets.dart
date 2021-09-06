@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:luz_do_mundo/domain/entity/app_file.dart';
 import 'package:luz_do_mundo/presentation/theme/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract class Widgets {
   static scaffold(
@@ -10,7 +11,6 @@ abstract class Widgets {
     Widget? leading,
     List<Widget>? actions,
     bool mostrarAppBar = true,
-    double tamanhoBarra = 50,
     required Widget child,
   }) {
     return Scaffold(
@@ -34,14 +34,14 @@ abstract class Widgets {
       splashColor: AppColors.alternative.withOpacity(0.4),
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: 20,
-          vertical: 8,
+          horizontal: 20.w,
+          vertical: 8.h,
         ),
-        width: 284,
-        height: 56,
+        width: 284.w,
+        height: 56.h,
         decoration: BoxDecoration(
           color: AppColors.alternative,
-          borderRadius: BorderRadius.all(Radius.circular(15)),
+          borderRadius: BorderRadius.all(Radius.circular(15.r)),
         ),
         child: Center(child: child),
       ),
@@ -53,7 +53,7 @@ abstract class Widgets {
       child: Text(
         text,
         style: TextStyle(
-          fontSize: 24,
+          fontSize: 24.sp,
           color: Colors.black,
         ),
       ),
@@ -72,7 +72,7 @@ abstract class Widgets {
         children: [
           Icon(icon),
           SizedBox(
-            width: 10,
+            width: 10.w,
           ),
           Text(
             text,
@@ -86,8 +86,8 @@ abstract class Widgets {
   static listImage(AppFile appFile) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(24.0)),
-        border: Border.all(width: 1),
+        borderRadius: BorderRadius.all(Radius.circular(24.0.r)),
+        border: Border.all(width: 1.w),
         image: DecorationImage(
           fit: BoxFit.cover,
           image: CachedNetworkImageProvider(

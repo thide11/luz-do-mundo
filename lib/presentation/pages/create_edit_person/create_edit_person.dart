@@ -3,6 +3,7 @@ import 'package:luz_do_mundo/presentation/pages/create_edit_person/steps/create_
 import 'package:luz_do_mundo/presentation/pages/create_edit_person/steps/create_edit_person_step_2.dart';
 import 'package:luz_do_mundo/presentation/pages/create_edit_person/steps/create_edit_person_step_3.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CreateEditPerson extends StatefulWidget {
   const CreateEditPerson({Key? key}) : super(key: key);
@@ -10,11 +11,11 @@ class CreateEditPerson extends StatefulWidget {
   static Widget title(String title) {
     return Center(
       child: Padding(
-        padding: EdgeInsets.only(bottom: 30),
+        padding: EdgeInsets.only(bottom: 30.h),
         child: Text(
           title,
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 18.sp,
           ),
         ),
       ),
@@ -46,12 +47,12 @@ class _CreateEditPersonState extends State<CreateEditPerson> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 23,
+              height: 23.h,
             ),
             _stepsBar(),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 23),
-              height: 550,
+              padding: EdgeInsets.symmetric(vertical: 23.h),
+              height: 550.h,
               child: PageView(
                 controller: pageController,
                 children: [
@@ -74,17 +75,17 @@ class _CreateEditPersonState extends State<CreateEditPerson> {
               ),
             ),
             Container(
-              height: 56,
-              width: 284,
+              height: 56.h,
+              width: 284.w,
               decoration: BoxDecoration(
                 color: Color(0xFFFFED48),
-                borderRadius: BorderRadius.all(Radius.circular(15)),
+                borderRadius: BorderRadius.all(Radius.circular(15.r)),
               ),
               child: Center(
                 child: Text(
                   "Prosseguir ->" ?? "Salvar",
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 24.sp,
                   ),
                 ),
               ),
@@ -108,7 +109,7 @@ class _CreateEditPersonState extends State<CreateEditPerson> {
 
   Widget _pageViewElement(Widget child) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40),
+      padding: EdgeInsets.symmetric(horizontal: 40.w),
       child: child,
     );
   }
@@ -120,7 +121,7 @@ class _CreateEditPersonState extends State<CreateEditPerson> {
     print(currentPage);
     return Center(
       child: SizedBox(
-        width: 280,
+        width: 280.w,
         child: Row(
           children: [
             _stepBall(selected: 0 == currentPage, value: "1"),
@@ -139,22 +140,22 @@ class _CreateEditPersonState extends State<CreateEditPerson> {
   _seperatorStepBall() {
     return Expanded(
         child: Container(
-      height: 1,
+      height: 1.h,
       color: Colors.black,
     ));
   }
 
   _stepBall({required String value, required bool selected}) {
     return Container(
-      width: 37,
-      height: 37,
+      width: 37.r,
+      height: 37.r,
       decoration: BoxDecoration(
           color: !selected ? Color(0xFFC4C4C4) : Color(0xFF76CD58),
           borderRadius: BorderRadius.all(Radius.circular(37)),
           boxShadow: [
             BoxShadow(
-              blurRadius: 5,
-              offset: Offset(0, 2),
+              blurRadius: 5.r,
+              offset: Offset(0, 2.w),
               spreadRadius: 3,
               color: Colors.black.withOpacity(0.25),
             )
@@ -163,7 +164,7 @@ class _CreateEditPersonState extends State<CreateEditPerson> {
           child: Text(
         value,
         style: TextStyle(
-          fontSize: 18,
+          fontSize: 18.sp,
         ),
       )),
     );

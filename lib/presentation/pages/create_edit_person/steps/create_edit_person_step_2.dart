@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:luz_do_mundo/domain/entity/app_file.dart';
 import 'package:luz_do_mundo/presentation/widgets/image_picker.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../create_edit_person.dart';
 
@@ -14,7 +15,7 @@ class CreateEditPersonStep2 extends StatelessWidget {
       children: [
         CreateEditPerson.title("Dados de contato"),
         CreateEditPerson.input("Endereço :"),
-        SizedBox(height: 16,),
+        SizedBox(height: 16.h,),
         CreateEditPerson.input("Telefone proprio :"),
         Row(
           children: [
@@ -25,11 +26,11 @@ class CreateEditPersonStep2 extends StatelessWidget {
             Text("Possui telefone"),
           ],
         ),
-        SizedBox(height: 16,),
+        SizedBox(height: 16.h,),
         CreateEditPerson.input("Nome da mãe :"),
-        SizedBox(height: 16,),
+        SizedBox(height: 16.h,),
         CreateEditPerson.input("Nome da pai :"),
-        SizedBox(height: 16,),
+        SizedBox(height: 16.h,),
       ],
     );
   }

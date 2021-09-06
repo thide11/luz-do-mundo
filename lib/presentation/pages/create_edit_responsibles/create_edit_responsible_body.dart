@@ -4,6 +4,7 @@ import 'package:luz_do_mundo/application/create_edit_responsibles_cubit/create_e
 import 'package:luz_do_mundo/domain/entity/app_file.dart';
 import 'package:luz_do_mundo/presentation/widgets/image_picker.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:asuka/asuka.dart' as asuka;
 
 class CreateEditResponsibleBody extends StatelessWidget {
@@ -22,9 +23,9 @@ class CreateEditResponsibleBody extends StatelessWidget {
             context,
             title: state.isEditing ? "Editar responsável" : "Criar responsável",
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16.0,
-                vertical: 20,
+              padding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 20.h,
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -38,7 +39,7 @@ class CreateEditResponsibleBody extends StatelessWidget {
                         .onNameChanged(text),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 20.h,
                   ),
                   ImagePicker(
                     file: state.responsible.picture ?? AppFile.empty(),
@@ -47,7 +48,7 @@ class CreateEditResponsibleBody extends StatelessWidget {
                     },
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 20.h,
                   ),
                   Center(
                     child: state.isSaving ? CircularProgressIndicator() : Widgets.button(

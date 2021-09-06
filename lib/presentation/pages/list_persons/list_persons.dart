@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:luz_do_mundo/presentation/routes/routes.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ListPersons extends StatefulWidget {
   const ListPersons({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class _ListPersonsState extends State<ListPersons> {
                 child: Text(
                   "+ Adicionar pessoas",
                   style: TextStyle(
-                    fontSize: 23,
+                    fontSize: 23.sp,
                   ),
                 ),
                 onTap: () => Navigator.of(context).pushNamed(Routes.createEditPerson),
@@ -48,8 +49,8 @@ class _ListPersonsState extends State<ListPersons> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 40,
-              width: 200,
+              height: 40.h,
+              width: 200.w,
               child: TextFormField(
                 decoration: InputDecoration(
                   hintText: "Filtrar pessoas...",
@@ -57,14 +58,14 @@ class _ListPersonsState extends State<ListPersons> {
                 ),
                 style: TextStyle(
                   color: Colors.black.withOpacity(0.44),
-                  fontSize: 18
+                  fontSize: 18.sp
                 ),
                 onChanged: (_) => null,
               ),
             ),
             Container(
-              width: 200,
-              height: 1,
+              width: 200.w,
+              height: 1.h,
               color: Colors.black,
             )
           ],
@@ -78,16 +79,16 @@ class _ListPersonsState extends State<ListPersons> {
     return ListView.separated(
       shrinkWrap: true,
       padding: EdgeInsets.symmetric(
-        horizontal: 33,
-        vertical: 30,
+        horizontal: 33.w,
+        vertical: 30.h,
       ),
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) => _generatePersonListElement(),
       separatorBuilder: (context, index) => Padding(
         padding: EdgeInsets.symmetric(
-          vertical: 14,
+          vertical: 14.h,
         ),
-        child: Center(child: Container(height: 1, width: 270, color: Color(0xFFFCE40E),))
+        child: Center(child: Container(height: 1.h, width: 270.w, color: Color(0xFFFCE40E),))
       ), 
       itemCount: 3
     );
@@ -102,7 +103,7 @@ class _ListPersonsState extends State<ListPersons> {
           Text(
             "Rodolfo",
             style: TextStyle(
-              fontSize: 18,
+              fontSize: 18.sp,
             ),
           )
         ],

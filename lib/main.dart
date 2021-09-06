@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:luz_do_mundo/di/di.dart';
 import 'package:luz_do_mundo/presentation/pages/home/home.dart';
 import 'package:luz_do_mundo/presentation/routes/routes.dart';
@@ -16,13 +17,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Firebase.initializeApp();
-    return MaterialApp(
-      title: 'Luz do mundo',
-      initialRoute: Routes.home,
-      theme: theme,
-      routes: Routes.getRoutes(),
-      builder: asuka.builder,
-      home: Home(),
+    return ScreenUtilInit(
+      designSize: Size(375, 812),
+      builder: () => MaterialApp(
+        title: 'Luz do mundo',
+        initialRoute: Routes.home,
+        theme: theme,
+        routes: Routes.getRoutes(),
+        builder: asuka.builder,
+        home: Home(),
+      ),
     );
   }
 }
