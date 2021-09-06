@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:luz_do_mundo/domain/entity/app_file.dart';
-import 'package:luz_do_mundo/presentation/widgets/image_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../create_edit_person.dart';

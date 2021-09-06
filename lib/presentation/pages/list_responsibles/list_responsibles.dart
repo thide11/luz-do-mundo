@@ -1,14 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:injector/injector.dart' as injector;
 import 'package:luz_do_mundo/application/core/base_crud_states.dart';
 import 'package:luz_do_mundo/application/list_responsibles_cubit.dart';
 import 'package:luz_do_mundo/domain/entity/responsible.dart';
 import 'package:luz_do_mundo/presentation/routes/routes.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
-import 'package:injector/injector.dart' as injector;
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ListResponsibles extends StatefulWidget {
   const ListResponsibles({Key? key}) : super(key: key);

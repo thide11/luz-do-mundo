@@ -83,7 +83,7 @@ class _CreateEditPersonState extends State<CreateEditPerson> {
               ),
               child: Center(
                 child: Text(
-                  "Prosseguir ->" ?? "Salvar",
+                  pageController.page != 3 ? "Prosseguir ->" : "Salvar",
                   style: TextStyle(
                     fontSize: 24.sp,
                   ),

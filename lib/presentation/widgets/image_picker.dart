@@ -1,13 +1,12 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:luz_do_mundo/domain/entity/app_file.dart';
-import 'package:image_picker/image_picker.dart' as lib;
-import 'package:md5_plugin/md5_plugin.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart' as lib;
+import 'package:luz_do_mundo/domain/entity/app_file.dart';
+import 'package:md5_plugin/md5_plugin.dart';
 
 class ImagePicker extends StatefulWidget {
   final AppFile file;

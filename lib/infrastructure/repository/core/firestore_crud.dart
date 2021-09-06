@@ -33,8 +33,7 @@ abstract class FirestoreCrud<T> extends CrudCapacity<T> {
 
   @override
   Future<void> disable(String id) {
-    // TODO: implement disable
-    throw UnimplementedError();
+    return _firestore.collection(basePath).doc(id).delete();
   }
 
   @override

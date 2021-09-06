@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
 
 class Activity extends Equatable {
-  String id;
-  String title;
-  String? description;
-  ActivityType type;
-  int? amountSpend;
+  final String id;
+  final String title;
+  final String? description;
+  final ActivityType type;
+  final int? amountSpend;
   
   Activity({
     required this.id,

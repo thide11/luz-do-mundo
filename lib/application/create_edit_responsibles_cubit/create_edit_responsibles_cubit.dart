@@ -16,8 +16,8 @@ class CreateEditResponsiblesCubit extends Cubit<CreateEditResponsiblesState> {
   set _responsible(ResponsibleDto responsible) {
     emit(
       EditingCreateEditResponsibles(
-        responsible,
-        false
+        responsible: responsible,
+        isSaving: false
       )
     );
   }
@@ -44,8 +44,8 @@ class CreateEditResponsiblesCubit extends Cubit<CreateEditResponsiblesState> {
   save() async {
     emit(
       EditingCreateEditResponsibles(
-        _responsible,
-        true
+        responsible: _responsible,
+        isSaving: true
       )
     );
     if(_responsible.id == null) {

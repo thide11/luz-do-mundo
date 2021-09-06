@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:luz_do_mundo/domain/entity/app_file.dart';
-import 'package:luz_do_mundo/presentation/widgets/image_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../create_edit_person.dart';
@@ -10,6 +8,7 @@ class CreateEditPersonStep3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isEditing = false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -17,6 +16,8 @@ class CreateEditPersonStep3 extends StatelessWidget {
         _dependentBox(),
         SizedBox(height: 20.h,),
         _dependentBox(),
+        SizedBox(height: 20.h,),
+        isEditing ? _dependentCrudBox() : _dependentBox(),
       ],
     );
   }
@@ -84,8 +85,8 @@ class CreateEditPersonStep3 extends StatelessWidget {
     );
   }
 
-  _dependentCrudBox() {
-    
+  Widget _dependentCrudBox() {
+    return Container();
   }
 
 }

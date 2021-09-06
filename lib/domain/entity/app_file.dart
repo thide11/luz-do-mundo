@@ -4,10 +4,10 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 
 class AppFile extends Equatable {
-  String md5Hash;
-  String filename;
-  String fileUrl;
-  File? tempFile;
+  final String md5Hash;
+  final String filename;
+  final String fileUrl;
+  final File? tempFile;
 
   get isEmpty => !isNotEmpty;
   get isNotEmpty => tempFile != null || fileUrl != "";

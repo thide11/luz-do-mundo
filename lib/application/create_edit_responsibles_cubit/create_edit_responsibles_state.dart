@@ -15,7 +15,7 @@ class EditingCreateEditResponsibles extends CreateEditResponsiblesState {
 
   bool get isEditing => responsible.id != null;
   
-  EditingCreateEditResponsibles(this.responsible, this.isSaving);
+  EditingCreateEditResponsibles({required this.responsible, required this.isSaving});
 
   @override
   List<Object> get props => [responsible, isSaving];

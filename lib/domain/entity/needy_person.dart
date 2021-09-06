@@ -4,18 +4,18 @@ import 'dependent.dart';
 import 'app_file.dart';
 
 class NeedyPerson extends Equatable {
-  String? id;
-  String name;
-  DateTime birthDate;
-  String rg;
-  String adress;
-  String telephone;
-  String motherName;
-  String fatherName;
-  int income;
-  AppFile? workCard;
-  AppFile? photo;
-  List<Dependent> dependents;
+  final String? id;
+  final String name;
+  final DateTime birthDate;
+  final String rg;
+  final String adress;
+  final String telephone;
+  final String motherName;
+  final String fatherName;
+  final int income;
+  final AppFile? workCard;
+  final AppFile? photo;
+  final List<Dependent> dependents;
 
   NeedyPerson({
     required this.id,
