@@ -8,6 +8,7 @@ class NeedyPerson extends Equatable {
   final String name;
   final DateTime birthDate;
   final String rg;
+  final String cpf;
   final String adress;
   final String telephone;
   final String motherName;
@@ -22,6 +23,7 @@ class NeedyPerson extends Equatable {
     required this.name,
     required this.birthDate,
     required this.rg,
+    required this.cpf,
     required this.adress,
     required this.telephone,
     required this.motherName,
