@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:injector/injector.dart';
 import 'package:luz_do_mundo/application/list_persons_cubit.dart';
-import 'package:luz_do_mundo/application/list_responsibles_cubit.dart';
 import 'package:luz_do_mundo/presentation/routes/routes.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'list_persons_body.dart';
 
@@ -60,7 +59,10 @@ class _ListPersonsState extends State<ListPersons> {
               width: 200.w,
               child: TextFormField(
                 decoration: InputDecoration(
-                    hintText: "Filtrar pessoas...", border: InputBorder.none),
+                  hintText: "Filtrar pessoas...",
+                  border: InputBorder.none,
+                ),
+                autofocus: false,
                 style: TextStyle(
                     color: Colors.black.withOpacity(0.44), fontSize: 18.sp),
                 onChanged: (_) => null,

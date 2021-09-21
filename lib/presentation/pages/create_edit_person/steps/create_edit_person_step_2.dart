@@ -22,34 +22,35 @@ class CreateEditPersonStep2 extends StatelessWidget {
         CreateEditPerson.input(
           label: "Endereço :",
           initialValue: state.needyPerson.adress,
-          onChanged: (text) => cubit.onCpfChanged(text),
+          onChanged: (text) => cubit.onAdressChanged(text),
         ),
         SizedBox(height: 16.h,),
         CreateEditPerson.input(
           label: "Telefone proprio :",
           initialValue: state.needyPerson.telephone,
-          onChanged: (text) => null,
+          onChanged: (text) => cubit.onTelephoneChanged(text),
         ),
-        Row(
-          children: [
-            Checkbox(
-              value: true, 
-              onChanged: (_) => null,
-            ),
-            Text("Possui telefone"),
-          ],
-        ),
+        // TODO REATIVAR COM SUPORTE A OUTROS TELEFONES
+        // Row(
+        //   children: [
+        //     Checkbox(
+        //       value: true, 
+        //       onChanged: (_) => null,
+        //     ),
+        //     Text("Possui telefone"),
+        //   ],
+        // ),
         SizedBox(height: 16.h,),
         CreateEditPerson.input(
           label: "Nome da mãe :",
           initialValue: state.needyPerson.motherName,
-          onChanged: (text) => null,
+          onChanged: (text) => cubit.onMotherNameChanged(text),
         ),
         SizedBox(height: 16.h,),
         CreateEditPerson.input(
           label: "Nome da pai :",
           initialValue: state.needyPerson.fatherName,
-          onChanged: (text) => null,
+          onChanged: (text) => cubit.onFatherNameChanged(text),
         ),
         SizedBox(height: 16.h,),
       ],

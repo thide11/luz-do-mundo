@@ -37,7 +37,8 @@ class CreateEditPersonBody extends StatelessWidget {
       },
       child: Widgets.scaffold(
         context,
-        title: "Cadastrar pessoa",
+        title: 
+          "${context.read<CreateEditPersonCubit>().getEditingStateOrNull()!.needyPerson.id == null ? "Cadastrar" : "Editar"} pessoa",
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

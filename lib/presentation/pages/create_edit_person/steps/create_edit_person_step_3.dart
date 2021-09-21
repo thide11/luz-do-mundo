@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:luz_do_mundo/application/create_edit_person/create_edit_person_cubit.dart';
 import 'package:luz_do_mundo/domain/entity/dependent.dart';
 
+import '../create_edit_person.dart';
+
 class CreateEditPersonStep3 extends StatelessWidget {
   const CreateEditPersonStep3({Key? key}) : super(key: key);
 
@@ -11,24 +13,51 @@ class CreateEditPersonStep3 extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.watch<CreateEditPersonCubit>();
     final state = cubit.getEditingStateOrNull();
-    if(state == null) {
+    if (state == null) {
       return Container();
     }
-    final isEditing = false;
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        final dependent = state.needyPerson.dependents[index];
-        return _dependentBox(dependent) ?? _dependentCrudBox(dependent);
-      }, 
-      separatorBuilder: (context, index) => SizedBox(height: 20.h,),
-      itemCount: state.needyPerson.dependents.length
+    final dependents = state.needyPerson.dependents;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CreateEditPerson.title("Dependentes"),
+        dependents.length == 0
+            ? Center(child: Text("Nenhum dependente cadastrado"))
+            : ListView.separated(
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final dependent = state.needyPerson.dependents[index];
+                  return _dependentBox(dependent) ??
+                      _dependentCrudBox(dependent);
+                },
+                separatorBuilder: (context, index) => SizedBox(
+                  height: 20.h,
+                ),
+                itemCount: state.needyPerson.dependents.length,
+              ),
+        SizedBox(height: 23.h,),
+        GestureDetector(
+          onTap: () {
+            //TODO FAZER AÇÕES DE CRUD DE DEPENDENTES
+          },
+          child: Center(
+            child: Text(
+              "Adicionar dependente +",
+              style: TextStyle(
+                color: Color(0xFF0000FF),
+                fontSize: 18,
+                decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
+        )
+      ],
     );
     // Column(
-    //   crossAxisAlignment: CrossAxisAlignment.start,
+    // crossAxisAlignment: CrossAxisAlignment.start,
     //   children: [
-    //     CreateEditPerson.title("Dependentes"),
+    // CreateEditPerson.title("Dependentes"),
     //     _dependentBox(),
     //     SizedBox(height: 20.h,),
     //     _dependentBox(),
@@ -95,14 +124,11 @@ class CreateEditPersonStep3 extends StatelessWidget {
   _dependentBoxText(String text) {
     return Text(
       text,
-      style: TextStyle(
-        fontSize: 18.sp
-      ),
+      style: TextStyle(fontSize: 18.sp),
     );
   }
 
   Widget _dependentCrudBox(Dependent dependent) {
     return Container();
   }
-
 }

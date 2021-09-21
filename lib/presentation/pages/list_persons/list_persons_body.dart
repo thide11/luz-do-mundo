@@ -58,7 +58,7 @@ class _ListPersonsBodyState extends State<ListPersonsBody> {
 
   Widget _generatePersonListItem(NeedyPerson person) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, Routes.showPerson),
+      onTap: () => Navigator.pushNamed(context, Routes.showPerson, arguments: person),
       child: Row(
         children: [
           Widgets.listImage(person.photo ?? AppFile.empty()),

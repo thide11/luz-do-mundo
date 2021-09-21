@@ -1,8 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:luz_do_mundo/domain/entity/app_file.dart';
 import 'package:luz_do_mundo/presentation/theme/app_colors.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'app_file_to_image_provider.dart';
 
 abstract class Widgets {
   static scaffold(
@@ -65,6 +66,7 @@ abstract class Widgets {
     required String text,
     required IconData icon,
     required void Function() onTap,
+    TextStyle? textStyle,
   }) {
     return Widgets._baseButton(
       child: Row(
@@ -76,6 +78,7 @@ abstract class Widgets {
           ),
           Text(
             text,
+            style: textStyle,
           )
         ],
       ),
@@ -92,18 +95,11 @@ abstract class Widgets {
         border: Border.all(width: 1.w),
         image: DecorationImage(
           fit: BoxFit.cover,
-          image:
-          appFile.isEmpty ?
-          AssetImage(
-            "assets/images/without-image.jpg"
-          ) as ImageProvider
-          :
-          CachedNetworkImageProvider(
-            appFile.fileUrl,
-            cacheKey: appFile.md5Hash,
-          ),
+          image: appFileToImageProvider(appFile)
         ),
       ),
     );
   }
+
+
 }
