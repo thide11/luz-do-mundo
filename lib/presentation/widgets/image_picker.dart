@@ -11,7 +11,9 @@ import 'package:md5_plugin/md5_plugin.dart';
 class ImagePicker extends StatefulWidget {
   final AppFile file;
   final Function(AppFile) onChanged;
-  const ImagePicker({Key? key, required this.file, required this.onChanged})
+  final bool shouldBeCircular;
+  final String label;
+  const ImagePicker({Key? key, required this.file, required this.onChanged, required this.shouldBeCircular, this.label = "Insira uma foto"})
       : super(key: key);
 
   @override
@@ -58,7 +60,7 @@ class _ImagePickerState extends State<ImagePicker> {
             decoration: BoxDecoration(
               color: Color(0xff224E00),
               borderRadius: BorderRadius.all(
-                Radius.circular(200),
+                Radius.circular(widget.shouldBeCircular ? 200 : 0),
               ),
               image: getImage(widget.file) != null ?
                 DecorationImage(
@@ -87,7 +89,7 @@ class _ImagePickerState extends State<ImagePicker> {
       maxWidth: 700,
       maxHeight: 700,
       compressFormat: ImageCompressFormat.png,
-      cropStyle: CropStyle.circle,
+      cropStyle: widget.shouldBeCircular ? CropStyle.circle : CropStyle.rectangle,
       androidUiSettings: AndroidUiSettings(
         toolbarTitle: 'Cortar imagem',
         toolbarColor: Colors.deepOrange,

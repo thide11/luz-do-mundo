@@ -1,16 +1,16 @@
 import 'package:equatable/equatable.dart';
 
 class Dependent extends Equatable {
-  final String? id;
-  final String nome;
+  final String? age;
+  final String name;
   final String? rg;
   
   Dependent({
-    required this.id,
-    required this.nome,
+    required this.age,
+    required this.name,
     required this.rg,
   });
 
   @override
-  List<Object?> get props => [id, nome, rg];
+  List<Object?> get props => [age, name, rg];
 }

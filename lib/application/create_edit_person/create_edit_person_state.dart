@@ -10,14 +10,30 @@ abstract class CreateEditPersonState extends Equatable {
 class EmptyCreateEditPerson extends CreateEditPersonState {}
 
 class EditingCreateEditPerson extends CreateEditPersonState {
-  final NeedyPersonDto needyPerson;
+  final NeedyPerson needyPerson;
   final int currentPage;
   final bool isSaving;
 
-  EditingCreateEditPerson({required this.currentPage, required this.needyPerson, required this.isSaving});
+  EditingCreateEditPerson({
+    required this.needyPerson,
+    required this.currentPage,
+    required this.isSaving,
+  });
 
   @override
   List<Object> get props => [needyPerson, currentPage];
+
+  EditingCreateEditPerson copyWith({
+    NeedyPerson? needyPerson,
+    int? currentPage,
+    bool? isSaving,
+  }) {
+    return EditingCreateEditPerson(
+      needyPerson: needyPerson ?? this.needyPerson,
+      currentPage: currentPage ?? this.currentPage,
+      isSaving: isSaving ?? this.isSaving,
+    );
+  }
 }
 
 class SucessCreateEditPerson extends CreateEditPersonState {}

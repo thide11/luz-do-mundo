@@ -12,7 +12,8 @@ class CreateEditPersonStep4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<CreateEditPersonCubit>().getEditingStateOrNull();
+    final cubit = context.watch<CreateEditPersonCubit>();
+    final state = cubit.getEditingStateOrNull();
     if(state == null) {
       return Container();
     }
@@ -23,12 +24,13 @@ class CreateEditPersonStep4 extends StatelessWidget {
         CreateEditPerson.input(
           label:  "Renda :",
           initialValue: state.needyPerson.adress,
-          onChanged: (text) => null,
+          onChanged: (text) => cubit.onIncomeChanged(int.tryParse(text) ?? 0),
         ),
         SizedBox(height: 20.h,),
         ImagePicker(
           file: state.needyPerson.workCard ?? AppFile.empty(), 
-          onChanged: (_) => null
+          onChanged: (photo) => cubit.onWorkCardChanged(photo),
+          shouldBeCircular: false,
         ),
       ],
     );

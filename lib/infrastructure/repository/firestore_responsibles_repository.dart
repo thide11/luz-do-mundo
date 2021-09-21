@@ -13,9 +13,9 @@ class FirestoreResponsiblesRepository extends FirestoreCrud<Responsible>
     implements ResponsibleRepository {
   @override
   String basePath = "/responsibles";
-  FirebaseStorage storage;
+  FirebaseStorage _storage;
 
-  FirestoreResponsiblesRepository(FirebaseFirestore firestore, this.storage)
+  FirestoreResponsiblesRepository(FirebaseFirestore firestore, this._storage)
       : super(firestore);
 
   @override
@@ -46,6 +46,7 @@ class FirestoreResponsiblesRepository extends FirestoreCrud<Responsible>
     final responsibles = await super.list();
     return await Future.wait(responsibles.map(_readResponsibleFile));
   }
+  
   @override
   Stream<List<Responsible>> listStream() {
     return super.listStream().asyncMap((e) async => await Future.wait(e.map(_readResponsibleFile)));
@@ -72,13 +73,11 @@ class FirestoreResponsiblesRepository extends FirestoreCrud<Responsible>
   }
 
   Reference _findResponsibleFileById(String id) {
-    return this.storage.ref("/responsibles/$id/profile.jpeg");
+    return this._storage.ref("/responsibles/$id/profile.jpeg");
   }
 
   Future<void> _insertPhoto(String responsibleId, File file) async {
-    await this
-        .storage
-        .ref("/responsibles/$responsibleId/profile.jpeg")
+    await _findResponsibleFileById(responsibleId)
         .putFile(file);
   }
 

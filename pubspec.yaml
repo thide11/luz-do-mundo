@@ -1,5 +1,5 @@
 name: luz_do_mundo
-description: A new Flutter project.
+description: Projeto para ajudar ONGS no controle de pessoas carentes
 
 publish_to: 'none'
 
@@ -36,5 +36,7 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
-
   uses-material-design: true
+
+  assets:
+    - assets/images/

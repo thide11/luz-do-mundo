@@ -8,6 +8,7 @@ import 'package:luz_do_mundo/presentation/pages/create_edit_person/steps/create_
 import 'package:luz_do_mundo/presentation/pages/create_edit_person/steps/create_edit_person_step_4.dart';
 import 'package:luz_do_mundo/presentation/pages/create_edit_person/steps/step_bar.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
+import 'package:asuka/asuka.dart' as asuka;
 
 class CreateEditPersonBody extends StatelessWidget {
   CreateEditPersonBody({Key? key}) : super(key: key);
@@ -24,6 +25,14 @@ class CreateEditPersonBody extends StatelessWidget {
             duration: Duration(milliseconds: 400),
             curve: Curves.easeInOut,
           );
+        }
+        if (state is SucessCreateEditPerson) {
+          asuka.showSnackBar(
+            SnackBar(
+              content: Text("Pessoa salva com sucesso!"),
+            )
+          );
+          return Navigator.of(context).pop();
         }
       },
       child: Widgets.scaffold(
@@ -57,8 +66,6 @@ class CreateEditPersonBody extends StatelessWidget {
                     ),
                   ],
                   onPageChanged: (page) {
-                    // pageController.
-                    // print(page);
                     context.read<CreateEditPersonCubit>().setPage(page);
                   },
                 ),

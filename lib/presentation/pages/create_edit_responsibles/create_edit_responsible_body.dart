@@ -45,7 +45,8 @@ class CreateEditResponsibleBody extends StatelessWidget {
                     file: state.responsible.picture ?? AppFile.empty(),
                     onChanged: (AppFile appFile) {
                       context.read<CreateEditResponsiblesCubit>().onPictureChanged(appFile);
-                    },
+                    }, 
+                    shouldBeCircular: true,
                   ),
                   SizedBox(
                     height: 20.h,

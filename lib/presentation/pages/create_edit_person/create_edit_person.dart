@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:injector/injector.dart';
 import 'package:luz_do_mundo/application/create_edit_person/create_edit_person_cubit.dart';
 import 'package:luz_do_mundo/domain/entity/needy_person.dart';
 
@@ -47,7 +48,7 @@ class _CreateEditPersonState extends State<CreateEditPerson> {
   Widget build(BuildContext context) {
     final needyPerson = ModalRoute.of(context)!.settings.arguments as NeedyPerson?;
     return BlocProvider<CreateEditPersonCubit>(
-      create: (context) => CreateEditPersonCubit()..load(needyPerson),
+      create: (context) => Injector.appInstance.get<CreateEditPersonCubit>()..load(needyPerson),
       child: CreateEditPersonBody(),
     );
   }

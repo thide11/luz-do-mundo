@@ -10,7 +10,8 @@ class CreateEditPersonStep2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<CreateEditPersonCubit>().getEditingStateOrNull();
+    final cubit = context.watch<CreateEditPersonCubit>();
+    final state = cubit.getEditingStateOrNull();
     if(state == null) {
       return Container();
     }
@@ -21,7 +22,7 @@ class CreateEditPersonStep2 extends StatelessWidget {
         CreateEditPerson.input(
           label: "Endereço :",
           initialValue: state.needyPerson.adress,
-          onChanged: (text) => null,
+          onChanged: (text) => cubit.onCpfChanged(text),
         ),
         SizedBox(height: 16.h,),
         CreateEditPerson.input(

@@ -85,12 +85,20 @@ abstract class Widgets {
 
   static listImage(AppFile appFile) {
     return Container(
+      height: 48.r,
+      width: 48.r,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(24.0.r)),
         border: Border.all(width: 1.w),
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: CachedNetworkImageProvider(
+          image:
+          appFile.isEmpty ?
+          AssetImage(
+            "assets/images/without-image.jpg"
+          ) as ImageProvider
+          :
+          CachedNetworkImageProvider(
             appFile.fileUrl,
             cacheKey: appFile.md5Hash,
           ),

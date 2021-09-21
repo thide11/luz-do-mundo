@@ -11,7 +11,8 @@ class CreateEditPersonStep1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<CreateEditPersonCubit>().getEditingStateOrNull();
+    final cubit = context.watch<CreateEditPersonCubit>();
+    final state = cubit.getEditingStateOrNull();
     if(state == null) {
       return Container();
     }
@@ -22,28 +23,33 @@ class CreateEditPersonStep1 extends StatelessWidget {
         CreateEditPerson.input(
           label: "Nome :",
           initialValue: state.needyPerson.name,
-          onChanged: (text) => null,
+          onChanged: (text) => cubit.onNameChanged(text),
         ),
         SizedBox(height: 16.h,),
         CreateEditPerson.input(
           label: "Data de nascimento :",
           initialValue: state.needyPerson.birthDate.toIso8601String(),
-          onChanged: (text) => null,
+          //TODO ajustar depois
+          onChanged: (text) => cubit.onBirthDateChanged(DateTime.tryParse(text) ?? DateTime.now()),
         ),
         SizedBox(height: 16.h,),
         CreateEditPerson.input(
           label: "Cpf :",
           initialValue: state.needyPerson.cpf,
-          onChanged: (text) => null,
+          onChanged: (text) => cubit.onCpfChanged(text),
         ),
         SizedBox(height: 16.h,),
         CreateEditPerson.input(
           label: "Rg :",
           initialValue: state.needyPerson.rg,
-          onChanged: (text) => null,
+          onChanged: (text) => cubit.onRgChanged(text),
         ),
         SizedBox(height: 16.h,),
-        ImagePicker(file: AppFile.empty(), onChanged: (_) => null),
+        ImagePicker(
+          file: state.needyPerson.photo ?? AppFile.empty(), 
+          onChanged: (photo) => cubit.onPhotoChanged(photo),
+          shouldBeCircular: true,
+        ),
       ],
     );
   }

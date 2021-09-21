@@ -1,28 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../create_edit_person.dart';
+import 'package:luz_do_mundo/application/create_edit_person/create_edit_person_cubit.dart';
+import 'package:luz_do_mundo/domain/entity/dependent.dart';
 
 class CreateEditPersonStep3 extends StatelessWidget {
   const CreateEditPersonStep3({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.watch<CreateEditPersonCubit>();
+    final state = cubit.getEditingStateOrNull();
+    if(state == null) {
+      return Container();
+    }
     final isEditing = false;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CreateEditPerson.title("Dependentes"),
-        _dependentBox(),
-        SizedBox(height: 20.h,),
-        _dependentBox(),
-        SizedBox(height: 20.h,),
-        isEditing ? _dependentCrudBox() : _dependentBox(),
-      ],
+    return ListView.separated(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        final dependent = state.needyPerson.dependents[index];
+        return _dependentBox(dependent) ?? _dependentCrudBox(dependent);
+      }, 
+      separatorBuilder: (context, index) => SizedBox(height: 20.h,),
+      itemCount: state.needyPerson.dependents.length
     );
+    // Column(
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   children: [
+    //     CreateEditPerson.title("Dependentes"),
+    //     _dependentBox(),
+    //     SizedBox(height: 20.h,),
+    //     _dependentBox(),
+    //     SizedBox(height: 20.h,),
+    //     isEditing ? _dependentCrudBox() : _dependentBox(),
+    //   ],
+    // );
   }
 
-  _dependentBox() {
+  _dependentBox(Dependent dependent) {
     return Stack(
       children: [
         Padding(
@@ -37,9 +53,9 @@ class CreateEditPersonStep3 extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _dependentBoxText("Thiago"),
-                _dependentBoxText("Idade: 24"),
-                _dependentBoxText("RG: 213.502.634-34"),
+                _dependentBoxText(dependent.name),
+                _dependentBoxText("Idade: ${dependent.age}"),
+                _dependentBoxText("RG: ${dependent.rg}"),
               ],
             ),
           ),
@@ -85,7 +101,7 @@ class CreateEditPersonStep3 extends StatelessWidget {
     );
   }
 
-  Widget _dependentCrudBox() {
+  Widget _dependentCrudBox(Dependent dependent) {
     return Container();
   }
 
