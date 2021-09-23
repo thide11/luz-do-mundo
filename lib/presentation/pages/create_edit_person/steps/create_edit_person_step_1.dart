@@ -4,10 +4,12 @@ import 'package:luz_do_mundo/domain/entity/app_file.dart';
 import 'package:luz_do_mundo/presentation/widgets/image_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../create_edit_person.dart';
 
 class CreateEditPersonStep1 extends StatelessWidget {
-  const CreateEditPersonStep1({Key? key}) : super(key: key);
+  CreateEditPersonStep1({Key? key}) : super(key: key);
+  final maskFormatter = new MaskTextInputFormatter(mask: '###.###.###-##', filter: { "#": RegExp(r'[0-9]') });
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +28,23 @@ class CreateEditPersonStep1 extends StatelessWidget {
           onChanged: (text) => cubit.onNameChanged(text),
         ),
         SizedBox(height: 16.h,),
-        CreateEditPerson.input(
+
+        CreateEditPerson.datePicker(
+          context: context,
           label: "Data de nascimento :",
-          initialValue: state.needyPerson.birthDate.toIso8601String(),
-          //TODO ajustar depois
-          onChanged: (text) => cubit.onBirthDateChanged(DateTime.tryParse(text) ?? DateTime.now()),
+          currentValue: state.needyPerson.birthDate,
+          firstDate: DateTime.now().subtract(Duration(days: 365*100)),
+          lastDate: DateTime.now().subtract(Duration(days: 365*5)),
+          onChanged: (date) => cubit.onBirthDateChanged(date),
         ),
         SizedBox(height: 16.h,),
         CreateEditPerson.input(
           label: "Cpf :",
           initialValue: state.needyPerson.cpf,
           onChanged: (text) => cubit.onCpfChanged(text),
+          inputFormatters: [
+            maskFormatter,
+          ]
         ),
         SizedBox(height: 16.h,),
         CreateEditPerson.input(

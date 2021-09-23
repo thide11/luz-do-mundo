@@ -5,6 +5,7 @@ import 'package:luz_do_mundo/di/di.dart';
 import 'package:luz_do_mundo/presentation/pages/home/home.dart';
 import 'package:luz_do_mundo/presentation/routes/routes.dart';
 import 'package:luz_do_mundo/presentation/widgets/screen_util_init.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'presentation/theme/theme.dart';
 
@@ -19,6 +20,12 @@ class Main extends StatelessWidget {
     Firebase.initializeApp();
     return generateScreenUtilInit(
       child: MaterialApp(
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate
+        ],
+        supportedLocales: [
+          const Locale('pt')
+        ],
         title: 'Luz do mundo',
         initialRoute: Routes.home,
         theme: theme,

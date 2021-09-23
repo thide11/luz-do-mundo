@@ -21,7 +21,7 @@ class EditingCreateEditPerson extends CreateEditPersonState {
   });
 
   @override
-  List<Object> get props => [needyPerson, currentPage];
+  List<Object> get props => [needyPerson, currentPage, isSaving];
 
   EditingCreateEditPerson copyWith({
     NeedyPerson? needyPerson,

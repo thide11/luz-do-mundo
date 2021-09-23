@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luz_do_mundo/application/create_edit_person/create_edit_person_cubit.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../create_edit_person.dart';
 
 class CreateEditPersonStep2 extends StatelessWidget {
-  const CreateEditPersonStep2({Key? key}) : super(key: key);
+  CreateEditPersonStep2({Key? key}) : super(key: key);
+  final celphoneMask = new MaskTextInputFormatter(mask: '(##) #####-####', filter: { "#": RegExp(r'[0-9]') });
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class CreateEditPersonStep2 extends StatelessWidget {
           label: "Telefone proprio :",
           initialValue: state.needyPerson.telephone,
           onChanged: (text) => cubit.onTelephoneChanged(text),
+          inputFormatters: [celphoneMask]
         ),
         // TODO REATIVAR COM SUPORTE A OUTROS TELEFONES
         // Row(

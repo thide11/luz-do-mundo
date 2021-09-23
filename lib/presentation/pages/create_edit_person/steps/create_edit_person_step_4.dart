@@ -23,6 +23,7 @@ class CreateEditPersonStep4 extends StatelessWidget {
         CreateEditPerson.title("Renda"),
         CreateEditPerson.input(
           label:  "Renda :",
+          keyboardType: TextInputType.number,
           initialValue: state.needyPerson.adress,
           onChanged: (text) => cubit.onIncomeChanged(int.tryParse(text) ?? 0),
         ),

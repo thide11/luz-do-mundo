@@ -19,7 +19,7 @@ class NeedyPersonSerializable {
   Map<String, dynamic> toMapWithoutId(NeedyPerson needyPerson) {
     return {
       'name': needyPerson.name,
-      'birthDate': needyPerson.birthDate.millisecondsSinceEpoch,
+      'birthDate': Timestamp.fromDate(needyPerson.birthDate),
       'rg': needyPerson.rg,
       'cpf': needyPerson.cpf,
       'adress': needyPerson.adress,
@@ -37,7 +37,7 @@ class NeedyPersonSerializable {
     return NeedyPerson(
       id: map['id'],
       name: map['name'],
-      birthDate: DateTime.fromMillisecondsSinceEpoch(map['birthDate']),
+      birthDate: (map['birthDate'] as Timestamp).toDate(),
       rg: map['rg'],
       cpf: map['cpf'],
       adress: map['adress'],

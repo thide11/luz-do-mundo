@@ -83,5 +83,5 @@ class NeedyPerson extends Equatable {
   }
 
   @override
-  List<Object?> get props => [id, name, birthDate, rg, adress, telephone, motherName, fatherName, income, workCard, photo, dependents];
+  List<Object?> get props => [id, name, birthDate, rg, cpf, adress, telephone, motherName, fatherName, income, workCard, photo, dependents];
 }
