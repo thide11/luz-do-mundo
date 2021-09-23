@@ -1,3 +1,4 @@
+
 import 'package:equatable/equatable.dart';
 
 class Dependent extends Equatable {
@@ -6,11 +7,25 @@ class Dependent extends Equatable {
   final String? rg;
   
   Dependent({
-    required this.age,
+    this.age,
     required this.name,
-    required this.rg,
+    this.rg,
   });
 
+  factory Dependent.empty() => Dependent(name: "");
+  
   @override
   List<Object?> get props => [age, name, rg];
+
+  Dependent copyWith({
+    String? age,
+    String? name,
+    String? rg,
+  }) {
+    return Dependent(
+      age: age ?? this.age,
+      name: name ?? this.name,
+      rg: rg ?? this.rg,
+    );
+  }
 }

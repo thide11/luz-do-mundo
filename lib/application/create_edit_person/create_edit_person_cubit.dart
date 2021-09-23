@@ -140,9 +140,7 @@ class CreateEditPersonCubit extends Cubit<CreateEditPersonState> {
     _needyPerson = _needyPerson.copyWith(photo: photo);
   }
 
-  onDependentChanged(int index, Dependent dependent) {
-    final newDependentsList = [..._needyPerson.dependents];
-    newDependentsList[index] = dependent;
-    _needyPerson = _needyPerson.copyWith(dependents: newDependentsList);
+  refreshDependentsList(List<Dependent> dependent) {
+    _needyPerson = _needyPerson.copyWith(dependents: dependent);
   }
 }

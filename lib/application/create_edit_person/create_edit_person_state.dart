@@ -4,7 +4,7 @@ abstract class CreateEditPersonState extends Equatable {
   const CreateEditPersonState();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class EmptyCreateEditPerson extends CreateEditPersonState {}
@@ -21,7 +21,7 @@ class EditingCreateEditPerson extends CreateEditPersonState {
   });
 
   @override
-  List<Object> get props => [needyPerson, currentPage, isSaving];
+  List<Object?> get props => [needyPerson, currentPage, isSaving];
 
   EditingCreateEditPerson copyWith({
     NeedyPerson? needyPerson,

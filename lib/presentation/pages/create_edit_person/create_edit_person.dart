@@ -30,7 +30,7 @@ class CreateEditPerson extends StatefulWidget {
       {required String label,
       required String initialValue,
       required Function(String) onChanged,
-      TextInputType keyboardType,
+      TextInputType? keyboardType,
       List<TextInputFormatter>? inputFormatters}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
