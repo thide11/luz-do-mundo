@@ -25,7 +25,6 @@ class _ListPersonsState extends State<ListPersons> {
             child: Column(
               children: [
                 SizedBox(height: 15),
-                _generateFilterForm(),
                 BlocProvider<ListPersonsCubit>(
                   create: (_) =>
                       Injector.appInstance.get<ListPersonsCubit>()..load(),
@@ -45,38 +44,5 @@ class _ListPersonsState extends State<ListPersons> {
             ),
           ),
         ));
-  }
-
-  Widget _generateFilterForm() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 40.h,
-              width: 200.w,
-              child: TextFormField(
-                decoration: InputDecoration(
-                  hintText: "Filtrar pessoas...",
-                  border: InputBorder.none,
-                ),
-                autofocus: false,
-                style: TextStyle(
-                    color: Colors.black.withOpacity(0.44), fontSize: 18.sp),
-                onChanged: (_) => null,
-              ),
-            ),
-            Container(
-              width: 200.w,
-              height: 1.h,
-              color: Colors.black,
-            )
-          ],
-        ),
-        Icon(Icons.search)
-      ],
-    );
   }
 }

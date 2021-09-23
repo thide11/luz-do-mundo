@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 import 'app_file.dart';
@@ -15,4 +17,19 @@ class Responsible extends Equatable {
 
   @override
   List<Object?> get props => [id, name, picture];
+
+  Responsible copyWith({
+    String? id,
+    String? name,
+    AppFile? picture,
+  }) {
+    return Responsible(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      picture: picture ?? this.picture,
+    );
+  }
+
+  @override
+  bool get stringify => true;
 }

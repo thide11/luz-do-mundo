@@ -14,8 +14,9 @@ class FirestorePersonRepository extends FirestoreCrud<NeedyPerson> implements Pe
   String basePath = "needyPerson";
   final _serializabler = NeedyPersonSerializable();
   FirebaseStorage _storage;
+  FirebaseFirestore _firestore;
 
-  FirestorePersonRepository(FirebaseFirestore firestore, this._storage) : super(firestore);
+  FirestorePersonRepository(this._firestore, this._storage) : super(_firestore);
 
   @override
   NeedyPerson readFirestoreDocument(DocumentSnapshot<Object?> data) {
@@ -76,8 +77,28 @@ class FirestorePersonRepository extends FirestoreCrud<NeedyPerson> implements Pe
   
   @override
   Stream<List<NeedyPerson>> listStream() {
-    return super.listStream().asyncMap((e) async => await Future.wait(e.map(_readPersonFiles)));
+    return _attachLoadingOfAppFiles(
+      super.listStream()
+    );
   }
+
+  @override
+  Stream<List<NeedyPerson>> listStreamFilterByName(String name) {
+    final stream = this._firestore.collection(basePath)
+      .orderBy('name')
+      .startAt([name])
+      .endAt([name + '\uf8ff'])
+      .snapshots()
+      .map(
+        (snapshot) => snapshot.docs.map(readFirestoreDocument).toList()
+      );
+    return _attachLoadingOfAppFiles(stream);
+  }
+
+  Stream<List<NeedyPerson>> _attachLoadingOfAppFiles(Stream<List<NeedyPerson>> stream) {
+    return stream.asyncMap((e) async => await Future.wait(e.map(_readPersonFiles)));
+  }
+  
 
   Future<void> _insertProfilePhoto(String personId, File file) async {
     await _findPersonPhotoPathById(personId)

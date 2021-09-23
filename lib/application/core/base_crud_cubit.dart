@@ -6,7 +6,7 @@ import 'package:luz_do_mundo/application/core/base_crud_states.dart';
 abstract class BaseCrudCubit<T extends Object> extends Cubit<BaseCrudStates<T>> {
   BaseCrudCubit() : super(EmptyBaseCrudStates());
 
-  StreamSubscription<T>? _stream;
+  StreamSubscription<T>? streamSubscription;
 
   load();
 
@@ -21,7 +21,8 @@ abstract class BaseCrudCubit<T extends Object> extends Cubit<BaseCrudStates<T>> 
 
   loadStreamData(Stream<T> Function() transaction) async {
     emit(LoadingBaseCrudStates());
-    _stream = transaction().listen(
+    await streamSubscription?.cancel();
+    streamSubscription = transaction().listen(
       onDataReceived, 
       onError: onErrorReceived
     );
@@ -39,7 +40,9 @@ abstract class BaseCrudCubit<T extends Object> extends Cubit<BaseCrudStates<T>> 
     );
   }
 
-  void dispose() async {
-    await _stream?.cancel();
+  Future<void> close() async {
+    print("Close ativado!");
+    await streamSubscription?.cancel();
+    super.close();
   }
 }

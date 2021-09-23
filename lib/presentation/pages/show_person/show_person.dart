@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:luz_do_mundo/domain/entity/needy_person.dart';
+import 'package:luz_do_mundo/presentation/pages/show_person/show_person_body.dart';
 import 'package:luz_do_mundo/presentation/routes/routes.dart';
 import 'package:luz_do_mundo/presentation/widgets/app_file_to_image_provider.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
@@ -12,89 +13,6 @@ class ShowPerson extends StatelessWidget {
   Widget build(BuildContext context) {
     final needyPerson =
         ModalRoute.of(context)!.settings.arguments as NeedyPerson;
-    return Widgets.scaffold(context,
-        title: "Informações da pessoa",
-        actions: [
-          IconButton(
-            onPressed: () => Navigator.pushNamed(
-              context,
-              Routes.createEditPerson,
-              arguments: needyPerson,
-            ),
-            icon: Icon(Icons.edit),
-          ),
-        ],
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(17.h, 33.h, 17.h, 90.h),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child:  Container(
-                  height: 163.r,
-                  width: 163.r,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(82.0.r)),
-                    border: Border.all(width: 1.w),
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: appFileToImageProvider(needyPerson.photo)
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 18.h,
-              ),
-              _text("Nome", needyPerson.name),
-              SizedBox(
-                height: 24.h,
-              ),
-              _text("Data de nascimento",
-                  needyPerson.birthDate.toIso8601String()),
-              SizedBox(
-                height: 24.h,
-              ),
-              _text("Endereço", needyPerson.adress),
-              SizedBox(
-                height: 24.h,
-              ),
-              _text("CPF", needyPerson.cpf),
-              SizedBox(
-                height: 24.h,
-              ),
-              _text("RG", needyPerson.rg),
-              Spacer(),
-              Center(
-                child: Widgets.buttonWithIcon(
-                  text: "Exibir datas",
-                  icon: Icons.calendar_today,
-                  textStyle: TextStyle(fontSize: 27.sp),
-                  onTap: () {},
-                ),
-              ),
-              SizedBox(
-                height: 18.h,
-              ),
-              Center(
-                child: Widgets.buttonWithIcon(
-                  text: "Exportar dados",
-                  textStyle: TextStyle(fontSize: 27.sp),
-                  icon: Icons.picture_as_pdf,
-                  onTap: () {},
-                ),
-              )
-            ],
-          ),
-        ));
-  }
-
-  Widget _text(String atribute, String value) {
-    return Text(
-      "$atribute: ${value != "" ? value : "Não informado"}",
-      style: TextStyle(
-        fontSize: 18.sp,
-      ),
-    );
+    return ShowPersonBody(needyPerson: needyPerson,);
   }
 }

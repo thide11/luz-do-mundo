@@ -32,9 +32,47 @@ class _ListPersonsBodyState extends State<ListPersonsBody> {
     }
     if (state is LoadedBaseCrudStates) {
       final data = (state as LoadedBaseCrudStates<List<NeedyPerson>>).data;
-      return _listPersons(data);
+      return Column(
+        children: [
+          _generateFilterForm(),
+          _listPersons(data),
+        ],
+      );
     }
     return Text("Estado desconhecido!");
+  }
+
+  Widget _generateFilterForm() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 40.h,
+              width: 200.w,
+              child: TextFormField(
+                decoration: InputDecoration(
+                  hintText: "Filtrar pessoas...",
+                  border: InputBorder.none,
+                ),
+                autofocus: false,
+                style: TextStyle(
+                    color: Colors.black.withOpacity(0.44), fontSize: 18.sp),
+                onChanged: (filter) => context.read<ListPersonsCubit>().onFilterChanged(filter),
+              ),
+            ),
+            Container(
+              width: 200.w,
+              height: 1.h,
+              color: Colors.black,
+            )
+          ],
+        ),
+        Icon(Icons.search)
+      ],
+    );
   }
 
   Widget _listPersons(List<NeedyPerson> data) {
@@ -52,7 +90,7 @@ class _ListPersonsBodyState extends State<ListPersonsBody> {
         ),
         child: Center(child: Container(height: 1.h, width: 270.w, color: Color(0xFFFCE40E),))
       ), 
-      itemCount: 3
+      itemCount: data.length,
     );
   }
 

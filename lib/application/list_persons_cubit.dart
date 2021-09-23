@@ -9,4 +9,11 @@ class ListPersonsCubit extends BaseCrudCubit<List<NeedyPerson>> {
   load() async {
     await super.loadStreamData(() => _personRepository.listStream());
   }
+
+  onFilterChanged(String filter) async {
+    streamSubscription = _personRepository.listStreamFilterByName(filter).listen(
+      onDataReceived, 
+      onError: onErrorReceived
+    );
+  }
 }
