@@ -77,6 +77,7 @@ class DependentsManagerCubit extends Cubit<DependentsManagerState> {
         dependents: newDependentsList,
       )
     );
+    _createEditPersonCubit.refreshDependentsList(newDependentsList);
   }
 
   onNameChanged(String name) {

@@ -5,7 +5,7 @@ class Activity extends Equatable {
   final String title;
   final String? description;
   final ActivityType type;
-  final int? amountSpend;
+  final double? amountSpend;
   
   Activity({
     required this.id,

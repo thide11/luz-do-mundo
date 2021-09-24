@@ -9,7 +9,7 @@ class ActivityDto {
   String title;
   String? description;
   ActivityType type;
-  int? amountSpend;
+  double? amountSpend;
   ActivityDto({
     required this.id,
     required this.title,
@@ -42,7 +42,7 @@ class ActivityDto {
     String? title,
     String? description,
     ActivityType? type,
-    int? amountSpend,
+    double? amountSpend,
   }) {
     return ActivityDto(
       id: id ?? this.id,

@@ -29,7 +29,72 @@ abstract class Widgets {
     );
   }
 
-  static _baseButton({required Widget child, required void Function() onTap}) {
+  static labelAndChild(String label, Widget child) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 6.0.h),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 18.sp,
+            ),
+          ),
+          SizedBox(
+            height: 7.h,
+          ),
+          child,
+        ],
+      ),
+    );
+  }
+
+  static labelAndValue(String label, String value) {
+    return Widgets.labelAndChild(
+      label,
+      Text(
+        value,
+        style: TextStyle(
+          fontSize: 18.sp,
+        ),
+      ),
+    );
+  }
+
+  static labelAndImage(
+    String label, {
+    AppFile? profileImg,
+    String? name,
+    required String textIfNotFound,
+    Widget? extraData,
+  }) {
+    if (name == null) {
+      return Widgets.labelAndValue(label, textIfNotFound);
+    }
+    return Widgets.labelAndChild(
+      label,
+      Row(
+        children: [
+          Widgets.listImage(profileImg ?? AppFile.empty()),
+          SizedBox(
+            width: 14.w,
+          ),
+          Text(
+            name,
+            style: TextStyle(
+              fontSize: 24.sp,
+            ),
+          ),
+          if(extraData != null)
+            extraData
+        ],
+      ),
+    );
+  }
+
+  static _baseButton({required Widget child, required void Function() onTap, Color? backgroundColor}) {
+    final selectedBackgroundColor = backgroundColor ?? AppColors.alternative;
     return InkWell(
       onTap: onTap,
       splashColor: AppColors.alternative.withOpacity(0.4),
@@ -41,7 +106,7 @@ abstract class Widgets {
         width: 284.w,
         height: 56.h,
         decoration: BoxDecoration(
-          color: AppColors.alternative,
+          color: selectedBackgroundColor,
           borderRadius: BorderRadius.all(Radius.circular(15.r)),
         ),
         child: Center(child: child),
@@ -66,9 +131,11 @@ abstract class Widgets {
     required String text,
     required IconData icon,
     required void Function() onTap,
+    Color? backgroundColor,
     TextStyle? textStyle,
   }) {
     return Widgets._baseButton(
+      backgroundColor: backgroundColor,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
