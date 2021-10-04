@@ -1,6 +1,19 @@
+import 'package:flutter/material.dart';
+
 extension DateTimeEx on DateTime {
+  static nowWithoutTime() {
+    final dateNow = DateTime.now().toUtc();
+    return DateUtils.dateOnly(
+      dateNow
+    );
+  }
+
   toBrazilianDateString() {
-    return "${_formatDateNumber(this.day)}/${_formatDateNumber(this.month)}/${this.year}";
+    return "${toBrazilianDayMonthString()}/${this.year}";
+  }
+
+  toBrazilianDayMonthString() {
+    return "${_formatDateNumber(this.day)}/${_formatDateNumber(this.month)}";
   }
 
   _formatDateNumber(int number) {

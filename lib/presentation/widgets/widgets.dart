@@ -114,16 +114,19 @@ abstract class Widgets {
     );
   }
 
-  static button({required String text, required void Function() onTap}) {
+  static button({required String text, required void Function() onTap, bool isLoading = false}) {
     return Widgets._baseButton(
-      child: Text(
+      child: isLoading ? Center(
+        child: CircularProgressIndicator(),
+      ) :
+      Text(
         text,
         style: TextStyle(
           fontSize: 24.sp,
           color: Colors.black,
         ),
       ),
-      onTap: onTap,
+      onTap: isLoading ? () => null : onTap,
     );
   }
 

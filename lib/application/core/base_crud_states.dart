@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 class BaseCrudStates<T> extends Equatable {
@@ -21,7 +23,18 @@ class ErrorBaseCrudStates<T> extends BaseCrudStates<T> {
 }
 class LoadedBaseCrudStates<T extends Object> extends BaseCrudStates<T> {
   final T data;
-  const LoadedBaseCrudStates(this.data);
+  const LoadedBaseCrudStates(
+    this.data,
+  );
+
   @override
   List<Object> get props => [data];
+
+  LoadedBaseCrudStates<T> copyWith({
+    T? data,
+  }) {
+    return LoadedBaseCrudStates<T>(
+      data ?? this.data,
+    );
+  }
 }
