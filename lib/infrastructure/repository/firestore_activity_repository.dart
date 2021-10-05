@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:luz_do_mundo/domain/entity/activity.dart';
 import 'package:luz_do_mundo/domain/repository/activity_repository.dart';
 import 'package:luz_do_mundo/infrastructure/data/activity_serializable.dart';
@@ -39,5 +38,10 @@ class FirestoreActivityRepository extends FirestoreCrud<Activity>
         .endAt([end])
         .snapshots()
         .map((e) => e.docs.map(readFirestoreDocument).toList());
+  }
+
+  @override
+  Stream<Activity> show(String id) {
+    return _firestore.collection(basePath).doc(id).snapshots().map(readFirestoreDocument);
   }
 }

@@ -5,12 +5,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:luz_do_mundo/application/create_edit_action/create_edit_action_cubit.dart';
 import 'package:luz_do_mundo/domain/entity/activity.dart';
 import 'package:luz_do_mundo/domain/entity/app_file.dart';
+import 'package:luz_do_mundo/presentation/utils/currency_pt_br_input_formatter.dart';
+import 'package:luz_do_mundo/presentation/utils/double_to_pt_br_currency.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
 import 'package:luz_do_mundo/utils/datetime_extension.dart';
 import 'package:asuka/asuka.dart' as asuka;
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CreateEditActivityBody extends StatelessWidget {
-  const CreateEditActivityBody({Key? key}) : super(key: key);
+  CreateEditActivityBody({Key? key}) : super(key: key);
+
+  final currencyFormatter = CurrencyPtBrInputFormatter(maxDigits: 20);
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +78,22 @@ class CreateEditActivityBody extends StatelessWidget {
                               final selectedDate = await showDatePicker(
                                 locale: Locale('pt'),
                                 context: context,
-                                firstDate: activity.type == ActivityType.ACTION_PLAN ? activity.date! : DateTimeEx.nowWithoutTime().subtract(Duration(days: 365)),
-                                initialDate: activity.date!,
-                                lastDate: activity.type == ActivityType.ACTION_PLAN ? DateTimeEx.nowWithoutTime().add(Duration(days: 365)) : activity.date!,
+                                firstDate: activity.type == ActivityType.ACTION_PLAN ? DateTimeEx.nowWithoutTime()! : DateTime.fromMillisecondsSinceEpoch(0),
+                                initialDate: 
+                                  activity.type == ActivityType.ACTION_PLAN ? 
+                                    (activity.date!.isAfter(DateTimeEx.nowWithoutTime())! ? 
+                                      activity.date
+                                      :
+                                      DateTimeEx.nowWithoutTime()
+                                    )
+                                    :
+                                    (
+                                      activity.date!.isAfter(DateTimeEx.nowWithoutTime())! ? 
+                                      DateTimeEx.nowWithoutTime()
+                                      :
+                                      activity.date
+                                    ),
+                                lastDate: activity.type == ActivityType.ACTION_PLAN ? DateTimeEx.nowWithoutTime().add(Duration(days: 365)) : DateTimeEx.nowWithoutTime(),
                               );
                               if (selectedDate != null) {
                                 cubit.onDateChanged(selectedDate);
@@ -91,12 +109,16 @@ class CreateEditActivityBody extends StatelessWidget {
                       "Valor gasto:",
                       TextFormField(
                         keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          currencyFormatter,
+                        ],
                         decoration: InputDecoration(
                           isDense: true,
                           hintText: "R\$ 0,00",
                         ),
-                        initialValue: activity.amountSpend.toString(),
-                        onChanged: (value) => cubit.onAmountSpendChanged(value),
+                        initialValue: doubleToPtBrCurrency(activity.amountSpend!),
+                        onChanged: (value) => cubit.onAmountSpendChanged(currencyFormatter.getUnmaskedDouble(),),
                       ),
                     ),
                   Widgets.labelAndChild(

@@ -40,11 +40,11 @@ class CreateEditActionCubit extends Cubit<CreateEditActionState> {
     );
   }
 
-  onAmountSpendChanged(String amountSpend) {
+  onAmountSpendChanged(double amountSpend) {
     emit(
       state.copyWith(
         activity: state.activity.copyWith(
-          amountSpend: double.tryParse(amountSpend)
+          amountSpend: amountSpend
         )
       )
     );

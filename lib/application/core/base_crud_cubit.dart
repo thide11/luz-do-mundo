@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luz_do_mundo/application/core/base_crud_states.dart';
 
 abstract class BaseCrudCubit<T extends Object> extends Cubit<BaseCrudStates<T>> {
-  BaseCrudCubit() : super(EmptyBaseCrudStates());
+  BaseCrudCubit([BaseCrudStates<T>? state]) : super(state ?? EmptyBaseCrudStates());
 
   StreamSubscription<T>? streamSubscription;
 
@@ -12,6 +12,7 @@ abstract class BaseCrudCubit<T extends Object> extends Cubit<BaseCrudStates<T>> 
 
   loadData(Function transaction) async {
     try {
+      emit(LoadingBaseCrudStates());
       final data = await transaction();
       onDataReceived(data);
     } on Exception catch (e) {
@@ -20,7 +21,7 @@ abstract class BaseCrudCubit<T extends Object> extends Cubit<BaseCrudStates<T>> 
   }
 
   loadStreamData(Stream<T> Function() transaction) async {
-    if(streamSubscription == null) {
+    if(streamSubscription == null && state is EmptyBaseCrudStates) {
       emit(LoadingBaseCrudStates());
     } else {
       await streamSubscription?.cancel();
