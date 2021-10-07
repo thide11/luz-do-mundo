@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:luz_do_mundo/application/show_person/show_person_cubit.dart';
 import 'package:luz_do_mundo/domain/entity/needy_person.dart';
 import 'package:luz_do_mundo/presentation/routes/routes.dart';
 import 'package:luz_do_mundo/presentation/widgets/app_file_to_image_provider.dart';
+import 'package:luz_do_mundo/presentation/widgets/base-crud-wrapper.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
 import 'package:luz_do_mundo/utils/datetime_extension.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShowPersonBody extends StatelessWidget {
   final NeedyPerson needyPerson;
@@ -12,7 +15,12 @@ class ShowPersonBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Widgets.scaffold(context,
+    final cubit = context.watch<ShowPersonCubit>();
+    final state = cubit.state;
+
+    return baseCrudWrapper<NeedyPerson>(state, onLoaded: (needyPerson) {
+      return Widgets.scaffold(
+        context,
         title: "Informações da pessoa",
         actions: [
           IconButton(
@@ -30,16 +38,15 @@ class ShowPersonBody extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                child:  Container(
+                child: Container(
                   height: 163.r,
                   width: 163.r,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(82.0.r)),
                     border: Border.all(width: 1.w),
                     image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: appFileToImageProvider(needyPerson.photo)
-                    ),
+                        fit: BoxFit.cover,
+                        image: appFileToImageProvider(needyPerson.photo)),
                   ),
                 ),
               ),
@@ -86,7 +93,9 @@ class ShowPersonBody extends StatelessWidget {
               )
             ],
           ),
-        ),);
+        ),
+      );
+    });
   }
 
   Widget _text(String atribute, String value) {

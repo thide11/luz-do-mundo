@@ -119,4 +119,9 @@ class FirestorePersonRepository extends FirestoreCrud<NeedyPerson> implements Pe
 
   @override
   FirestoreModel toFirestore(NeedyPerson data) => _serializabler.toFirestore(data);
+
+  @override
+  Stream<NeedyPerson> show(String id) {
+    return super.show(id).asyncMap(_readPersonFiles);
+  }
 }

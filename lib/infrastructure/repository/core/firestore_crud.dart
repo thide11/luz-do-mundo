@@ -60,6 +60,17 @@ abstract class FirestoreCrud<T> extends CrudCapacity<T> {
     }
   }
 
+  Stream<T> show(String id) {
+    try {
+      final data = _firestore.collection(basePath).doc(id).snapshots();
+      return data.map(readFirestoreDocument);
+    } catch(e) {
+      print("Exibir um erro");
+      print(e);
+      throw e;
+    }
+  }
+
   Stream<List<T>> listStream() {
     return _firestore.collection(basePath).snapshots().map((snapshot) => snapshot.docs.map(readFirestoreDocument).toList());
   }
