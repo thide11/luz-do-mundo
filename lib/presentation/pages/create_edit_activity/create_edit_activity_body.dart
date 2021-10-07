@@ -12,26 +12,29 @@ import 'package:luz_do_mundo/utils/datetime_extension.dart';
 import 'package:asuka/asuka.dart' as asuka;
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-class CreateEditActivityBody extends StatelessWidget {
+class CreateEditActivityBody extends StatefulWidget {
   CreateEditActivityBody({Key? key}) : super(key: key);
 
+  @override
+  _CreateEditActivityBodyState createState() => _CreateEditActivityBodyState();
+}
+
+class _CreateEditActivityBodyState extends State<CreateEditActivityBody> {
   final currencyFormatter = CurrencyPtBrInputFormatter(maxDigits: 20);
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CreateEditActionCubit, CreateEditActionState>(
+    return BlocConsumer<CreateEditActivityCubit, CreateEditActivityState>(
       listener: (context, state) {
-        if(state.successfulSaved) {
-          asuka.showSnackBar(
-            SnackBar(
-              content: Text("Atividade salva com sucesso!"),
-            )
-          );
+        if (state.successfulSaved) {
+          asuka.showSnackBar(SnackBar(
+            content: Text("Atividade salva com sucesso!"),
+          ));
           return Navigator.of(context).pop();
         }
       },
       builder: (context, state) {
-        final cubit = context.read<CreateEditActionCubit>();
+        final cubit = context.read<CreateEditActivityCubit>();
         final activity = state.activity;
         final isEditing = activity.isEditing;
         String title = "${isEditing ? 'Editar' : 'Cadastrar'}";
@@ -72,39 +75,16 @@ class CreateEditActivityBody extends StatelessWidget {
                           width: 208.w,
                           height: 40.h,
                           child: Widgets.buttonWithIcon(
-                            text: "${activity.isEditing ? "Alterar" : "Selecionar"} dia",
+                            text:
+                                "${activity.isEditing ? "Alterar" : "Selecionar"} dia",
                             icon: Icons.calendar_today,
-                            onTap: () async {
-                              final selectedDate = await showDatePicker(
-                                locale: Locale('pt'),
-                                context: context,
-                                firstDate: activity.type == ActivityType.ACTION_PLAN ? DateTimeEx.nowWithoutTime()! : DateTime.fromMillisecondsSinceEpoch(0),
-                                initialDate: 
-                                  activity.type == ActivityType.ACTION_PLAN ? 
-                                    (activity.date!.isAfter(DateTimeEx.nowWithoutTime())! ? 
-                                      activity.date
-                                      :
-                                      DateTimeEx.nowWithoutTime()
-                                    )
-                                    :
-                                    (
-                                      activity.date!.isAfter(DateTimeEx.nowWithoutTime())! ? 
-                                      DateTimeEx.nowWithoutTime()
-                                      :
-                                      activity.date
-                                    ),
-                                lastDate: activity.type == ActivityType.ACTION_PLAN ? DateTimeEx.nowWithoutTime().add(Duration(days: 365)) : DateTimeEx.nowWithoutTime(),
-                              );
-                              if (selectedDate != null) {
-                                cubit.onDateChanged(selectedDate);
-                              }
-                            },
+                            onTap: () => showDatePickerSelector(activity),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  if(activity.type == ActivityType.ACCOMPANIMENT)
+                  if (activity.type == ActivityType.ACCOMPANIMENT)
                     Widgets.labelAndChild(
                       "Valor gasto:",
                       TextFormField(
@@ -117,8 +97,11 @@ class CreateEditActivityBody extends StatelessWidget {
                           isDense: true,
                           hintText: "R\$ 0,00",
                         ),
-                        initialValue: doubleToPtBrCurrency(activity.amountSpend!),
-                        onChanged: (value) => cubit.onAmountSpendChanged(currencyFormatter.getUnmaskedDouble(),),
+                        initialValue:
+                            doubleToPtBrCurrency(activity.amountSpend!),
+                        onChanged: (value) => cubit.onAmountSpendChanged(
+                          currencyFormatter.getUnmaskedDouble(),
+                        ),
                       ),
                     ),
                   Widgets.labelAndChild(
@@ -129,7 +112,8 @@ class CreateEditActivityBody extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18.sp,
                       ),
-                      onChanged: (description) => cubit.onDescriptionChanged(description),
+                      onChanged: (description) =>
+                          cubit.onDescriptionChanged(description),
                     ),
                   ),
                   labelAndImageWithEdits(
@@ -163,6 +147,38 @@ class CreateEditActivityBody extends StatelessWidget {
         );
       },
     );
+  }
+
+  void showDatePickerSelector(Activity activity) async {
+    late DateTime firstDate;
+    late DateTime initialDate;
+    late DateTime lastDate;
+    final currentDate = DateTimeEx.nowWithoutTime();
+    final activityDate = activity.date!;
+    if (activity.type == ActivityType.ACTION_PLAN) {
+      firstDate = currentDate;
+      initialDate =
+          activityDate.isAfter(currentDate) ? activityDate : currentDate;
+      lastDate = currentDate.add(
+        Duration(days: 365),
+      );
+    }
+    if (activity.type == ActivityType.ACCOMPANIMENT) {
+      firstDate = DateTime.fromMillisecondsSinceEpoch(0);
+      initialDate =
+          activityDate.isAfter(currentDate) ? currentDate : activityDate;
+      lastDate = currentDate;
+    }
+    final selectedDate = await showDatePicker(
+      locale: Locale('pt'),
+      context: context,
+      firstDate: firstDate,
+      initialDate: initialDate,
+      lastDate: lastDate,
+    );
+    if (selectedDate != null) {
+      context.read<CreateEditActivityCubit>().onDateChanged(selectedDate);
+    }
   }
 
   Widget labelAndImageWithEdits(

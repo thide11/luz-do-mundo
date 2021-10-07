@@ -12,8 +12,8 @@ class CreateEditActivity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final activity = ModalRoute.of(context)!.settings.arguments as Activity;
-    return BlocProvider<CreateEditActionCubit>(
-      create: (context) => CreateEditActionCubit(Injector.appInstance.get<ActivityRepository>(), activity),
+    return BlocProvider<CreateEditActivityCubit>(
+      create: (context) => CreateEditActivityCubit(Injector.appInstance.get<ActivityRepository>(), activity),
       child: CreateEditActivityBody(),
     );
   }

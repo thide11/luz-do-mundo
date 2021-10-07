@@ -1,17 +1,17 @@
 part of 'create_edit_action_cubit.dart';
 
-class CreateEditActionState extends Equatable {
+class CreateEditActivityState extends Equatable {
   final Activity activity;
   final bool isSaving;
   final bool successfulSaved;
-  const CreateEditActionState({required this.activity, this.isSaving = false, this.successfulSaved = false});
+  const CreateEditActivityState({required this.activity, this.isSaving = false, this.successfulSaved = false});
 
-  CreateEditActionState copyWith({
+  CreateEditActivityState copyWith({
     Activity? activity,
     bool? isSaving,
     bool? successfulSaved,
   }) {
-    return CreateEditActionState(
+    return CreateEditActivityState(
       activity:  activity ?? this.activity,
       isSaving: isSaving ?? this.isSaving,
       successfulSaved: successfulSaved ?? this.successfulSaved,
