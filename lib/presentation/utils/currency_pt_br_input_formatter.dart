@@ -14,7 +14,7 @@ class CurrencyPtBrInputFormatter extends TextInputFormatter {
       return newValue;
     }
 
-    if (maxDigits != null && newValue.selection.baseOffset > maxDigits) {
+    if (newValue.selection.baseOffset > maxDigits) {
       return oldValue;
     }
 

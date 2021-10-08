@@ -1,16 +1,20 @@
+import 'package:asuka/asuka.dart' as asuka;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:injector/injector.dart' as injector;
+import 'package:luz_do_mundo/application/core/base_crud_states.dart';
 import 'package:luz_do_mundo/application/create_edit_action/create_edit_action_cubit.dart';
+import 'package:luz_do_mundo/application/list_responsibles_cubit.dart';
 import 'package:luz_do_mundo/domain/entity/activity.dart';
 import 'package:luz_do_mundo/domain/entity/app_file.dart';
+import 'package:luz_do_mundo/domain/entity/base_person.dart';
 import 'package:luz_do_mundo/presentation/utils/currency_pt_br_input_formatter.dart';
 import 'package:luz_do_mundo/presentation/utils/double_to_pt_br_currency.dart';
+import 'package:luz_do_mundo/presentation/widgets/person_selector.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
 import 'package:luz_do_mundo/utils/datetime_extension.dart';
-import 'package:asuka/asuka.dart' as asuka;
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CreateEditActivityBody extends StatefulWidget {
   CreateEditActivityBody({Key? key}) : super(key: key);
@@ -120,7 +124,34 @@ class _CreateEditActivityBodyState extends State<CreateEditActivityBody> {
                     "Beneficiário:",
                     textIfNotFound: 'Nenhum beneficiário atribuido',
                     name: "Roberto",
-                    onEditClicked: () {},
+                    onEditClicked: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return BlocProvider(
+                            create: (context) => injector.Injector.appInstance.get<ListResponsiblesCubit>()..load(),
+                            child: Builder(
+                              builder: (context) {
+                                final cubit = context.watch<ListResponsiblesCubit>();
+                                final state = cubit.state;
+                                List<BasePerson>? persons;
+                                if(state is LoadedBaseCrudStates) {
+                                  persons = (state as LoadedBaseCrudStates<List<BasePerson>>).data;
+                                }
+                                return PersonSelector(
+                                  onTap: (_) {},
+                                  persons: persons,
+                                );
+                                // return baseCrudWrapper<List<Responsible>>(
+                                //   cubit.state, onLoaded: (data) {
+                                //   }
+                                // );
+                              },
+                            )
+                          );
+                        },
+                      );
+                    },
                     onRemoveClicked: () {},
                   ),
                   labelAndImageWithEdits(
@@ -198,11 +229,11 @@ class _CreateEditActivityBodyState extends State<CreateEditActivityBody> {
       extraData: Row(
         children: [
           IconButton(
-            onPressed: () {},
+            onPressed: onEditClicked,
             icon: Icon(Icons.edit),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: onRemoveClicked,
             icon: Icon(Icons.close),
           ),
         ],

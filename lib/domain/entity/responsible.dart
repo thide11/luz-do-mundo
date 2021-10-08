@@ -1,33 +1,15 @@
-import 'package:equatable/equatable.dart';
 
 import 'app_file.dart';
+import 'base_person.dart';
 
-class Responsible extends Equatable {
-  final String? id;
-  final String name;
-  final AppFile? picture;
-
+class Responsible extends BasePerson {
   Responsible({
-    this.id,
-    required this.name,
-    this.picture,
-  });
-
-  @override
-  List<Object?> get props => [id, name, picture];
-
-  Responsible copyWith({
     String? id,
-    String? name,
+    required String name,
     AppFile? picture,
-  }) {
-    return Responsible(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      picture: picture ?? this.picture,
-    );
-  }
-
-  @override
-  bool get stringify => true;
+  }) : super(
+    id: id,
+    name: name,
+    picture: picture,
+  );
 }
