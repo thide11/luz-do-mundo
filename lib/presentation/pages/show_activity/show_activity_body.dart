@@ -55,12 +55,12 @@ class ShowActivityBody extends StatelessWidget {
                 Widgets.labelAndImage(
                   "Beneficiário:",
                   textIfNotFound: "Nenhum beneficiário atribuido",
-                  name: "Solange",
+                  name: activity.beneficiary?.name,
                 ),
                 Widgets.labelAndImage(
                   "Responsável:",
                   textIfNotFound: "Nenhum responsável atribuido",
-                  // name: "Solange",
+                  name: activity.responsible?.name,
                 ),
               ],
             ),

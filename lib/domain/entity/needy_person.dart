@@ -1,11 +1,9 @@
-import 'package:equatable/equatable.dart';
+import 'package:luz_do_mundo/domain/entity/base_person.dart';
 
-import 'dependent.dart';
 import 'app_file.dart';
+import 'dependent.dart';
 
-class NeedyPerson extends Equatable {
-  final String? id;
-  final String name;
+class NeedyPerson extends BasePerson {
   final DateTime birthDate;
   final String rg;
   final String cpf;
@@ -15,12 +13,11 @@ class NeedyPerson extends Equatable {
   final String fatherName;
   final int income;
   final AppFile? workCard;
-  final AppFile? photo;
   final List<Dependent> dependents;
 
   NeedyPerson({
-    required this.id,
-    required this.name,
+    String? id,
+    required String name,
     required this.birthDate,
     required this.rg,
     required this.cpf,
@@ -30,9 +27,13 @@ class NeedyPerson extends Equatable {
     required this.fatherName,
     required this.income,
     required this.workCard,
-    required this.photo,
+    AppFile? picture,
     required this.dependents,
-  });
+  }) : super(
+    name: name,
+    id: id,
+    picture: picture,
+  );
 
   factory NeedyPerson.empty() => NeedyPerson(
     id: null,
@@ -46,7 +47,7 @@ class NeedyPerson extends Equatable {
     fatherName: "", 
     income: 0, 
     workCard: AppFile.empty(), 
-    photo: AppFile.empty(), 
+    picture: AppFile.empty(), 
     dependents: [],
   );
 
@@ -77,11 +78,11 @@ class NeedyPerson extends Equatable {
       fatherName: fatherName ?? this.fatherName,
       income: income ?? this.income,
       workCard: workCard ?? this.workCard,
-      photo: photo ?? this.photo,
+      picture: picture ?? this.picture,
       dependents: dependents ?? this.dependents,
     );
   }
 
   @override
-  List<Object?> get props => [id, name, birthDate, rg, cpf, adress, telephone, motherName, fatherName, income, workCard, photo, dependents];
+  List<Object?> get props => [id, name, birthDate, rg, cpf, adress, telephone, motherName, fatherName, income, workCard, picture, dependents];
 }

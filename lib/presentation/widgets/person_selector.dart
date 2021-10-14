@@ -7,11 +7,13 @@ import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
 class PersonSelector extends StatelessWidget {
   final List<BasePerson>? persons;
   final void Function(BasePerson person) onTap;
+  final String title;
 
   const PersonSelector({
     Key? key,
     this.persons,
     required this.onTap,
+    required this.title,
   }) : super(key: key);
 
   @override
@@ -59,7 +61,7 @@ class PersonSelector extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          "Selecione um beneficiário",
+          title,
           style: TextStyle(
             color: Colors.white,
             fontSize: 14.sp,

@@ -28,7 +28,7 @@ class NeedyPersonSerializable {
       'fatherName': needyPerson.fatherName,
       'income': needyPerson.income,
       'workCard': needyPerson.workCard?.toMap(),
-      'photo': needyPerson.photo?.toMap(),
+      'picture': needyPerson.picture?.toMap(),
       'dependents': needyPerson.dependents.map((x) => _dependentSerializable.toMap(x)).toList(),
     };
   }
@@ -46,7 +46,7 @@ class NeedyPersonSerializable {
       fatherName: map['fatherName'],
       income: map['income'],
       workCard: AppFile.fromMap(map['workCard']),
-      photo: AppFile.fromMap(map['photo']),
+      picture: AppFile.fromMap(map['picture'] ?? null),
       dependents: List<Dependent>.from(map['dependents']?.map((x) => _dependentSerializable.fromMap(x))),
     );
   }

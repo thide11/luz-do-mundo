@@ -99,7 +99,7 @@ class _ListPersonsBodyState extends State<ListPersonsBody> {
       onTap: () => Navigator.pushNamed(context, Routes.showPerson, arguments: person),
       child: Row(
         children: [
-          Widgets.listImage(person.photo ?? AppFile.empty()),
+          Widgets.listImage(person.picture ?? AppFile.empty()),
           SizedBox(
             width: 10.w,
           ),

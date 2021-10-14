@@ -41,7 +41,10 @@ class AppFile extends Equatable {
     };
   }
 
-  factory AppFile.fromMap(Map<String, dynamic> map) {
+  factory AppFile.fromMap(Map<String, dynamic>? map) {
+    if(map == null) {
+      return AppFile.empty();
+    }
     return AppFile(
       md5Hash: map['md5Hash'],
       fileUrl: map['fileUrl']

@@ -72,11 +72,25 @@ abstract class Widgets {
     if (name == null) {
       return Widgets.labelAndValue(label, textIfNotFound);
     }
+    return Widgets.labelAndChildWithText(
+      label,
+      child: Widgets.listImage(profileImg ?? AppFile.empty()),
+      extraData: extraData,
+      name: name
+    );
+  }
+
+  static labelAndChildWithText(
+    String label, {
+    required Widget child,
+    required String name,
+    Widget? extraData,
+  }) {
     return Widgets.labelAndChild(
       label,
       Row(
         children: [
-          Widgets.listImage(profileImg ?? AppFile.empty()),
+          child,
           SizedBox(
             width: 14.w,
           ),
@@ -157,6 +171,12 @@ abstract class Widgets {
   }
 
   static listImage(AppFile appFile) {
+    return render48SizeImage(
+      appFileToImageProvider(appFile)
+    );
+  }
+
+  static render48SizeImage(ImageProvider<Object> image) {
     return Container(
       height: 48.r,
       width: 48.r,
@@ -165,7 +185,7 @@ abstract class Widgets {
         border: Border.all(width: 1.w),
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: appFileToImageProvider(appFile)
+          image: image,
         ),
       ),
     );

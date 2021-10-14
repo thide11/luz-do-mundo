@@ -54,7 +54,7 @@ class CreateEditPersonStep1 extends StatelessWidget {
         ),
         SizedBox(height: 16.h,),
         ImagePicker(
-          file: state.needyPerson.photo ?? AppFile.empty(), 
+          file: state.needyPerson.picture ?? AppFile.empty(), 
           onChanged: (photo) => cubit.onPhotoChanged(photo),
           shouldBeCircular: true,
         ),

@@ -1,5 +1,5 @@
-
 import 'package:equatable/equatable.dart';
+import 'package:luz_do_mundo/domain/entity/base_person.dart';
 import 'package:luz_do_mundo/utils/datetime_extension.dart';
 
 class Activity extends Equatable {
@@ -9,9 +9,11 @@ class Activity extends Equatable {
   final ActivityType type;
   final double? amountSpend;
   final DateTime? date;
+  final BasePerson? beneficiary;
+  final BasePerson? responsible;
 
   get isEditing => id != null;
-  
+
   Activity({
     this.id,
     required this.title,
@@ -19,10 +21,12 @@ class Activity extends Equatable {
     required this.type,
     this.date,
     this.amountSpend,
+    this.beneficiary,
+    this.responsible,
   });
 
-  factory Activity.empty(ActivityType type, DateTime? date) => Activity( 
-    title: "", 
+  factory Activity.empty(ActivityType type, DateTime? date) => Activity(
+    title: "",
     description: "",
     type: type,
     amountSpend: type == ActivityType.ACCOMPANIMENT ? 0.0 : null,
@@ -38,6 +42,8 @@ class Activity extends Equatable {
       description,
       type,
       amountSpend,
+      beneficiary,
+      responsible
     ];
   }
 
@@ -56,6 +62,29 @@ class Activity extends Equatable {
       type: type ?? this.type,
       amountSpend: amountSpend ?? this.amountSpend,
       date: date ?? this.date,
+      beneficiary: this.beneficiary,
+      responsible: this.responsible,
+    );
+  }
+
+  Activity copyWithBasePersons({String? id,
+    String? title,
+    String? description,
+    ActivityType? type,
+    double? amountSpend,
+    DateTime? date,
+    required BasePerson? beneficiary,
+    required BasePerson? responsible,
+  }) {
+    return Activity(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      type: type ?? this.type,
+      amountSpend: amountSpend ?? this.amountSpend,
+      date: date ?? this.date,
+      beneficiary: beneficiary,
+      responsible: responsible,
     );
   }
 }

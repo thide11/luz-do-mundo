@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:luz_do_mundo/domain/entity/activity.dart';
+import 'package:luz_do_mundo/domain/entity/base_person.dart';
 import 'package:luz_do_mundo/domain/repository/activity_repository.dart';
 
 part 'create_edit_action_state.dart';
@@ -34,7 +35,7 @@ class CreateEditActivityCubit extends Cubit<CreateEditActivityState> {
     emit(
       state.copyWith(
         activity: state.activity.copyWith(
-          date: date,
+          date: date.toUtc().subtract(Duration(hours: 3)),
         )
       )
     );
@@ -45,6 +46,28 @@ class CreateEditActivityCubit extends Cubit<CreateEditActivityState> {
       state.copyWith(
         activity: state.activity.copyWith(
           amountSpend: amountSpend
+        )
+      )
+    );
+  }
+
+  onResponsibleChanged(BasePerson? responsible) {
+    emit(
+      state.copyWith(
+        activity: state.activity.copyWithBasePersons(
+          responsible: responsible,
+          beneficiary: state.activity.beneficiary
+        )
+      )
+    );
+  }
+
+  onBeneficiaryChanged(BasePerson? beneficiary) {
+    emit(
+      state.copyWith(
+        activity: state.activity.copyWithBasePersons(
+          responsible: state.activity.responsible,
+          beneficiary: beneficiary
         )
       )
     );

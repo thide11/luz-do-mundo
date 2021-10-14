@@ -4,11 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:injector/injector.dart' as injector;
+import 'package:luz_do_mundo/application/core/base_crud_cubit.dart';
 import 'package:luz_do_mundo/application/core/base_crud_states.dart';
 import 'package:luz_do_mundo/application/create_edit_action/create_edit_action_cubit.dart';
+import 'package:luz_do_mundo/application/list_persons_cubit.dart';
 import 'package:luz_do_mundo/application/list_responsibles_cubit.dart';
 import 'package:luz_do_mundo/domain/entity/activity.dart';
-import 'package:luz_do_mundo/domain/entity/app_file.dart';
 import 'package:luz_do_mundo/domain/entity/base_person.dart';
 import 'package:luz_do_mundo/presentation/utils/currency_pt_br_input_formatter.dart';
 import 'package:luz_do_mundo/presentation/utils/double_to_pt_br_currency.dart';
@@ -123,43 +124,22 @@ class _CreateEditActivityBodyState extends State<CreateEditActivityBody> {
                   labelAndImageWithEdits(
                     "Beneficiário:",
                     textIfNotFound: 'Nenhum beneficiário atribuido',
-                    name: "Roberto",
-                    onEditClicked: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return BlocProvider(
-                            create: (context) => injector.Injector.appInstance.get<ListResponsiblesCubit>()..load(),
-                            child: Builder(
-                              builder: (context) {
-                                final cubit = context.watch<ListResponsiblesCubit>();
-                                final state = cubit.state;
-                                List<BasePerson>? persons;
-                                if(state is LoadedBaseCrudStates) {
-                                  persons = (state as LoadedBaseCrudStates<List<BasePerson>>).data;
-                                }
-                                return PersonSelector(
-                                  onTap: (_) {},
-                                  persons: persons,
-                                );
-                                // return baseCrudWrapper<List<Responsible>>(
-                                //   cubit.state, onLoaded: (data) {
-                                //   }
-                                // );
-                              },
-                            )
-                          );
-                        },
-                      );
+                    person: state.activity.beneficiary,
+                    onAddClicked: showBeneficiaryDialog,
+                    onEditClicked: showBeneficiaryDialog,
+                    onRemoveClicked: () {
+                      cubit.onBeneficiaryChanged(null);
                     },
-                    onRemoveClicked: () {},
                   ),
                   labelAndImageWithEdits(
                     "Responsável:",
                     textIfNotFound: 'Nenhum responsável atribuido',
-                    name: "Julio",
-                    onEditClicked: () {},
-                    onRemoveClicked: () {},
+                    person: state.activity.responsible,
+                    onAddClicked: showResponsibleDialog,
+                    onEditClicked: showResponsibleDialog,
+                    onRemoveClicked: () {
+                      cubit.onResponsibleChanged(null);
+                    },
                   ),
                   SizedBox(
                     height: 15.h,
@@ -177,6 +157,60 @@ class _CreateEditActivityBodyState extends State<CreateEditActivityBody> {
           ),
         );
       },
+    );
+  }
+
+  void showCrudDialog<T extends BaseCrudCubit>({
+    required void Function(BasePerson) onTap,
+    required String title,
+  }) {
+    showDialog(
+      context: context,
+      builder: (localContext) {
+        return BlocProvider(
+          create: (context) =>
+              injector.Injector.appInstance.get<T>()
+                ..load(),
+          child: Builder(
+            builder: (localContext) {
+              final listCubit = localContext.watch<T>();
+              final state = listCubit.state;
+              List<BasePerson>? persons;
+              if (state is LoadedBaseCrudStates) {
+                persons =
+                    (state as LoadedBaseCrudStates<List<BasePerson>>).data;
+              }
+              return PersonSelector(
+                onTap: onTap,
+                persons: persons,
+                title: title,
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  void showBeneficiaryDialog() {
+    showCrudDialog<ListPersonsCubit>(
+      onTap: (person) {
+        context
+          .read<CreateEditActivityCubit>()
+          .onBeneficiaryChanged(person);
+      },
+      title: "Selecione um beneficiário",
+    );
+  }
+
+  void showResponsibleDialog() {
+    showCrudDialog<ListResponsiblesCubit>(
+      onTap: (person) {
+        context
+          .read<CreateEditActivityCubit>()
+          .onResponsibleChanged(person);
+      },
+      title: "Selecione um responsável"
     );
   }
 
@@ -214,22 +248,33 @@ class _CreateEditActivityBodyState extends State<CreateEditActivityBody> {
 
   Widget labelAndImageWithEdits(
     String label, {
-    AppFile? profileImg,
-    String? name,
+    BasePerson? person,
     required String textIfNotFound,
     Widget? extraData,
+    required Function() onAddClicked,
     required Function() onEditClicked,
     required Function() onRemoveClicked,
   }) {
+    if (person == null) {
+      return GestureDetector(
+        onTap: () => onAddClicked(),
+        child: Widgets.labelAndChildWithText(
+          label,
+          child:
+              Widgets.render48SizeImage(AssetImage("assets/images/empty.png")),
+          name: "Selecionar responsável",
+        ),
+      );
+    }
     return Widgets.labelAndImage(
       label,
       textIfNotFound: textIfNotFound,
-      name: name,
-      profileImg: profileImg,
+      name: person.name,
+      profileImg: person.picture,
       extraData: Row(
         children: [
           IconButton(
-            onPressed: onEditClicked,
+            onPressed: () => onEditClicked(),
             icon: Icon(Icons.edit),
           ),
           IconButton(

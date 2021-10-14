@@ -16,7 +16,7 @@ class Fixtures {
       fatherName: "Jackson alencar", 
       income: 200, 
       workCard: AppFile.empty(), 
-      photo: AppFile(fileUrl: "https://example.com", md5Hash: "235"), 
+      picture: AppFile(fileUrl: "https://example.com", md5Hash: "235"), 
       dependents: []
     );
   }

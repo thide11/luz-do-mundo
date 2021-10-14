@@ -16,7 +16,7 @@ class BasePerson extends Equatable {
   @override
   List<Object?> get props => [id, name, picture];
 
-  BasePerson copyWith({
+  BasePerson baseCopyWith({
     String? id,
     String? name,
     AppFile? picture,
@@ -28,6 +28,11 @@ class BasePerson extends Equatable {
     );
   }
 
-  @override
-  bool get stringify => true;
+  Map<String, dynamic> toMap() {
+    return {
+      "id": id!,
+      "name": name,
+      "picture": picture?.toMap(),
+    };
+  }
 }

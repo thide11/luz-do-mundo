@@ -25,11 +25,11 @@ class FirestorePersonRepository extends FirestoreCrud<NeedyPerson> implements Pe
 
   Future<NeedyPerson> _readPersonFiles(NeedyPerson responsible) async {
     final photoData = await loadAppFileUrl(
-      responsible.photo?.md5Hash, 
+      responsible.picture?.md5Hash, 
       _findPersonPhotoPathById(responsible.id!),
     );
     final workCardData = await loadAppFileUrl(
-      responsible.photo?.md5Hash, 
+      responsible.picture?.md5Hash, 
       _findPersonWorkCardPathById(responsible.id!),
     );
 
@@ -59,11 +59,11 @@ class FirestorePersonRepository extends FirestoreCrud<NeedyPerson> implements Pe
   @override
   Future<String> create(NeedyPerson data) async {
     final id = new DateTime.now().millisecondsSinceEpoch.toString();
-    if (data.photo?.tempFile != null) {
-      await _insertProfilePhoto(id, data.photo!.tempFile!);
+    if (data.picture?.tempFile != null) {
+      await _insertProfilePhoto(id, data.picture!.tempFile!);
     }
     if(data.workCard?.tempFile != null) {
-      await _insertWorkCardPhoto(id, data.photo!.tempFile!);
+      await _insertWorkCardPhoto(id, data.picture!.tempFile!);
     }
     await super.create(data.copyWith(id: id));
     return id;

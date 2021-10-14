@@ -15,7 +15,7 @@ void main() {
     await tester.pumpWidget(TestScaffold(child: ShowPersonBody(needyPerson: needyPerson)));
 
     expect(
-      Predicates.findAppFile(needyPerson.photo!),
+      Predicates.findAppFile(needyPerson.picture!),
       findsOneWidget,
     );
     expect(

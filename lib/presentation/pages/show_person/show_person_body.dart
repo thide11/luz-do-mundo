@@ -45,8 +45,9 @@ class ShowPersonBody extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(82.0.r)),
                     border: Border.all(width: 1.w),
                     image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: appFileToImageProvider(needyPerson.photo)),
+                      fit: BoxFit.cover,
+                      image: appFileToImageProvider(needyPerson.picture),
+                    ),
                   ),
                 ),
               ),

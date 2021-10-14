@@ -42,9 +42,9 @@ void main() {
     );
 
     state.data.forEach((person) {
-      if (person.photo != null) {
+      if (person.picture != null) {
         expect(
-          Predicates.findAppFile(person.photo!),
+          Predicates.findAppFile(person.picture!),
           findsOneWidget,
         );
       }

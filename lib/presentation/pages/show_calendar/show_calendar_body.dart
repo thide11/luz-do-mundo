@@ -201,20 +201,21 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
                       ),
                     ),
                     SizedBox(height: 7.h,),
-                    Row(
-                      children: [
-                        Text(
-                          "Beneficiário",
-                          style: TextStyle(
-                            fontSize: 14.sp,
+                    if(activity.beneficiary != null)
+                      Row(
+                        children: [
+                          Text(
+                            "Beneficiário",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 15.w,),
-                        Widgets.listImage(AppFile.empty()),
-                        SizedBox(width: 13.w,),
-                        Text("Solange")
-                      ],
-                    )
+                          SizedBox(width: 15.w,),
+                          Widgets.listImage(AppFile.empty()),
+                          SizedBox(width: 13.w,),
+                          Text(activity.beneficiary!.name)
+                        ],
+                      )
                   ],
                 ),
               ),
