@@ -6,6 +6,7 @@ class BasePerson extends Equatable {
   final String? id;
   final String name;
   final AppFile? picture;
+  get firstName => name.split(" ")[0];
 
   BasePerson({
     this.id,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:luz_do_mundo/application/show_calendar/filter/filter_cubit.dart';
 import 'package:luz_do_mundo/application/show_person/show_person_cubit.dart';
 import 'package:luz_do_mundo/domain/entity/needy_person.dart';
 import 'package:luz_do_mundo/presentation/routes/routes.dart';
@@ -78,7 +79,12 @@ class ShowPersonBody extends StatelessWidget {
                   text: "Exibir datas",
                   icon: Icons.calendar_today,
                   textStyle: TextStyle(fontSize: 27.sp),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                      Routes.showCalendar,
+                      arguments: FilterState(beneficiary: needyPerson)
+                    );
+                  },
                 ),
               ),
               SizedBox(

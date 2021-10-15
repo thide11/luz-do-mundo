@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:luz_do_mundo/domain/entity/activity.dart';
-import 'package:luz_do_mundo/domain/entity/base_person.dart';
 import 'package:luz_do_mundo/infrastructure/data/base_person_serializable.dart';
 import 'package:luz_do_mundo/infrastructure/data/enum_dto.dart';
 import 'package:luz_do_mundo/infrastructure/repository/core/firestore_model.dart';
@@ -38,7 +37,6 @@ class ActivitySerializable {
   }
 
   Activity fromMap(Map<String, dynamic> map) {
-    
     return Activity(
       title: map['title'], 
       description: map['description'], 

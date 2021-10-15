@@ -17,7 +17,7 @@ class Activity extends Equatable {
   Activity({
     this.id,
     required this.title,
-    required this.description,
+    this.description,
     required this.type,
     this.date,
     this.amountSpend,
@@ -27,7 +27,6 @@ class Activity extends Equatable {
 
   factory Activity.empty(ActivityType type, DateTime? date) => Activity(
     title: "",
-    description: "",
     type: type,
     amountSpend: type == ActivityType.ACCOMPANIMENT ? 0.0 : null,
     date: date ?? DateTimeEx.nowWithoutTime(),

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:luz_do_mundo/application/show_calendar/filter/filter_cubit.dart';
 import 'package:luz_do_mundo/application/show_calendar/show_calendar_cubit.dart';
 import 'package:luz_do_mundo/domain/entity/activity.dart';
 import 'package:luz_do_mundo/domain/entity/app_file.dart';
+import 'package:luz_do_mundo/presentation/pages/show_calendar/filter/filter_dialog.dart';
 import 'package:luz_do_mundo/presentation/routes/routes.dart';
 import 'package:luz_do_mundo/presentation/widgets/base-crud-wrapper.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
@@ -33,6 +35,8 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              SizedBox(height: 26.h,),
+              _filter(data.filters),
               _calendar(data),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 22.0.h),
@@ -89,6 +93,35 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
         ),
       );
     });
+  }
+
+  Widget _filter(FilterState filters) {
+    String text = "Adicionar filtros";
+    if(filters.beneficiary != null && filters.responsible != null) {
+      text = "2 filtros aplicados - Editar";
+    } else if(filters.beneficiary != null || filters.responsible != null) {
+      text = "1 filtro aplicado - Editar";
+    }
+    return GestureDetector(
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (dialogContext) {
+              return FilterDialog(
+                onApplyFilters: (filters) => context.read<ShowCalendarCubit>().onFilterChanged(filters),
+                baseFilters: filters,
+              );
+            },
+          );
+      },
+      child: Text(
+        text,
+        style: TextStyle(
+          decoration: TextDecoration.underline,
+          color: Color(0xff0000EE),
+        ),
+      ),
+    );
   }
 
   Widget _calendar(ShowCalendarState state) {
@@ -159,12 +192,12 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
     late Color boxColor;
     late Color buttonsColor;
     late String title;
-    if(activity.type == ActivityType.ACCOMPANIMENT) {
+    if (activity.type == ActivityType.ACCOMPANIMENT) {
       boxColor = Color(0xFFFB2020).withOpacity(0.7);
       buttonsColor = Color(0xFFFF8484);
       title = "Acompanhamento";
     }
-    if(activity.type == ActivityType.ACTION_PLAN) {
+    if (activity.type == ActivityType.ACTION_PLAN) {
       boxColor = Color(0xFFFCE40E).withOpacity(0.8);
       buttonsColor = Color(0xFFEDFF7C);
       title = "Plano de ação";
@@ -177,10 +210,12 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
           Padding(
             padding: EdgeInsets.only(bottom: 20.h),
             child: GestureDetector(
-              onTap: () => Navigator.of(context).pushNamed(Routes.showActivity, arguments: activity),
+              onTap: () => Navigator.of(context)
+                  .pushNamed(Routes.showActivity, arguments: activity),
               child: Container(
                 width: 341.w,
-                padding: EdgeInsets.only(right: 29.w, left: 29.w, top: 14.w, bottom: 16.w),
+                padding: EdgeInsets.only(
+                    right: 29.w, left: 29.w, top: 14.w, bottom: 16.w),
                 decoration: BoxDecoration(
                     color: boxColor,
                     borderRadius: BorderRadius.all(Radius.circular(30.r))),
@@ -193,15 +228,19 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
                         fontSize: 18.sp,
                       ),
                     ),
-                    SizedBox(height: 10.h,),
+                    SizedBox(
+                      height: 10.h,
+                    ),
                     Text(
                       activity.title,
                       style: TextStyle(
                         fontSize: 18.sp,
                       ),
                     ),
-                    SizedBox(height: 7.h,),
-                    if(activity.beneficiary != null)
+                    SizedBox(
+                      height: 7.h,
+                    ),
+                    if (activity.beneficiary != null)
                       Row(
                         children: [
                           Text(
@@ -210,9 +249,13 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
                               fontSize: 14.sp,
                             ),
                           ),
-                          SizedBox(width: 15.w,),
+                          SizedBox(
+                            width: 15.w,
+                          ),
                           Widgets.listImage(AppFile.empty()),
-                          SizedBox(width: 13.w,),
+                          SizedBox(
+                            width: 13.w,
+                          ),
                           Text(activity.beneficiary!.name)
                         ],
                       )
@@ -231,7 +274,8 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
               ),
               child: IconButton(
                 icon: Icon(Icons.edit),
-                onPressed: () => Navigator.of(context).pushNamed(Routes.createEditActivity, arguments: activity),
+                onPressed: () => Navigator.of(context)
+                    .pushNamed(Routes.createEditActivity, arguments: activity),
               ),
             ),
           ),

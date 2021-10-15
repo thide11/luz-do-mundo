@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:luz_do_mundo/domain/entity/activity.dart';
+import 'package:luz_do_mundo/domain/entity/base_person.dart';
 import 'package:luz_do_mundo/domain/repository/activity_repository.dart';
 import 'package:luz_do_mundo/infrastructure/data/activity_serializable.dart';
 import 'package:luz_do_mundo/infrastructure/repository/core/firestore_crud.dart';
@@ -26,18 +27,23 @@ class FirestoreActivityRepository extends FirestoreCrud<Activity>
   }
 
   @override
-  Stream<List<Activity>> listByMonth(DateTime date) {
+  Stream<List<Activity>> listByMonthOrResponsibleOrBeneficiary(DateTime date, [BasePerson? beneficiary, BasePerson? responsible]) {
     final start = new DateTime(date.year, date.month);
     final end = start.add(Duration(days: 31));
-    return 
+    Query query = 
       this
         ._firestore
         .collection(basePath)
         .orderBy("date")
         .startAt([start])
-        .endAt([end])
-        .snapshots()
-        .map((e) => e.docs.map(readFirestoreDocument).toList());
+        .endAt([end]);
+    if(beneficiary != null) {
+      query = query.where("beneficiary.id", isEqualTo: beneficiary.id);
+    }
+    if(responsible != null) {
+      query = query.where("responsible.id", isEqualTo: responsible.id);
+    }
+    return query.snapshots().map((e) => e.docs.map(readFirestoreDocument).toList());
   }
 
   @override

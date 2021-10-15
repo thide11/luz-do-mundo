@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:luz_do_mundo/application/core/base_crud_cubit.dart';
+import 'package:luz_do_mundo/application/core/base_crud_states.dart';
 import 'package:luz_do_mundo/domain/entity/app_file.dart';
+import 'package:luz_do_mundo/domain/entity/base_person.dart';
 import 'package:luz_do_mundo/presentation/theme/app_colors.dart';
+import 'package:luz_do_mundo/presentation/widgets/person_selector.dart';
+import 'package:injector/injector.dart' as injector;
 
 import 'app_file_to_image_provider.dart';
 
@@ -188,6 +194,80 @@ abstract class Widgets {
           image: image,
         ),
       ),
+    );
+  }
+
+  static void showCrudDialog<T extends BaseCrudCubit>({
+    required BuildContext context,
+    required void Function(BasePerson) onTap,
+    required String title,
+  }) {
+    showDialog(
+      context: context,
+      builder: (localContext) {
+        return BlocProvider(
+          create: (context) =>
+              injector.Injector.appInstance.get<T>()
+                ..load(),
+          child: Builder(
+            builder: (localContext) {
+              final listCubit = localContext.watch<T>();
+              final state = listCubit.state;
+              List<BasePerson>? persons;
+              if (state is LoadedBaseCrudStates) {
+                persons =
+                    (state as LoadedBaseCrudStates<List<BasePerson>>).data;
+              }
+              return PersonSelector(
+                onTap: onTap,
+                persons: persons,
+                title: title,
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  static Widget labelAndImageWithEdits(
+    String label, {
+    BasePerson? person,
+    required String textIfNotFound,
+    Widget? extraData,
+    required Function() onAddClicked,
+    required Function() onEditClicked,
+    required Function() onRemoveClicked,
+  }) {
+    if (person == null) {
+      return GestureDetector(
+        onTap: () => onAddClicked(),
+        child: Widgets.labelAndChildWithText(
+          label,
+          child:
+              Widgets.render48SizeImage(AssetImage("assets/images/empty.png")),
+          name: textIfNotFound,
+        ),
+      );
+    }
+    return Widgets.labelAndImage(
+      label,
+      textIfNotFound: textIfNotFound,
+      name: person.firstName,
+      profileImg: person.picture,
+      extraData: Row(
+        children: [
+          IconButton(
+            onPressed: () => onEditClicked(),
+            icon: Icon(Icons.edit),
+          ),
+          IconButton(
+            onPressed: onRemoveClicked,
+            icon: Icon(Icons.close),
+          ),
+        ],
+      ),
+      // extraData:
     );
   }
 

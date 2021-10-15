@@ -3,17 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:injector/injector.dart' as injector;
-import 'package:luz_do_mundo/application/core/base_crud_cubit.dart';
-import 'package:luz_do_mundo/application/core/base_crud_states.dart';
 import 'package:luz_do_mundo/application/create_edit_action/create_edit_action_cubit.dart';
 import 'package:luz_do_mundo/application/list_persons_cubit.dart';
 import 'package:luz_do_mundo/application/list_responsibles_cubit.dart';
 import 'package:luz_do_mundo/domain/entity/activity.dart';
-import 'package:luz_do_mundo/domain/entity/base_person.dart';
 import 'package:luz_do_mundo/presentation/utils/currency_pt_br_input_formatter.dart';
 import 'package:luz_do_mundo/presentation/utils/double_to_pt_br_currency.dart';
-import 'package:luz_do_mundo/presentation/widgets/person_selector.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
 import 'package:luz_do_mundo/utils/datetime_extension.dart';
 
@@ -121,7 +116,7 @@ class _CreateEditActivityBodyState extends State<CreateEditActivityBody> {
                           cubit.onDescriptionChanged(description),
                     ),
                   ),
-                  labelAndImageWithEdits(
+                  Widgets.labelAndImageWithEdits(
                     "Beneficiário:",
                     textIfNotFound: 'Nenhum beneficiário atribuido',
                     person: state.activity.beneficiary,
@@ -131,7 +126,7 @@ class _CreateEditActivityBodyState extends State<CreateEditActivityBody> {
                       cubit.onBeneficiaryChanged(null);
                     },
                   ),
-                  labelAndImageWithEdits(
+                  Widgets.labelAndImageWithEdits(
                     "Responsável:",
                     textIfNotFound: 'Nenhum responsável atribuido',
                     person: state.activity.responsible,
@@ -160,40 +155,9 @@ class _CreateEditActivityBodyState extends State<CreateEditActivityBody> {
     );
   }
 
-  void showCrudDialog<T extends BaseCrudCubit>({
-    required void Function(BasePerson) onTap,
-    required String title,
-  }) {
-    showDialog(
-      context: context,
-      builder: (localContext) {
-        return BlocProvider(
-          create: (context) =>
-              injector.Injector.appInstance.get<T>()
-                ..load(),
-          child: Builder(
-            builder: (localContext) {
-              final listCubit = localContext.watch<T>();
-              final state = listCubit.state;
-              List<BasePerson>? persons;
-              if (state is LoadedBaseCrudStates) {
-                persons =
-                    (state as LoadedBaseCrudStates<List<BasePerson>>).data;
-              }
-              return PersonSelector(
-                onTap: onTap,
-                persons: persons,
-                title: title,
-              );
-            },
-          ),
-        );
-      },
-    );
-  }
-
   void showBeneficiaryDialog() {
-    showCrudDialog<ListPersonsCubit>(
+    Widgets.showCrudDialog<ListPersonsCubit>(
+      context: context,
       onTap: (person) {
         context
           .read<CreateEditActivityCubit>()
@@ -204,7 +168,8 @@ class _CreateEditActivityBodyState extends State<CreateEditActivityBody> {
   }
 
   void showResponsibleDialog() {
-    showCrudDialog<ListResponsiblesCubit>(
+    Widgets.showCrudDialog<ListResponsiblesCubit>(
+      context: context,
       onTap: (person) {
         context
           .read<CreateEditActivityCubit>()
@@ -244,46 +209,5 @@ class _CreateEditActivityBodyState extends State<CreateEditActivityBody> {
     if (selectedDate != null) {
       context.read<CreateEditActivityCubit>().onDateChanged(selectedDate);
     }
-  }
-
-  Widget labelAndImageWithEdits(
-    String label, {
-    BasePerson? person,
-    required String textIfNotFound,
-    Widget? extraData,
-    required Function() onAddClicked,
-    required Function() onEditClicked,
-    required Function() onRemoveClicked,
-  }) {
-    if (person == null) {
-      return GestureDetector(
-        onTap: () => onAddClicked(),
-        child: Widgets.labelAndChildWithText(
-          label,
-          child:
-              Widgets.render48SizeImage(AssetImage("assets/images/empty.png")),
-          name: "Selecionar responsável",
-        ),
-      );
-    }
-    return Widgets.labelAndImage(
-      label,
-      textIfNotFound: textIfNotFound,
-      name: person.name,
-      profileImg: person.picture,
-      extraData: Row(
-        children: [
-          IconButton(
-            onPressed: () => onEditClicked(),
-            icon: Icon(Icons.edit),
-          ),
-          IconButton(
-            onPressed: onRemoveClicked,
-            icon: Icon(Icons.close),
-          ),
-        ],
-      ),
-      // extraData:
-    );
   }
 }

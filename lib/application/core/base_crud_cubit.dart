@@ -33,6 +33,7 @@ abstract class BaseCrudCubit<T extends Object> extends Cubit<BaseCrudStates<T>> 
   }
 
   onErrorReceived(e) {
+    print(e.message);
     emit(
       ErrorBaseCrudStates(e.toString())
     );
