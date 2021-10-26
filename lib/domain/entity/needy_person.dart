@@ -11,7 +11,7 @@ class NeedyPerson extends BasePerson {
   final String telephone;
   final String motherName;
   final String fatherName;
-  final int income;
+  final double income;
   final AppFile? workCard;
   final List<Dependent> dependents;
 
@@ -61,9 +61,9 @@ class NeedyPerson extends BasePerson {
     String? telephone,
     String? motherName,
     String? fatherName,
-    int? income,
+    double? income,
     AppFile? workCard,
-    AppFile? photo,
+    AppFile? picture,
     List<Dependent>? dependents,
   }) {
     return NeedyPerson(

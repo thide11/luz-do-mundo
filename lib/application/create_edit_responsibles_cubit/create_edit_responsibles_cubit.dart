@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:luz_do_mundo/domain/entity/app_file.dart';
+import 'package:luz_do_mundo/domain/entity/base_person.dart';
 import 'package:luz_do_mundo/domain/entity/responsible.dart';
 import 'package:luz_do_mundo/domain/repository/responsible_repository.dart';
 import 'package:luz_do_mundo/infrastructure/data/responsible_dto.dart';
@@ -25,9 +26,12 @@ class CreateEditResponsiblesCubit extends Cubit<CreateEditResponsiblesState> {
   ResponsibleRepository _responsibleRepository;
   CreateEditResponsiblesCubit(this._responsibleRepository) : super(EmptyCreateEditResponsibles());
 
-  load([Responsible? responsible]) {
+  load([BasePerson? responsible]) {
     _responsible = ResponsibleDto.fromDomain(
-      responsible ?? Responsible(name: "", picture: null)
+      responsible != null ?
+      Responsible(id: responsible.id, name: responsible.name, picture: responsible.picture)
+      : 
+      Responsible(name: "", picture: null)
     );
   }
 

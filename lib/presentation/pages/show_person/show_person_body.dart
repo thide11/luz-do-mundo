@@ -11,8 +11,7 @@ import 'package:luz_do_mundo/utils/datetime_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShowPersonBody extends StatelessWidget {
-  final NeedyPerson needyPerson;
-  const ShowPersonBody({required this.needyPerson, Key? key}) : super(key: key);
+  const ShowPersonBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

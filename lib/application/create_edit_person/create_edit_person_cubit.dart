@@ -128,7 +128,7 @@ class CreateEditPersonCubit extends Cubit<CreateEditPersonState> {
     _needyPerson = _needyPerson.copyWith(fatherName: fatherName);
   }
 
-  onIncomeChanged(int income) {
+  onIncomeChanged(double income) {
     _needyPerson = _needyPerson.copyWith(income: income);
   }
 
@@ -136,8 +136,8 @@ class CreateEditPersonCubit extends Cubit<CreateEditPersonState> {
     _needyPerson = _needyPerson.copyWith(workCard: workCard);
   }
 
-  onPhotoChanged(AppFile photo) {
-    _needyPerson = _needyPerson.copyWith(photo: photo);
+  onPhotoChanged(AppFile picture) {
+    _needyPerson = _needyPerson.copyWith(picture: picture);
   }
 
   refreshDependentsList(List<Dependent> dependent) {

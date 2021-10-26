@@ -52,16 +52,34 @@ class ShowActivityBody extends StatelessWidget {
                   ),
                 Widgets.labelAndValue(
                     "Descrição:", activity.description ?? "Sem descrição"),
-                Widgets.labelAndImage(
-                  "Beneficiário:",
-                  textIfNotFound: "Nenhum beneficiário atribuido",
-                  name: activity.beneficiary?.name,
+                GestureDetector(
+                  onTap: () => activity.beneficiary != null
+                      ? Navigator.of(context).pushNamed(
+                          Routes.showPerson,
+                          arguments: activity.beneficiary,
+                        )
+                      : null,
+                  child: Widgets.labelAndImage(
+                    "Beneficiário:",
+                    textIfNotFound: "Nenhum beneficiário atribuido",
+                    name: activity.beneficiary?.name,
+                    profileImg: activity.beneficiary?.picture,
+                  ),
                 ),
-                Widgets.labelAndImage(
-                  "Responsável:",
-                  textIfNotFound: "Nenhum responsável atribuido",
-                  name: activity.responsible?.name,
-                ),
+                GestureDetector(
+                  onTap: () => activity.responsible != null
+                      ? Navigator.of(context).pushNamed(
+                          Routes.createEditResponsibles,
+                          arguments: activity.responsible,
+                        )
+                      : null,
+                  child: Widgets.labelAndImage(
+                    "Responsável:",
+                    textIfNotFound: "Nenhum responsável atribuido",
+                    name: activity.responsible?.name,
+                    profileImg: activity.responsible?.picture,
+                  ),
+                )
               ],
             ),
           ),

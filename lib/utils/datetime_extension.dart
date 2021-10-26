@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 
 extension DateTimeEx on DateTime {
-  static nowWithoutTime() {
+  static DateTime nowWithoutTime() {
     final dateNow = DateTime.now().toUtc();
     return DateUtils.dateOnly(
       dateNow
     );
   }
 
-  toBrazilianDateString() {
+  String toBrazilianDateString() {
     return "${toBrazilianDayMonthString()}/${this.year}";
   }
 
-  toBrazilianDayMonthString() {
+  String toBrazilianDayMonthString() {
     return "${_formatDateNumber(this.day)}/${_formatDateNumber(this.month)}";
   }
 
-  _formatDateNumber(int number) {
+  String _formatDateNumber(int number) {
     if(number < 10) {
       return "0$number";
     }
-    return number;
+    return number.toString();
   }
 }

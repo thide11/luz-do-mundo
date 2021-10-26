@@ -41,10 +41,15 @@ class ResponsibleDto extends Responsible {
   }
 
   Map<String, dynamic> toMap() {
-    return {
+    // ignore: unnecessary_cast
+    final map = Map<String, dynamic>.from({
       'id': id,
       'name': name,
-    };
+    });
+    if(picture != null) {
+      map['picture'] = picture!.toMap();
+    }
+    return map;
   }
 
   factory ResponsibleDto.fromMap(Map<String, dynamic> map) {

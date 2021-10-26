@@ -21,8 +21,8 @@ void main() {
     final state = LoadedBaseCrudStates(
       [
         baseNeedyPerson,
-        baseNeedyPerson.copyWith(name: "Jackson", photo: AppFile(fileUrl: "https://picsum.photos/100", md5Hash: "fwefwe")),
-        baseNeedyPerson.copyWith(name: "Poliana", photo: AppFile(fileUrl: "https://picsum.photos/101", md5Hash: "gheger2")),
+        baseNeedyPerson.copyWith(name: "Jackson", picture: AppFile(fileUrl: "https://picsum.photos/100", md5Hash: "fwefwe")),
+        baseNeedyPerson.copyWith(name: "Poliana", picture: AppFile(fileUrl: "https://picsum.photos/101", md5Hash: "gheger2")),
       ],
     );
     

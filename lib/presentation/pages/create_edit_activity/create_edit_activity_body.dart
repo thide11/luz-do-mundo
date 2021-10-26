@@ -118,7 +118,7 @@ class _CreateEditActivityBodyState extends State<CreateEditActivityBody> {
                   ),
                   Widgets.labelAndImageWithEdits(
                     "Beneficiário:",
-                    textIfNotFound: 'Nenhum beneficiário atribuido',
+                    textIfNotFound: 'Sem beneficiário',
                     person: state.activity.beneficiary,
                     onAddClicked: showBeneficiaryDialog,
                     onEditClicked: showBeneficiaryDialog,
@@ -128,7 +128,7 @@ class _CreateEditActivityBodyState extends State<CreateEditActivityBody> {
                   ),
                   Widgets.labelAndImageWithEdits(
                     "Responsável:",
-                    textIfNotFound: 'Nenhum responsável atribuido',
+                    textIfNotFound: 'Sem responsável',
                     person: state.activity.responsible,
                     onAddClicked: showResponsibleDialog,
                     onEditClicked: showResponsibleDialog,

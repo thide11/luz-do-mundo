@@ -6,6 +6,7 @@ import 'package:luz_do_mundo/application/show_calendar/filter/filter_cubit.dart'
 import 'package:luz_do_mundo/application/show_calendar/show_calendar_cubit.dart';
 import 'package:luz_do_mundo/domain/entity/activity.dart';
 import 'package:luz_do_mundo/domain/entity/app_file.dart';
+import 'package:luz_do_mundo/domain/entity/base_person.dart';
 import 'package:luz_do_mundo/presentation/pages/show_calendar/filter/filter_dialog.dart';
 import 'package:luz_do_mundo/presentation/routes/routes.dart';
 import 'package:luz_do_mundo/presentation/widgets/base-crud-wrapper.dart';
@@ -55,18 +56,19 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
                 },
                 itemCount: showingActionPlans.length,
               ),
-              _addButton(
-                text: "Adicionar plano",
-                fontSize: 27.sp,
-                onTap: () => Navigator.pushNamed(
-                  context,
-                  Routes.createEditActivity,
-                  arguments: Activity.empty(
-                    ActivityType.ACTION_PLAN,
-                    data.selectedDay,
+              if(DateTimeEx.nowWithoutTime().isBefore(data.selectedDay))
+                _addButton(
+                  text: "Adicionar plano",
+                  fontSize: 27.sp,
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    Routes.createEditActivity,
+                    arguments: Activity.empty(
+                      ActivityType.ACTION_PLAN,
+                      data.selectedDay,
+                    ),
                   ),
                 ),
-              ),
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
@@ -75,19 +77,20 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
                 },
                 itemCount: showingAccompaiment.length,
               ),
-              _addButton(
-                text: "Adicionar acompanhamento",
-                fontSize: 16.sp,
-                backgroundColor: Color(0xFFFB2020).withOpacity(0.7),
-                onTap: () => Navigator.pushNamed(
-                  context,
-                  Routes.createEditActivity,
-                  arguments: Activity.empty(
-                    ActivityType.ACCOMPANIMENT,
-                    data.selectedDay,
+              if(DateTimeEx.nowWithoutTime().isAfter(data.selectedDay))
+                _addButton(
+                  text: "Adicionar acompanhamento",
+                  fontSize: 16.sp,
+                  backgroundColor: Color(0xFFFB2020).withOpacity(0.7),
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    Routes.createEditActivity,
+                    arguments: Activity.empty(
+                      ActivityType.ACCOMPANIMENT,
+                      data.selectedDay,
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
         ),
@@ -241,24 +244,15 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
                       height: 7.h,
                     ),
                     if (activity.beneficiary != null)
-                      Row(
-                        children: [
-                          Text(
-                            "Beneficiário",
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 15.w,
-                          ),
-                          Widgets.listImage(AppFile.empty()),
-                          SizedBox(
-                            width: 13.w,
-                          ),
-                          Text(activity.beneficiary!.name)
-                        ],
-                      )
+                      _activityCardRow(
+                        "Beneficiário",
+                        activity.beneficiary!,
+                      ),
+                    if (activity.responsible != null)
+                      _activityCardRow(
+                        "Responsável",
+                        activity.responsible!,
+                      ),
                   ],
                 ),
               ),
@@ -317,6 +311,30 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
             ),
           ),
         ]),
+      ),
+    );
+  }
+
+  _activityCardRow(String label, BasePerson person) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 2.0.h),
+      child: Row(
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 14.sp,
+            ),
+          ),
+          SizedBox(
+            width: 15.w,
+          ),
+          Widgets.listImage(person.picture ?? AppFile.empty()),
+          SizedBox(
+            width: 13.w,
+          ),
+          Text(person.name)
+        ],
       ),
     );
   }

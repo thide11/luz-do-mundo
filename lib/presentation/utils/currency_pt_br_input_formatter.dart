@@ -19,12 +19,16 @@ class CurrencyPtBrInputFormatter extends TextInputFormatter {
     }
 
     double value = double.parse(newValue.text);
-    final formatter = new NumberFormat("#,##0.00", "pt_BR");
     _uMaskValue = value / 100;
-    String newText = "R\$ " + formatter.format(_uMaskValue);
+    String newText = "R\$ " + formatNumber(_uMaskValue!);
     return newValue.copyWith(
         text: newText,
         selection: new TextSelection.collapsed(offset: newText.length));
+  }
+
+  static formatNumber(double value) {
+    final formatter = new NumberFormat("#,##0.00", "pt_BR");
+    return formatter.format(value);
   }
 
   double getUnmaskedDouble() {

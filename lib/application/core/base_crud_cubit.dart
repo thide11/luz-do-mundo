@@ -15,8 +15,8 @@ abstract class BaseCrudCubit<T extends Object> extends Cubit<BaseCrudStates<T>> 
       emit(LoadingBaseCrudStates());
       final data = await transaction();
       onDataReceived(data);
-    } on Exception catch (e) {
-      onErrorReceived(e);
+    } on Exception catch (e, stack) {
+      onErrorReceived(e, stack);
     }
   }
 
@@ -28,12 +28,13 @@ abstract class BaseCrudCubit<T extends Object> extends Cubit<BaseCrudStates<T>> 
     }
     streamSubscription = transaction().listen(
       onDataReceived, 
-      onError: onErrorReceived
+      // onError: onErrorReceived
     );
   }
 
-  onErrorReceived(e) {
+  onErrorReceived(e, stack) {
     print(e.message);
+    print(stack);
     emit(
       ErrorBaseCrudStates(e.toString())
     );

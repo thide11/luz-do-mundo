@@ -24,8 +24,9 @@ class _ImagePickerState extends State<ImagePicker> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Insira uma foto :"),
+        Text(widget.label),
         SizedBox(
           height: 5.h,
         ),

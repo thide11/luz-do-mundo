@@ -12,7 +12,7 @@ void main() {
     needyPerson = Fixtures.needyPerson();
   });
   testWidgets('Deve exibir todos os dados da pessoa ...', (tester) async {
-    await tester.pumpWidget(TestScaffold(child: ShowPersonBody(needyPerson: needyPerson)));
+    await tester.pumpWidget(TestScaffold(child: ShowPersonBody()));
 
     expect(
       Predicates.findAppFile(needyPerson.picture!),
@@ -45,7 +45,7 @@ void main() {
 
   testWidgets('Deve exibir não informado, caso tenha um dado em branco ...', (tester) async {
     final _needyPerson = needyPerson.copyWith(adress: "");
-    await tester.pumpWidget(TestScaffold(child: ShowPersonBody(needyPerson: _needyPerson)));
+    await tester.pumpWidget(TestScaffold(child: ShowPersonBody()));
 
     expect(
       find.text("Nome: ${_needyPerson.name}"),

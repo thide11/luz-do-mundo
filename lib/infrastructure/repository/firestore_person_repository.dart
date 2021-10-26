@@ -34,7 +34,7 @@ class FirestorePersonRepository extends FirestoreCrud<NeedyPerson> implements Pe
     );
 
     return responsible.copyWith(
-      photo: photoData,
+      picture: photoData,
       workCard: workCardData,
     );
   }
