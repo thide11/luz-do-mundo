@@ -96,4 +96,9 @@ class ShowCalendarCubit extends BaseCrudCubit<ShowCalendarState> {
       )
     );
   }
+
+  onDeleteActivity(Activity activity) {
+    assert(state is LoadedBaseCrudStates<ShowCalendarState>);
+    _activityRepository.disable(activity.id!);
+  }
 }

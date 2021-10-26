@@ -289,7 +289,30 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
               ),
               child: IconButton(
                 icon: Icon(Icons.delete),
-                onPressed: () => null,
+                onPressed: () => {
+                  showDialog(
+                    context: context, 
+                    builder: (dialogContext) {
+                      return AlertDialog(
+                        title: Text("Excluir atividade"),
+                        content: Text("Deseja realmente excluir esta atividade?"),
+                        actions: [
+                          ElevatedButton(
+                            child: Text("Cancelar"),
+                            onPressed: () => Navigator.of(dialogContext).pop(),
+                          ),
+                          ElevatedButton(
+                            child: Text("Excluir"),
+                            onPressed: () {
+                              context.read<ShowCalendarCubit>().onDeleteActivity(activity);
+                              Navigator.of(dialogContext).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    }
+                  )
+                },
               ),
             ),
           ),

@@ -67,7 +67,7 @@ class CreateEditPerson extends StatefulWidget {
                   context: context,
                   initialDate: currentValue,
                   firstDate: firstDate,
-                  lastDate: lastDate,
+                  lastDate: DateTime(2030) // lastDate,
                 );
                 if (selectedDate != null) {
                   onChanged(selectedDate);

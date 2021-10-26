@@ -7,7 +7,6 @@ import 'package:luz_do_mundo/domain/repository/activity_repository.dart';
 part 'create_edit_action_state.dart';
 
 class CreateEditActivityCubit extends Cubit<CreateEditActivityState> {
-
   ActivityRepository _activityRepository;
   CreateEditActivityCubit(this._activityRepository, Activity activity) : super(CreateEditActivityState(activity: activity));
 

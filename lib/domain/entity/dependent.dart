@@ -5,7 +5,6 @@ class Dependent extends Equatable {
   final String? age;
   final String name;
   final String? rg;
-  
   Dependent({
     this.age,
     required this.name,

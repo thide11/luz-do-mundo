@@ -153,7 +153,7 @@ class FilterDialog extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.w500,
           ).merge(style),
-        ));
+        ),);
   }
 
   _showBeneficiarySelector(BuildContext context) {
