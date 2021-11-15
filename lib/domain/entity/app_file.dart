@@ -47,7 +47,7 @@ class AppFile extends Equatable {
     }
     return AppFile(
       md5Hash: map['md5Hash'],
-      fileUrl: map['fileUrl']
+      fileUrl: map['fileUrl'] ?? "",
     );
   }
 

@@ -24,7 +24,7 @@ class ResponsibleSerializable {
   Responsible fromMap(Map<String, dynamic> map) {
     return Responsible(
       name: map['name'],
-      telephone: map['telephone'],
+      telephone: map['telephone'] ?? "",
       picture: AppFile.fromMap(map['picture'] ?? null),
     );
   }
