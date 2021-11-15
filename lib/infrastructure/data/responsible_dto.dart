@@ -8,13 +8,15 @@ class ResponsibleDto extends Responsible {
   ResponsibleDto({
     String? id,
     required String name,
+    required String telephone,
     AppFile? picture,
-  }) : super(id: id, name: name, picture: picture);
+  }) : super(id: id, name: name, picture: picture, telephone: telephone);
 
   factory ResponsibleDto.fromDomain(Responsible responsible) {
     return ResponsibleDto(
       id: responsible.id, 
       name: responsible.name,
+      telephone: responsible.telephone,
       picture: responsible.picture,
     );
   }
@@ -22,6 +24,7 @@ class ResponsibleDto extends Responsible {
   FirestoreModel toFirestore() {
     return FirestoreModel({
       'name': name,
+      'telephone': telephone,
       'picture': picture != null ? {
         "md5Hash": picture?.md5Hash
       } : null,
@@ -31,11 +34,13 @@ class ResponsibleDto extends Responsible {
   ResponsibleDto copyWith({
     String? id,
     String? name,
+    String? telephone,
     AppFile? picture,
   }) {
     return ResponsibleDto(
       id: id ?? this.id,
       name: name ?? this.name,
+      telephone: telephone ?? this.telephone,
       picture: picture ?? this.picture,
     );
   }
@@ -45,6 +50,7 @@ class ResponsibleDto extends Responsible {
     final map = Map<String, dynamic>.from({
       'id': id,
       'name': name,
+      'telephone': telephone,
     });
     if(picture != null) {
       map['picture'] = picture!.toMap();
@@ -56,6 +62,7 @@ class ResponsibleDto extends Responsible {
     return ResponsibleDto(
       id: map['id'],
       name: map['name'],
+      telephone: map['telephone'] ?? "",
       picture: map["picture"] != null ? AppFile(
         md5Hash: map["picture"]["md5Hash"],
         fileUrl: "",

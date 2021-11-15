@@ -35,7 +35,6 @@ class NeedyPersonSerializable {
 
   NeedyPerson fromMap(Map<String, dynamic> map) {
     return NeedyPerson(
-      id: map['id'],
       name: map['name'],
       birthDate: (map['birthDate'] as Timestamp).toDate(),
       rg: map['rg'],

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:luz_do_mundo/application/create_edit_responsibles_cubit/create_edit_responsibles_cubit.dart';
 import 'package:luz_do_mundo/domain/entity/app_file.dart';
-import 'package:luz_do_mundo/infrastructure/data/responsible_dto.dart';
+import 'package:luz_do_mundo/domain/entity/responsible.dart';
 import 'package:luz_do_mundo/presentation/pages/create_edit_responsibles/create_edit_responsible_body.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -30,7 +30,7 @@ void main() {
   testWidgets('Deve inserir nome no formulário', (tester) async {
     when(() => cubit.state).thenReturn(
       EditingCreateEditResponsibles(
-        responsible: ResponsibleDto(name: "José", picture: AppFile.empty()),
+        responsible: Responsible(name: "José", telephone: "18986862734", picture: AppFile.empty()),
         isSaving: false,
       ),
     );
@@ -52,7 +52,7 @@ void main() {
 
   testWidgets('Deve exibir icone de salvando', (tester) async {
     final state = EditingCreateEditResponsibles(
-      responsible: ResponsibleDto(name: "José", picture: AppFile.empty()),
+      responsible: Responsible(name: "José", picture: AppFile.empty(), telephone: '18986862734'),
       isSaving: true,
     );
     when(() => cubit.state).thenReturn(state);

@@ -6,9 +6,12 @@ import 'package:luz_do_mundo/presentation/widgets/image_picker.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:asuka/asuka.dart' as asuka;
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class CreateEditResponsibleBody extends StatelessWidget {
-  const CreateEditResponsibleBody({Key? key}) : super(key: key);
+  final celphoneMask = new MaskTextInputFormatter(mask: '(##) #####-####', filter: { "#": RegExp(r'[0-9]') });
+
+  CreateEditResponsibleBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +40,18 @@ class CreateEditResponsibleBody extends StatelessWidget {
                     onChanged: (text) => context
                         .read<CreateEditResponsiblesCubit>()
                         .onNameChanged(text),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text("Telefone :"),
+                  TextFormField(
+                    initialValue: state.responsible.telephone,
+                    onChanged: (text) => context
+                        .read<CreateEditResponsiblesCubit>()
+                        .onTelephoneChanged(text),
+                    inputFormatters: [celphoneMask],
+                    keyboardType: TextInputType.phone,
                   ),
                   SizedBox(
                     height: 20.h,

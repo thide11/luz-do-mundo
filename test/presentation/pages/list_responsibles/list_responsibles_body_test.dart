@@ -29,11 +29,13 @@ void main() {
   testWidgets('Deve listar os responsáveis ...', (tester) async {
     final rogerio = Responsible(
       name: "Rogérin",
-      picture: AppFile(fileUrl: "https://fotolegal.com", md5Hash: 'gwegw'),
+      picture: AppFile(fileUrl: "https://fotolegal.com", md5Hash: 'gwegw'), 
+      telephone: '18986862734',
     );
     final alberto = Responsible(
       name: "Alberto",
       picture: AppFile(fileUrl: "https://example.com", md5Hash: 'has'),
+      telephone: '18986862734',
     );
 
     final state = LoadedBaseCrudStates<List<Responsible>>([

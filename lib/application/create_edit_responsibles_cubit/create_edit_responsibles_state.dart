@@ -10,7 +10,7 @@ abstract class CreateEditResponsiblesState extends Equatable {
 class EmptyCreateEditResponsibles extends CreateEditResponsiblesState {}
 
 class EditingCreateEditResponsibles extends CreateEditResponsiblesState {
-  final ResponsibleDto responsible;
+  final Responsible responsible;
   final bool isSaving;
 
   bool get isEditing => responsible.id != null;

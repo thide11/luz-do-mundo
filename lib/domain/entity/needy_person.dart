@@ -33,6 +33,7 @@ class NeedyPerson extends BasePerson {
     name: name,
     id: id,
     picture: picture,
+    telephone: telephone
   );
 
   factory NeedyPerson.empty() => NeedyPerson(

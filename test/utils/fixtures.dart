@@ -24,7 +24,8 @@ class Fixtures {
   static Responsible responsible() {
     return Responsible(
       name: "Rogérin",
-      picture: AppFile(fileUrl: "https://fotolegal.com", md5Hash: 'gwegw'),
+      picture: AppFile(fileUrl: "https://fotolegal.com", md5Hash: 'gwegw',),
+      telephone: '18986862734'
     );
   }
 }

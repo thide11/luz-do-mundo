@@ -31,18 +31,9 @@ class CreateEditPersonStep2 extends StatelessWidget {
           label: "Telefone proprio :",
           initialValue: state.needyPerson.telephone,
           onChanged: (text) => cubit.onTelephoneChanged(text),
-          inputFormatters: [celphoneMask]
+          inputFormatters: [celphoneMask],
+          keyboardType: TextInputType.phone,
         ),
-        // TODO REATIVAR COM SUPORTE A OUTROS TELEFONES
-        // Row(
-        //   children: [
-        //     Checkbox(
-        //       value: true, 
-        //       onChanged: (_) => null,
-        //     ),
-        //     Text("Possui telefone"),
-        //   ],
-        // ),
         SizedBox(height: 16.h,),
         CreateEditPerson.input(
           label: "Nome da mãe :",

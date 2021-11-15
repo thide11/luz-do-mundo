@@ -6,6 +6,7 @@ class BasePersonSerializable {
     return {
       'id': basePerson.id,
       'name': basePerson.name,
+      'telephone': basePerson.telephone,
       'picture': basePerson.picture?.toMap(),
     };
   }
@@ -14,6 +15,7 @@ class BasePersonSerializable {
     return BasePerson(
       id: map['id'],
       name: map['name'],
+      telephone: map['telephone'],
       picture: AppFile.fromMap(map['picture']),
     );
   }

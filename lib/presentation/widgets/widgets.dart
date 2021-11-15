@@ -26,6 +26,10 @@ abstract class Widgets {
               title: Text(title),
               leading: leading,
               actions: actions,
+              centerTitle: true,
+              titleTextStyle: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.w400),
+              iconTheme: IconThemeData(color: Colors.black),
+              backgroundColor: AppColors.alternative,
             )
           : null,
       backgroundColor: AppColors.primary,

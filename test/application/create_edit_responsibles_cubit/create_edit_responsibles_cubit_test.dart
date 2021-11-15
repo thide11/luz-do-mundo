@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:luz_do_mundo/application/create_edit_responsibles_cubit/create_edit_responsibles_cubit.dart';
 import 'package:luz_do_mundo/domain/entity/responsible.dart';
 import 'package:luz_do_mundo/domain/repository/responsible_repository.dart';
-import 'package:luz_do_mundo/infrastructure/data/responsible_dto.dart';
 import 'package:mocktail/mocktail.dart';
 
 class FakeResponsibleRepository extends Mock implements ResponsibleRepository {}
@@ -22,13 +21,15 @@ void main() {
     final responsible = Responsible(
       name: "teste",
       picture: null,
+      telephone: '1897877658'
     );
     blocTest<CreateEditResponsiblesCubit, CreateEditResponsiblesState>(
-      "Deve cadastrar um responsável",
+      "Deve ler alteracoes e cadastrar um responsável",
       build: () => CreateEditResponsiblesCubit(_responsibleRepository),
       act: (bloc) {
         bloc.load();
         bloc.onNameChanged(responsible.name);
+        bloc.onTelephoneChanged(responsible.telephone);
         bloc.save();
       },
       setUp: () {
@@ -40,9 +41,10 @@ void main() {
       },
       expect: () {
         return [
-          EditingCreateEditResponsibles(responsible: ResponsibleDto(name: ""), isSaving: false),
-          EditingCreateEditResponsibles(responsible: ResponsibleDto(name: responsible.name), isSaving: false),
-          EditingCreateEditResponsibles(responsible: ResponsibleDto(name: responsible.name), isSaving: true),
+          EditingCreateEditResponsibles(responsible: Responsible(name: "", telephone: ''), isSaving: false),
+          EditingCreateEditResponsibles(responsible: Responsible(name: responsible.name, telephone: ''), isSaving: false),
+          EditingCreateEditResponsibles(responsible: Responsible(name: responsible.name, telephone: responsible.telephone), isSaving: false),
+          EditingCreateEditResponsibles(responsible: Responsible(name: responsible.name, telephone: responsible.telephone), isSaving: true),
           SucessCreateEditResponsibles()
         ];
       },
@@ -52,6 +54,7 @@ void main() {
     final responsible = Responsible(
       id: "massa",
       name: "teste",
+      telephone: '',
       picture: null,
     );
     final newName = "testtwo";
@@ -72,9 +75,9 @@ void main() {
       },
       expect: () {
         return [
-          EditingCreateEditResponsibles(responsible: ResponsibleDto(id: responsible.id, name: responsible.name), isSaving: false),
-          EditingCreateEditResponsibles(responsible: ResponsibleDto(id: responsible.id, name: newName), isSaving: false),
-          EditingCreateEditResponsibles(responsible: ResponsibleDto(id: responsible.id, name: newName), isSaving: true),
+          EditingCreateEditResponsibles(responsible: Responsible(id: responsible.id, name: responsible.name, telephone: ''), isSaving: false),
+          EditingCreateEditResponsibles(responsible: Responsible(id: responsible.id, name: newName, telephone: ''), isSaving: false),
+          EditingCreateEditResponsibles(responsible: Responsible(id: responsible.id, name: newName, telephone: ''), isSaving: true),
           SucessCreateEditResponsibles()
         ];
       },
