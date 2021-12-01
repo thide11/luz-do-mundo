@@ -9,6 +9,8 @@ import 'package:luz_do_mundo/presentation/widgets/base-crud-wrapper.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
 import 'package:luz_do_mundo/utils/datetime_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pdf/pdf.dart';
+import 'package:printing/printing.dart';
 
 class ShowPersonBody extends StatelessWidget {
   const ShowPersonBody({Key? key}) : super(key: key);
@@ -94,7 +96,13 @@ class ShowPersonBody extends StatelessWidget {
                   text: "Exportar dados",
                   textStyle: TextStyle(fontSize: 27.sp),
                   icon: Icons.picture_as_pdf,
-                  onTap: () {},
+                  onTap: () async {
+                    final path = await cubit.buildPdf();
+                    Navigator.of(context).pushNamed(
+                      Routes.pdfPreview,
+                      arguments: path,
+                    );
+                  },
                 ),
               )
             ],

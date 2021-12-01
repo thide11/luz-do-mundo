@@ -33,6 +33,14 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
       return Widgets.scaffold(
         context,
         title: "Calendário",
+        actions: [
+          IconButton(
+            onPressed: () {
+              showFilterDialog(data.filters);
+            }, 
+            icon: Icon(Icons.filter_list),
+          )
+        ],
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -48,6 +56,16 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
                   ),
                 ),
               ),
+              if(showingAccompaiment.length == 0 && showingActionPlans.length == 0)
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 22.0.h),
+                  child: Text(
+                    "Nenhum registro encontrado",
+                    style: TextStyle(
+                      fontSize: 18.sp,
+                    ),
+                  ),
+                ),
               ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
@@ -107,15 +125,7 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
     }
     return GestureDetector(
       onTap: () {
-        showDialog(
-            context: context,
-            builder: (dialogContext) {
-              return FilterDialog(
-                onApplyFilters: (filters) => context.read<ShowCalendarCubit>().onFilterChanged(filters),
-                baseFilters: filters,
-              );
-            },
-          );
+        showFilterDialog(filters);
       },
       child: Text(
         text,
@@ -124,6 +134,18 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
           color: Color(0xff0000EE),
         ),
       ),
+    );
+  }
+
+  showFilterDialog(FilterState filters) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return FilterDialog(
+          onApplyFilters: (filters) => context.read<ShowCalendarCubit>().onFilterChanged(filters),
+          baseFilters: filters,
+        );
+      },
     );
   }
 

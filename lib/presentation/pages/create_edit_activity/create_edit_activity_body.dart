@@ -25,12 +25,23 @@ class _CreateEditActivityBodyState extends State<CreateEditActivityBody> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CreateEditActivityCubit, CreateEditActivityState>(
+      listenWhen: (previous, current) =>
+          previous.activity.beneficiary != current.activity.beneficiary
+          ||
+          previous.activity.responsible != current.activity.responsible
+          ||
+          previous.activity.date != current.activity.date
+          ||
+          previous.successfulSaved != current.successfulSaved,
       listener: (context, state) {
         if (state.successfulSaved) {
           asuka.showSnackBar(SnackBar(
             content: Text("Atividade salva com sucesso!"),
           ));
           return Navigator.of(context).pop();
+        }
+        if(state.activity.beneficiary != null || state.activity.responsible != null || state.activity.date != null) {
+          FocusScope.of(context).requestFocus(FocusNode());
         }
       },
       builder: (context, state) {

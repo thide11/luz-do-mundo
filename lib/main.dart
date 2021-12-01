@@ -20,6 +20,7 @@ class Main extends StatelessWidget {
     Firebase.initializeApp();
     return generateScreenUtilInit(
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate
         ],

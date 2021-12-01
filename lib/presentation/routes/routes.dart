@@ -4,6 +4,7 @@ import 'package:luz_do_mundo/presentation/pages/create_edit_responsibles/create_
 import 'package:luz_do_mundo/presentation/pages/home/home.dart';
 import 'package:luz_do_mundo/presentation/pages/list_persons/list_persons.dart';
 import 'package:luz_do_mundo/presentation/pages/list_responsibles/list_responsibles.dart';
+import 'package:luz_do_mundo/presentation/pages/pdf_preview/pdf_preview.dart';
 import 'package:luz_do_mundo/presentation/pages/show_activity/show_activity.dart';
 import 'package:luz_do_mundo/presentation/pages/show_calendar/show_calendar.dart';
 import 'package:luz_do_mundo/presentation/pages/show_person/show_person.dart';
@@ -22,6 +23,8 @@ abstract class Routes {
 
   static const String showActivity = "/showActivity";
   static const String createEditActivity = "/createEditActivity";
+  
+  static const String pdfPreview = "/pdfPreviewActivity";
 
   static getRoutes() => {
     Routes.home: (context) => const Home(),
@@ -37,5 +40,7 @@ abstract class Routes {
 
     Routes.showActivity: (context) => const ShowActivity(),
     Routes.createEditActivity: (context) => const CreateEditActivity(),
+
+    Routes.pdfPreview: (context) => const PdfPreview(),
   };
 }

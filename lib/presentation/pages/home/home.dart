@@ -16,17 +16,23 @@ class Home extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: 172.h,
+              height: 120.h,
             ),
-            Text(
-              "Luz do mundo",
-              style: TextStyle(
-                fontSize: 30.sp,
-              ),
+            Image.asset(
+              "assets/images/logo.jpg",
+              width: 300,
             ),
             SizedBox(
-              height: 251.h,
+              height: 20.h,
             ),
+            Text(
+              "LUZ DO MUNDO",
+              style: TextStyle(
+                fontSize: 34.sp,
+                color: Colors.grey,
+              ),
+            ),
+            Spacer(),
             Widgets.button(
               text: "Calendário",
               onTap: () => Navigator.pushNamed(context, Routes.showCalendar),
@@ -44,6 +50,9 @@ class Home extends StatelessWidget {
             Widgets.button(
               text: "Pessoas",
               onTap: () => Navigator.pushNamed(context, Routes.listPersons),
+            ),
+            SizedBox(
+              height: 60.h,
             ),
           ],
         ),
