@@ -42,8 +42,8 @@ void main() {
       },
       expect: () {
         return [
-          EditingCreateEditResponsibles(responsible: Responsible(name: "", telephone: ''), isSaving: false),
-          EditingCreateEditResponsibles(responsible: Responsible(name: responsible.name, telephone: ''), isSaving: false),
+          EditingCreateEditResponsibles(responsible: Responsible(name: ""), isSaving: false),
+          EditingCreateEditResponsibles(responsible: Responsible(name: responsible.name), isSaving: false),
           EditingCreateEditResponsibles(responsible: Responsible(name: responsible.name, telephone: responsible.telephone), isSaving: false),
           EditingCreateEditResponsibles(responsible: Responsible(name: responsible.name, telephone: responsible.telephone), isSaving: true),
           SucessCreateEditResponsibles(SucessType.SAVED)
