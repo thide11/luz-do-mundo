@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:luz_do_mundo/domain/repository/core/crud_capacity.dart';
 import 'package:luz_do_mundo/infrastructure/repository/core/firestore_model.dart';
 
@@ -32,7 +33,7 @@ abstract class FirestoreCrud<T> extends CrudCapacity<T> {
   }
 
   @override
-  Future<void> disable(String id) {
+  Future<void> delete(String id) {
     return _firestore.collection(basePath).doc(id).delete();
   }
 
@@ -72,7 +73,15 @@ abstract class FirestoreCrud<T> extends CrudCapacity<T> {
   }
 
   Stream<List<T>> listStream() {
-    return _firestore.collection(basePath).snapshots().map((snapshot) => snapshot.docs.map(readFirestoreDocument).toList());
+    return createStream(_firestore.collection(basePath));
   }
+
+  @protected
+  Stream<List<T>> createStream(Query query) {
+    return query.snapshots().map((snapshot) => snapshot.docs.map(readFirestoreDocument).toList());
+  }
+
+  @protected
+  FirebaseFirestore get firestore => _firestore;
 
 }

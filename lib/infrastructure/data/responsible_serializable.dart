@@ -14,11 +14,7 @@ class ResponsibleSerializable {
   }
 
   Map<String, dynamic> toMapWithoutId(Responsible responsible) {
-    return {
-      'name': responsible.name,
-      'telephone': responsible.telephone,
-      'picture': responsible.picture?.toMap(),
-    };
+    return responsible.toMapWithoutId();
   }
 
   Responsible fromMap(Map<String, dynamic> map) {

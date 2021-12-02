@@ -9,6 +9,7 @@ import 'package:luz_do_mundo/domain/entity/app_file.dart';
 import 'package:luz_do_mundo/domain/entity/base_person.dart';
 import 'package:luz_do_mundo/presentation/pages/show_calendar/filter/filter_dialog.dart';
 import 'package:luz_do_mundo/presentation/routes/routes.dart';
+import 'package:luz_do_mundo/presentation/theme/app_colors.dart';
 import 'package:luz_do_mundo/presentation/widgets/base-crud-wrapper.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
 import 'package:luz_do_mundo/utils/datetime_extension.dart';
@@ -37,14 +38,16 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
           IconButton(
             onPressed: () {
               showFilterDialog(data.filters);
-            }, 
+            },
             icon: Icon(Icons.filter_list),
           )
         ],
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: 26.h,),
+              SizedBox(
+                height: 26.h,
+              ),
               _filter(data.filters),
               _calendar(data),
               Padding(
@@ -56,7 +59,8 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
                   ),
                 ),
               ),
-              if(showingAccompaiment.length == 0 && showingActionPlans.length == 0)
+              if (showingAccompaiment.length == 0 &&
+                  showingActionPlans.length == 0)
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 22.0.h),
                   child: Text(
@@ -74,7 +78,7 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
                 },
                 itemCount: showingActionPlans.length,
               ),
-              if(DateTimeEx.nowWithoutTime().isBefore(data.selectedDay))
+              if (DateTimeEx.nowWithoutTime().isBefore(data.selectedDay))
                 _addButton(
                   text: "Adicionar plano",
                   fontSize: 27.sp,
@@ -95,7 +99,7 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
                 },
                 itemCount: showingAccompaiment.length,
               ),
-              if(DateTimeEx.nowWithoutTime().isAfter(data.selectedDay))
+              if (DateTimeEx.nowWithoutTime().isAfter(data.selectedDay))
                 _addButton(
                   text: "Adicionar acompanhamento",
                   fontSize: 16.sp,
@@ -118,9 +122,9 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
 
   Widget _filter(FilterState filters) {
     String text = "Adicionar filtros";
-    if(filters.beneficiary != null && filters.responsible != null) {
+    if (filters.beneficiary != null && filters.responsible != null) {
       text = "2 filtros aplicados - Editar";
-    } else if(filters.beneficiary != null || filters.responsible != null) {
+    } else if (filters.beneficiary != null || filters.responsible != null) {
       text = "1 filtro aplicado - Editar";
     }
     return GestureDetector(
@@ -142,7 +146,8 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
       context: context,
       builder: (dialogContext) {
         return FilterDialog(
-          onApplyFilters: (filters) => context.read<ShowCalendarCubit>().onFilterChanged(filters),
+          onApplyFilters: (filters) =>
+              context.read<ShowCalendarCubit>().onFilterChanged(filters),
           baseFilters: filters,
         );
       },
@@ -307,27 +312,46 @@ class _ShowCalendarBodyState extends State<ShowCalendarBody> {
                 icon: Icon(Icons.delete),
                 onPressed: () => {
                   showDialog(
-                    context: context, 
-                    builder: (dialogContext) {
-                      return AlertDialog(
-                        title: Text("Excluir atividade"),
-                        content: Text("Deseja realmente excluir esta atividade?"),
-                        actions: [
-                          ElevatedButton(
-                            child: Text("Cancelar"),
-                            onPressed: () => Navigator.of(dialogContext).pop(),
-                          ),
-                          ElevatedButton(
-                            child: Text("Excluir"),
-                            onPressed: () {
-                              context.read<ShowCalendarCubit>().onDeleteActivity(activity);
-                              Navigator.of(dialogContext).pop();
-                            },
-                          ),
-                        ],
-                      );
-                    }
-                  )
+                      context: context,
+                      builder: (dialogContext) {
+                        return AlertDialog(
+                          title: Text("Excluir atividade"),
+                          content:
+                              Text("Deseja realmente excluir esta atividade?"),
+                          actions: [
+                            ElevatedButton(
+                              child: Text(
+                                "Cancelar",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                              onPressed: () =>
+                                  Navigator.of(dialogContext).pop(),
+                              style: ElevatedButton.styleFrom(
+                                primary: AppColors.alternative,
+                              ),
+                            ),
+                            ElevatedButton(
+                              child: Text(
+                                "Excluir",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                primary: AppColors.alternative,
+                              ),
+                              onPressed: () {
+                                context
+                                    .read<ShowCalendarCubit>()
+                                    .onDeleteActivity(activity);
+                                Navigator.of(dialogContext).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      })
                 },
               ),
             ),

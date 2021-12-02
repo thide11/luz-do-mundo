@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.thide11.luzdomundo">
+    package="com.thide11.luz_do_mundo">
    <application
-        android:label="luz_do_mundo"
+        android:label="Luz do mundo"
         android:icon="@mipmap/launcher_icon">
         <activity
           android:name="com.yalantis.ucrop.UCropActivity"

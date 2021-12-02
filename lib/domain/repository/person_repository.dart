@@ -4,4 +4,5 @@ import 'core/crud_capacity.dart';
 
 abstract class PersonRepository extends CrudCapacity<NeedyPerson> {
   Stream<List<NeedyPerson>> listStreamFilterByName(String name);
+  Future<void> disableOrDelete(NeedyPerson person);
 }

@@ -32,6 +32,9 @@ class _ListResponsiblesBodyState extends State<ListResponsiblesBody> {
     }
     if (state is LoadedBaseCrudStates) {
       final data = (state as LoadedBaseCrudStates<List<Responsible>>).data;
+      if(data.isEmpty) {
+        return Center(child: Text("Nenhum responsável cadastrado"));
+      }
       return ListView.separated(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),

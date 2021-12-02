@@ -21,4 +21,12 @@ class EditingCreateEditResponsibles extends CreateEditResponsiblesState {
   List<Object> get props => [responsible, isSaving];
 }
 
-class SucessCreateEditResponsibles extends CreateEditResponsiblesState {}
+class SucessCreateEditResponsibles extends CreateEditResponsiblesState {
+
+  final SucessType sucessType;
+
+  SucessCreateEditResponsibles(this.sucessType);
+
+  @override
+  List<Object> get props => [sucessType];
+}

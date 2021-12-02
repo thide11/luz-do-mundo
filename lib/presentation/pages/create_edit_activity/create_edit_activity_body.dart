@@ -9,6 +9,7 @@ import 'package:luz_do_mundo/application/list_responsibles_cubit.dart';
 import 'package:luz_do_mundo/domain/entity/activity.dart';
 import 'package:luz_do_mundo/presentation/utils/currency_pt_br_input_formatter.dart';
 import 'package:luz_do_mundo/presentation/utils/double_to_pt_br_currency.dart';
+import 'package:luz_do_mundo/presentation/utils/reset_focus.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
 import 'package:luz_do_mundo/utils/datetime_extension.dart';
 
@@ -41,7 +42,7 @@ class _CreateEditActivityBodyState extends State<CreateEditActivityBody> {
           return Navigator.of(context).pop();
         }
         if(state.activity.beneficiary != null || state.activity.responsible != null || state.activity.date != null) {
-          FocusScope.of(context).requestFocus(FocusNode());
+          resetFocus(context);
         }
       },
       builder: (context, state) {
@@ -89,7 +90,10 @@ class _CreateEditActivityBodyState extends State<CreateEditActivityBody> {
                             text:
                                 "${activity.isEditing ? "Alterar" : "Selecionar"} dia",
                             icon: Icons.calendar_today,
-                            onTap: () => showDatePickerSelector(activity),
+                            onTap: () {
+                              resetFocus(context);
+                              showDatePickerSelector(activity);
+                            }
                           ),
                         ),
                       ],

@@ -41,7 +41,7 @@ class ActivitySerializable {
       title: map['title'], 
       description: map['description'], 
       type: EnumDto.findValue(ActivityType.values, map['type']),
-      date: (map["date"] as Timestamp).toDate(),
+      date: (map["date"] as Timestamp).toDate().toUtc(),
       amountSpend: map['amountSpend'],
       beneficiary: map['beneficiary'] != null ? BasePersonSerializable().fromMap(map['beneficiary']) : null,
       responsible: map['responsible'] != null ? BasePersonSerializable().fromMap(map['responsible']) : null,

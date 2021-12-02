@@ -8,7 +8,6 @@ class NeedyPerson extends BasePerson {
   final String rg;
   final String cpf;
   final String adress;
-  final String telephone;
   final String motherName;
   final String fatherName;
   final double income;
@@ -17,12 +16,13 @@ class NeedyPerson extends BasePerson {
 
   NeedyPerson({
     String? id,
+    String? telephone,
+    bool enabled = true,
     required String name,
     required this.birthDate,
     required this.rg,
     required this.cpf,
     required this.adress,
-    required this.telephone,
     required this.motherName,
     required this.fatherName,
     required this.income,
@@ -33,8 +33,10 @@ class NeedyPerson extends BasePerson {
     name: name,
     id: id,
     picture: picture,
-    telephone: telephone
-  );
+    telephone: telephone,
+    enabled: enabled,
+  )
+  ;
 
   factory NeedyPerson.empty() => NeedyPerson(
     id: null,
@@ -65,6 +67,7 @@ class NeedyPerson extends BasePerson {
     double? income,
     AppFile? workCard,
     AppFile? picture,
+    bool? enabled,
     List<Dependent>? dependents,
   }) {
     return NeedyPerson(
@@ -81,6 +84,7 @@ class NeedyPerson extends BasePerson {
       workCard: workCard ?? this.workCard,
       picture: picture ?? this.picture,
       dependents: dependents ?? this.dependents,
+      enabled: enabled != null ? enabled : this.enabled,
     );
   }
 

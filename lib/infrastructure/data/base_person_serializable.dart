@@ -15,6 +15,7 @@ class BasePersonSerializable {
     return BasePerson(
       id: map['id'],
       name: map['name'],
+      enabled: map['enabled'],
       telephone: map['telephone'] ?? "",
       picture: AppFile.fromMap(map['picture']),
     );

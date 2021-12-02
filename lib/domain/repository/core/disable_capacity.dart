@@ -1,3 +1,3 @@
-mixin DisableCapacity {
-  Future<void> disable(String id);
+mixin DeleteCapacity {
+  Future<void> delete(String id);
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:luz_do_mundo/application/create_edit_responsibles_cubit/create_edit_responsibles_cubit.dart';
+import 'package:luz_do_mundo/application/sucess_type.dart';
 import 'package:luz_do_mundo/domain/entity/app_file.dart';
 import 'package:luz_do_mundo/presentation/widgets/image_picker.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
@@ -24,6 +25,14 @@ class CreateEditResponsibleBody extends StatelessWidget {
         if (state is EditingCreateEditResponsibles)
           return Widgets.scaffold(
             context,
+            actions: [
+              state.isEditing
+                  ? IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () => context.read<CreateEditResponsiblesCubit>().delete(),
+                    )
+                  : Container(),
+            ],
             title: state.isEditing ? "Editar responsável" : "Criar responsável",
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -83,9 +92,12 @@ class CreateEditResponsibleBody extends StatelessWidget {
       },
       listener: (context, state) {
         if (state is SucessCreateEditResponsibles) {
+          final message = state.sucessType == SucessType.SAVED ?
+            "Responsável salvo com sucesso!" :
+            "Responsável deletado com sucesso";
           asuka.showSnackBar(
             SnackBar(
-              content: Text("Responsável salvo com sucesso!"),
+              content: Text(message),
             )
           );
           return Navigator.of(context).pop();

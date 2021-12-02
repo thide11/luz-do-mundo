@@ -28,15 +28,15 @@ class FirestoreActivityRepository extends FirestoreCrud<Activity>
 
   @override
   Stream<List<Activity>> listByMonthOrResponsibleOrBeneficiary(DateTime date, [BasePerson? beneficiary, BasePerson? responsible]) {
-    final start = new DateTime(date.year, date.month);
-    final end = start.add(Duration(days: 31));
+    // final start = new DateTime(date.year, date.month);
+    // final end = start.add(Duration(days: 31));
     Query query = 
       this
         ._firestore
         .collection(basePath)
-        .orderBy("date")
-        .startAt([start])
-        .endAt([end]);
+        .orderBy("date");
+        // .startAt([start])
+        // .endAt([end]);
     if(beneficiary != null) {
       query = query.where("beneficiary.id", isEqualTo: beneficiary.id);
     }

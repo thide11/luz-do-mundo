@@ -6,6 +6,7 @@ import 'package:luz_do_mundo/domain/entity/app_file.dart';
 import 'package:luz_do_mundo/domain/entity/needy_person.dart';
 import 'package:luz_do_mundo/presentation/routes/routes.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:luz_do_mundo/presentation/utils/reset_focus.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
 
 class ListPersonsBody extends StatefulWidget {
@@ -76,6 +77,13 @@ class _ListPersonsBodyState extends State<ListPersonsBody> {
   }
 
   Widget _listPersons(List<NeedyPerson> data) {
+    if(data.isEmpty) {
+      return Center(child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 30.0.h),
+        
+        child: Text("Nenhuma pessoa encontrada"),
+      ));
+    }
     return ListView.separated(
       shrinkWrap: true,
       padding: EdgeInsets.symmetric(
@@ -96,7 +104,10 @@ class _ListPersonsBodyState extends State<ListPersonsBody> {
 
   Widget _generatePersonListItem(NeedyPerson person) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, Routes.showPerson, arguments: person),
+      onTap: () {
+        resetFocus(context);
+        Navigator.pushNamed(context, Routes.showPerson, arguments: person);
+      },
       child: Row(
         children: [
           Widgets.listImage(person.picture ?? AppFile.empty()),

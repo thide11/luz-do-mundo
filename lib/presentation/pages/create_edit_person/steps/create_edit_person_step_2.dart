@@ -29,7 +29,7 @@ class CreateEditPersonStep2 extends StatelessWidget {
         SizedBox(height: 16.h,),
         CreateEditPerson.input(
           label: "Telefone proprio :",
-          initialValue: state.needyPerson.telephone,
+          initialValue: state.needyPerson.telephone ?? "",
           onChanged: (text) => cubit.onTelephoneChanged(text),
           inputFormatters: [celphoneMask],
           keyboardType: TextInputType.phone,

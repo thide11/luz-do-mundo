@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:luz_do_mundo/application/create_edit_person/create_edit_person_cubit.dart';
+import 'package:luz_do_mundo/application/sucess_type.dart';
 import 'package:luz_do_mundo/presentation/pages/create_edit_person/steps/create_edit_person_step_1.dart';
 import 'package:luz_do_mundo/presentation/pages/create_edit_person/steps/create_edit_person_step_2.dart';
 import 'package:luz_do_mundo/presentation/pages/create_edit_person/steps/create_edit_person_step_3.dart';
@@ -27,18 +28,32 @@ class CreateEditPersonBody extends StatelessWidget {
           );
         }
         if (state is SucessCreateEditPerson) {
+          final message = state.sucessType == SucessType.SAVED ?
+            "Pessoa salva com sucesso!" :
+            "Pessoa deletada com sucesso";
+          if(state.sucessType == SucessType.DELETED) {
+            Navigator.of(context).pop();
+          }
+          Navigator.of(context).pop();
           asuka.showSnackBar(
             SnackBar(
-              content: Text("Pessoa salva com sucesso!"),
+              content: Text(message),
             )
           );
-          return Navigator.of(context).pop();
         }
       },
       child: Widgets.scaffold(
         context,
+        actions: [
+              context.read<CreateEditPersonCubit>().isEditing()
+                  ? IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () => context.read<CreateEditPersonCubit>().delete(),
+                    )
+                  : Container(),
+            ],
         title: 
-          "${context.read<CreateEditPersonCubit>().getEditingStateOrNull()!.needyPerson.id == null ? "Cadastrar" : "Editar"} pessoa",
+          "${context.read<CreateEditPersonCubit>().isEditing() ? "Editar" : "Cadastrar"} pessoa",
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

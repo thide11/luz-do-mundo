@@ -1,13 +1,10 @@
-import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
 import 'package:luz_do_mundo/domain/entity/app_file.dart';
 import 'package:luz_do_mundo/domain/entity/dependent.dart';
 import 'package:luz_do_mundo/domain/entity/needy_person.dart';
 import 'package:luz_do_mundo/presentation/utils/currency_pt_br_input_formatter.dart';
 import 'package:luz_do_mundo/utils/datetime_extension.dart';
-
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -49,7 +46,7 @@ Future<Uint8List> pdfBuilder(NeedyPerson person) async {
             if (person.rg != "") _text('Rg', person.rg),
             if (person.cpf != "") _text('Cpf', person.cpf),
             if (person.adress != "") _text('Endereço', person.adress),
-            if (person.telephone != "") _text('Telefone', person.telephone),
+            if (person.telephone != null) _text('Telefone', person.telephone!),
             if (person.motherName != "")
               _text('Nome da mãe', person.motherName),
             if (person.fatherName != "")

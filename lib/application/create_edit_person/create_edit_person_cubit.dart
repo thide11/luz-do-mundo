@@ -6,6 +6,7 @@ import 'package:luz_do_mundo/domain/entity/app_file.dart';
 import 'package:luz_do_mundo/domain/entity/dependent.dart';
 import 'package:luz_do_mundo/domain/entity/needy_person.dart';
 import 'package:luz_do_mundo/domain/repository/person_repository.dart';
+import '../sucess_type.dart';
 
 part 'create_edit_person_state.dart';
 
@@ -14,6 +15,14 @@ class CreateEditPersonCubit extends Cubit<CreateEditPersonState> {
   CreateEditPersonCubit(this._personRepository) : super(EmptyCreateEditPerson());
 
   bool lockScroll = false;
+
+  bool isEditing() {
+    final editingState = getEditingStateOrNull();
+    if(editingState == null) {
+      return false;
+    }
+    return editingState.needyPerson.id != null;
+  }
 
   EditingCreateEditPerson? getEditingStateOrNull() {
     if (state is EditingCreateEditPerson) {
@@ -81,6 +90,12 @@ class CreateEditPersonCubit extends Cubit<CreateEditPersonState> {
         needyPerson: (state as EditingCreateEditPerson).needyPerson));
   }
 
+  delete() async {
+    final needyPerson = (state as EditingCreateEditPerson).needyPerson;
+    await _personRepository.disableOrDelete(needyPerson);
+    emit(SucessCreateEditPerson(SucessType.DELETED));
+  }
+
   save() async {
     final needyPerson = (state as EditingCreateEditPerson).needyPerson;
     emit(EditingCreateEditPerson(
@@ -93,7 +108,7 @@ class CreateEditPersonCubit extends Cubit<CreateEditPersonState> {
     } else {
       await _personRepository.edit(needyPerson);
     }
-    emit(SucessCreateEditPerson());
+    emit(SucessCreateEditPerson(SucessType.SAVED));
   }
 
   onNameChanged(String name) {

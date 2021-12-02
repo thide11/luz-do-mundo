@@ -41,6 +41,7 @@ class CreateEditPersonStep1 extends StatelessWidget {
         CreateEditPerson.input(
           label: "Cpf :",
           initialValue: state.needyPerson.cpf,
+          keyboardType: TextInputType.number,
           onChanged: (text) => cubit.onCpfChanged(text),
           inputFormatters: [
             maskFormatter,
@@ -49,11 +50,13 @@ class CreateEditPersonStep1 extends StatelessWidget {
         SizedBox(height: 16.h,),
         CreateEditPerson.input(
           label: "Rg :",
+          keyboardType: TextInputType.number,
           initialValue: state.needyPerson.rg,
           onChanged: (text) => cubit.onRgChanged(text),
         ),
         SizedBox(height: 16.h,),
         ImagePicker(
+          label: "Foto de perfil :",
           file: state.needyPerson.picture ?? AppFile.empty(), 
           onChanged: (photo) => cubit.onPhotoChanged(photo),
           shouldBeCircular: true,

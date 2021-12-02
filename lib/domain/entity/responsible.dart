@@ -6,13 +6,15 @@ class Responsible extends BasePerson {
   Responsible({
     String? id,
     required String name,
-    required String telephone,
+    String? telephone,
     AppFile? picture,
+    bool enabled = true,
   }) : super(
     id: id,
     name: name,
     picture: picture,
     telephone: telephone,
+    enabled: enabled,
   );
 
   factory Responsible.fromBasePerson(BasePerson basePerson) {
@@ -29,12 +31,14 @@ class Responsible extends BasePerson {
     String? name,
     String? telephone,
     AppFile? picture,
+    bool? enabled,
   }) {
     return Responsible(
       id: id ?? this.id,
       name: name ?? this.name,
       telephone: telephone ?? this.telephone,
       picture: picture ?? this.picture,
+      enabled: enabled != null ? enabled : this.enabled,
     );
   }
 }

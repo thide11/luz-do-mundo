@@ -8,6 +8,7 @@ import 'package:luz_do_mundo/domain/repository/responsible_repository.dart';
 import 'package:luz_do_mundo/infrastructure/data/responsible_serializable.dart';
 import 'package:luz_do_mundo/infrastructure/repository/core/firestore_crud.dart';
 import 'package:luz_do_mundo/infrastructure/repository/core/firestore_model.dart';
+import 'package:luz_do_mundo/infrastructure/repository/firestore_activity_repository.dart';
 
 class FirestoreResponsiblesRepository extends FirestoreCrud<Responsible>
     implements ResponsibleRepository {
@@ -20,16 +21,41 @@ class FirestoreResponsiblesRepository extends FirestoreCrud<Responsible>
       : super(firestore);
 
   @override
+  Future<void> disableOrDelete(Responsible responsible) async {
+    final id = responsible.id!;
+    final data = await firestore.collection(
+      FirestoreActivityRepository(firestore).basePath
+    ).where(
+      "responsible.id",
+      isEqualTo: id
+    ).get();
+    if(data.docs.isEmpty) {
+      if(responsible.picture != null && responsible.picture!.isNotEmpty) {
+        await _findResponsibleFileById(id).delete();
+      }
+      return super.delete(id);
+    } else {
+      return super.edit(
+        responsible.copyWith(
+          enabled: false
+        )
+      );
+    }
+  }
+
+  
+
+  @override
   Responsible readFirestoreDocument(DocumentSnapshot data) {
     return _serializable.fromFirestore(data);
   }
 
   @override
   Future<void> edit(Responsible data) async {
-    await super.edit(data);
     if (data.picture?.tempFile != null) {
       await _findResponsibleFileById(data.id!).putFile(data.picture!.tempFile!);
     }
+    await super.edit(data);
   }
 
   @override
@@ -50,7 +76,12 @@ class FirestoreResponsiblesRepository extends FirestoreCrud<Responsible>
   
   @override
   Stream<List<Responsible>> listStream() {
-    return super.listStream().asyncMap((e) async => await Future.wait(e.map(_readResponsibleFile)));
+    return super.createStream(
+      firestore.collection(basePath).where(
+        "enabled",
+        isEqualTo: true,
+      )
+    ).asyncMap((e) async => await Future.wait(e.map(_readResponsibleFile)));
   }
 
   Future<Responsible> _readResponsibleFile(Responsible responsible) async {
@@ -73,8 +104,12 @@ class FirestoreResponsiblesRepository extends FirestoreCrud<Responsible>
     }
   }
 
+  Reference _findResponsableFolderById(String id) {
+    return this._storage.ref("/responsibles/$id");
+  }
+
   Reference _findResponsibleFileById(String id) {
-    return this._storage.ref("/responsibles/$id/profile.jpeg");
+    return _findResponsableFolderById(id).child("/responsibles/$id/profile.jpeg");
   }
 
   Future<void> _insertPhoto(String responsibleId, File file) async {

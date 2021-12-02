@@ -44,7 +44,9 @@ class ShowActivityBody extends StatelessWidget {
               children: [
                 Widgets.labelAndValue("Titulo:", activity.title),
                 Widgets.labelAndValue(
-                    "Data:", activity.date!.toBrazilianDateString()),
+                  "Data:",
+                  activity.date!.toBrazilianDateString(),
+                ),
                 if (activity.type == ActivityType.ACCOMPANIMENT)
                   Widgets.labelAndValue(
                     "Valor gasto:",

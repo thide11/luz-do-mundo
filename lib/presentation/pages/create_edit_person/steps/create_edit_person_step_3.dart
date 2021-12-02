@@ -207,6 +207,7 @@ class _CreateEditPersonStep3BodyState extends State<CreateEditPersonStep3Body> {
                 ),
                 _dependendCrudBoxInput(
                   hintText: "Digite o RG",
+                  textInputType: TextInputType.number,
                   initialValue: dependent.rg ?? "",
                   onChanged: (name) =>
                       context.read<DependentsManagerCubit>().onRgChanged(name),

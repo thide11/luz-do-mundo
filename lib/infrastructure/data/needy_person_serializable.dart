@@ -18,18 +18,16 @@ class NeedyPersonSerializable {
 
   Map<String, dynamic> toMapWithoutId(NeedyPerson needyPerson) {
     return {
-      'name': needyPerson.name,
       'birthDate': Timestamp.fromDate(needyPerson.birthDate),
       'rg': needyPerson.rg,
       'cpf': needyPerson.cpf,
       'adress': needyPerson.adress,
-      'telephone': needyPerson.telephone,
       'motherName': needyPerson.motherName,
       'fatherName': needyPerson.fatherName,
       'income': needyPerson.income,
       'workCard': needyPerson.workCard?.toMap(),
-      'picture': needyPerson.picture?.toMap(),
       'dependents': needyPerson.dependents.map((x) => _dependentSerializable.toMap(x)).toList(),
+      ...needyPerson.toMapWithoutId(),
     };
   }
 

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:injector/injector.dart';
 import 'package:luz_do_mundo/application/list_persons_cubit.dart';
 import 'package:luz_do_mundo/presentation/routes/routes.dart';
+import 'package:luz_do_mundo/presentation/utils/reset_focus.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
 
 import 'list_persons_body.dart';
@@ -37,8 +38,10 @@ class _ListPersonsState extends State<ListPersons> {
                       fontSize: 23.sp,
                     ),
                   ),
-                  onTap: () =>
-                      Navigator.of(context).pushNamed(Routes.createEditPerson),
+                  onTap: () {
+                    resetFocus(context);
+                    Navigator.of(context).pushNamed(Routes.createEditPerson);
+                  }
                 ),
               ],
             ),

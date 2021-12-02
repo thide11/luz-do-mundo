@@ -36,4 +36,12 @@ class EditingCreateEditPerson extends CreateEditPersonState {
   }
 }
 
-class SucessCreateEditPerson extends CreateEditPersonState {}
+class SucessCreateEditPerson extends CreateEditPersonState {
+
+  final SucessType sucessType;
+
+  SucessCreateEditPerson(this.sucessType);
+
+  @override
+  List<Object> get props => [sucessType];
+}

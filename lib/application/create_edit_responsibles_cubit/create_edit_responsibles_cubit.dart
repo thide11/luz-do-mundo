@@ -5,6 +5,8 @@ import 'package:luz_do_mundo/domain/entity/base_person.dart';
 import 'package:luz_do_mundo/domain/entity/responsible.dart';
 import 'package:luz_do_mundo/domain/repository/responsible_repository.dart';
 
+import '../sucess_type.dart';
+
 part 'create_edit_responsibles_state.dart';
 
 class CreateEditResponsiblesCubit extends Cubit<CreateEditResponsiblesState> {
@@ -39,6 +41,14 @@ class CreateEditResponsiblesCubit extends Cubit<CreateEditResponsiblesState> {
     _responsible = _responsible.copyWith(picture: file);
   }
 
+  delete() async {
+    if(_responsible.id == null) {
+      return;
+    }
+    await _responsibleRepository.disableOrDelete(_responsible);
+    emit(SucessCreateEditResponsibles(SucessType.DELETED));
+  }
+
   save() async {
     emit(EditingCreateEditResponsibles(
         responsible: _responsible, isSaving: true));
@@ -47,6 +57,6 @@ class CreateEditResponsiblesCubit extends Cubit<CreateEditResponsiblesState> {
     } else {
       await _responsibleRepository.edit(_responsible);
     }
-    emit(SucessCreateEditResponsibles());
+    emit(SucessCreateEditResponsibles(SucessType.SAVED));
   }
 }

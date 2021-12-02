@@ -1,6 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:luz_do_mundo/application/create_edit_responsibles_cubit/create_edit_responsibles_cubit.dart';
+import 'package:luz_do_mundo/application/sucess_type.dart';
 import 'package:luz_do_mundo/domain/entity/responsible.dart';
 import 'package:luz_do_mundo/domain/repository/responsible_repository.dart';
 import 'package:mocktail/mocktail.dart';
@@ -29,7 +30,7 @@ void main() {
       act: (bloc) {
         bloc.load();
         bloc.onNameChanged(responsible.name);
-        bloc.onTelephoneChanged(responsible.telephone);
+        bloc.onTelephoneChanged(responsible.telephone!);
         bloc.save();
       },
       setUp: () {
@@ -45,7 +46,7 @@ void main() {
           EditingCreateEditResponsibles(responsible: Responsible(name: responsible.name, telephone: ''), isSaving: false),
           EditingCreateEditResponsibles(responsible: Responsible(name: responsible.name, telephone: responsible.telephone), isSaving: false),
           EditingCreateEditResponsibles(responsible: Responsible(name: responsible.name, telephone: responsible.telephone), isSaving: true),
-          SucessCreateEditResponsibles()
+          SucessCreateEditResponsibles(SucessType.SAVED)
         ];
       },
     );
@@ -78,7 +79,7 @@ void main() {
           EditingCreateEditResponsibles(responsible: Responsible(id: responsible.id, name: responsible.name, telephone: ''), isSaving: false),
           EditingCreateEditResponsibles(responsible: Responsible(id: responsible.id, name: newName, telephone: ''), isSaving: false),
           EditingCreateEditResponsibles(responsible: Responsible(id: responsible.id, name: newName, telephone: ''), isSaving: true),
-          SucessCreateEditResponsibles()
+          SucessCreateEditResponsibles(SucessType.SAVED)
         ];
       },
     );

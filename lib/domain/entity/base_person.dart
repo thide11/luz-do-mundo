@@ -5,7 +5,8 @@ import 'app_file.dart';
 class BasePerson extends Equatable {
   final String? id;
   final String name;
-  final String telephone;
+  final String? telephone;
+  final bool enabled;
   final AppFile? picture;
   get firstName => name.split(" ")[0];
 
@@ -14,12 +15,14 @@ class BasePerson extends Equatable {
     required this.name,
     required this.telephone,
     this.picture,
+    required this.enabled,
   });
 
   factory BasePerson.empty() => BasePerson(
     id: null,
     name: "",
-    telephone: "",
+    telephone: null,
+    enabled: true,
     picture: null,
   );
 
@@ -31,21 +34,30 @@ class BasePerson extends Equatable {
     String? name,
     String? telephone,
     AppFile? picture,
+    bool? enabled,
   }) {
     return BasePerson(
       id: id ?? this.id,
       name: name ?? this.name,
       telephone: telephone ?? this.telephone,
       picture: picture ?? this.picture,
+      enabled: enabled ?? this.enabled,
     );
+  }
+
+  Map<String, dynamic> toMapWithoutId() {
+    return {
+      "name": name,
+      "telephone": telephone,
+      "picture": picture?.toMap(),
+      "enabled": enabled,
+    };
   }
 
   Map<String, dynamic> toMap() {
     return {
+      ...toMapWithoutId(),
       "id": id!,
-      "name": name,
-      "telephone": telephone,
-      "picture": picture?.toMap(),
     };
   }
 }

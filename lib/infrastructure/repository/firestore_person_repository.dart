@@ -9,6 +9,8 @@ import 'package:luz_do_mundo/infrastructure/data/needy_person_serializable.dart'
 import 'package:luz_do_mundo/infrastructure/repository/core/firestore_crud.dart';
 import 'package:luz_do_mundo/infrastructure/repository/core/firestore_model.dart';
 
+import 'firestore_activity_repository.dart';
+
 class FirestorePersonRepository extends FirestoreCrud<NeedyPerson> implements PersonRepository {
   @override
   String basePath = "needyPerson";
@@ -17,6 +19,33 @@ class FirestorePersonRepository extends FirestoreCrud<NeedyPerson> implements Pe
   FirebaseFirestore _firestore;
 
   FirestorePersonRepository(this._firestore, this._storage) : super(_firestore);
+
+
+  @override
+  Future<void> disableOrDelete(NeedyPerson person) async {
+    final id = person.id!;
+    final data = await firestore.collection(
+      FirestoreActivityRepository(firestore).basePath
+    ).where(
+      "beneficiary.id",
+      isEqualTo: id
+    ).get();
+    if(data.docs.isEmpty) {
+      if(person.picture != null && person.picture!.isNotEmpty) {
+        await _findPersonPhotoPathById(id).delete();
+      }
+      if(person.workCard != null && person.workCard!.isNotEmpty) {
+        await _findPersonWorkCardPathById(id).delete();
+      }
+      return super.delete(id);
+    } else {
+      return super.edit(
+        person.copyWith(
+          enabled: false
+        )
+      );
+    }
+  }
 
   @override
   NeedyPerson readFirestoreDocument(DocumentSnapshot<Object?> data) {
@@ -29,7 +58,7 @@ class FirestorePersonRepository extends FirestoreCrud<NeedyPerson> implements Pe
       _findPersonPhotoPathById(responsible.id!),
     );
     final workCardData = await loadAppFileUrl(
-      responsible.picture?.md5Hash, 
+      responsible.workCard?.md5Hash, 
       _findPersonWorkCardPathById(responsible.id!),
     );
 
@@ -63,10 +92,22 @@ class FirestorePersonRepository extends FirestoreCrud<NeedyPerson> implements Pe
       await _insertProfilePhoto(id, data.picture!.tempFile!);
     }
     if(data.workCard?.tempFile != null) {
-      await _insertWorkCardPhoto(id, data.picture!.tempFile!);
+      await _insertWorkCardPhoto(id, data.workCard!.tempFile!);
     }
     await super.create(data.copyWith(id: id));
     return id;
+  }
+
+  @override
+  Future<String> edit(NeedyPerson data) async {
+    if (data.picture?.tempFile != null) {
+      await _insertProfilePhoto(data.id!, data.picture!.tempFile!);
+    }
+    if(data.workCard?.tempFile != null) {
+      await _insertWorkCardPhoto(data.id!, data.workCard!.tempFile!);
+    }
+    await super.edit(data);
+    return data.id!;
   }
 
   @override
@@ -78,12 +119,20 @@ class FirestorePersonRepository extends FirestoreCrud<NeedyPerson> implements Pe
   @override
   Stream<List<NeedyPerson>> listStream() {
     return _attachLoadingOfAppFiles(
-      super.listStream()
+      super.createStream(
+        firestore.collection(basePath).where(
+          "enabled",
+          isEqualTo: true,
+        )
+      )
     );
   }
 
   @override
   Stream<List<NeedyPerson>> listStreamFilterByName(String name) {
+    if(name.isEmpty) {
+      return listStream();
+    }
     final stream = this._firestore.collection(basePath)
       .orderBy('name')
       .startAt([name])

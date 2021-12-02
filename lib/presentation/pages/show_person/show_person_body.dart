@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:luz_do_mundo/application/show_calendar/filter/filter_cubit.dart';
 import 'package:luz_do_mundo/application/show_person/show_person_cubit.dart';
@@ -8,9 +9,6 @@ import 'package:luz_do_mundo/presentation/widgets/app_file_to_image_provider.dar
 import 'package:luz_do_mundo/presentation/widgets/base-crud-wrapper.dart';
 import 'package:luz_do_mundo/presentation/widgets/widgets.dart';
 import 'package:luz_do_mundo/utils/datetime_extension.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pdf/pdf.dart';
-import 'package:printing/printing.dart';
 
 class ShowPersonBody extends StatelessWidget {
   const ShowPersonBody({Key? key}) : super(key: key);
